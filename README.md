@@ -1,8 +1,8 @@
-# ViewToolsTest
+# ViewToolsTest 
 ![建立者](https://img.shields.io/badge/建立者-Coody-orange.svg)
 ![License](https://img.shields.io/dub/l/vibe-d.svg)
 
->用來快速建立 view 元件的工具（可以不用管排版）
+用來快速建立 view 元件的工具（可以不用管排版）
 
 # 類別說明
 裡面包含兩個類別：
