@@ -19,7 +19,7 @@
 // 設定 TextField 內文字的顏色
 #define D_ViewTools_TextField_Inner_Color [UIColor grayColor]
 // 設定 Image 的名稱（不帶 .png ）
-#define D_ViewTools_Arrow_Image (nil)
+#define D_ViewTools_Arrow_Image (@"arrow")
 #define D_ViewTools_Button_Red_Normal_Image (nil)
 #define D_ViewTools_Button_Red_HightLight_Image (nil)
 #define D_ViewTools_Button_Normal_Image (nil)
@@ -304,10 +304,7 @@
                         withNeedArrow:(BOOL)tempIsNeedArrow 
                       withCustomWidth:(float)tempCustomWidth
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6, 
-                                                                  0, 
-                                                                  tempCustomWidth - 12,
-                                                                  _viewHeight)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6,0,tempCustomWidth - 12,_viewHeight)];
     [button setImageEdgeInsets:UIEdgeInsetsMake(2, 5, 2, 5)];
     [button setBackgroundImage:[_buttonImage_Normal 
                                 resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
@@ -463,23 +460,25 @@
     
     NSArray *tempRecentObjects = [NSArray array];
     // 建立文字
-    if ( tempText != nil )
-    {
-        CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
-        UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake((button.frame.size.width - tempSize.width - 6)*0.5,
-                                                                        0,
-                                                                        tempSize.width + 6 ,
-                                                                        _viewHeight)];
-        [firstLabel setText:tempText];
-        [firstLabel setTextAlignment:(NSTextAlignmentCenter)];
-        [firstLabel setTextColor:_btnTextColor];
-        [firstLabel setFont:_textFont];
-        [firstLabel setTag:1];
-        firstLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin ;
-        [button addSubview:firstLabel];
-        
-        tempRecentObjects = @[firstLabel];
-    }
+//    if ( tempText != nil )
+//    {
+//        CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
+//        UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake((button.frame.size.width - tempSize.width - 6)*0.5,
+//                                                                        0,
+//                                                                        tempSize.width + 6 ,
+//                                                                        _viewHeight)];
+//        [firstLabel setText:tempText];
+//        [firstLabel setTextAlignment:(NSTextAlignmentCenter)];
+//        [firstLabel setTextColor:_btnTextColor];
+//        [firstLabel setFont:_textFont];
+//        [firstLabel setTag:1];
+//        firstLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin ;
+//        [button addSubview:firstLabel];
+//        
+//        tempRecentObjects = @[firstLabel];
+//    }
+    
+    [button setTitle:tempText forState:(UIControlStateNormal)];
     
     // 將元件陣列暫時存入 recentObjects
     _recentObjects = nil;
@@ -796,7 +795,7 @@
     
     if (nil == cachedImage)
     {
-        cachedImage = [UIImage imageWithContentsOfFile: fullPath];
+        cachedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
         
 #ifdef D_AFNetworking
         [[UIImageView sharedImageCache] cacheImage:cachedImage forRequest:request];

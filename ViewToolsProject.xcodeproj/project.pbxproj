@@ -14,6 +14,7 @@
 		FBB08CBF1B956B1800E742F0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB08CBD1B956B1800E742F0 /* LaunchScreen.xib */; };
 		FBB08CCB1B956B1800E742F0 /* ViewToolsProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CCA1B956B1800E742F0 /* ViewToolsProjectTests.m */; };
 		FBB08CD71B956B4F00E742F0 /* ViewTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CD61B956B4F00E742F0 /* ViewTools.m */; };
+		FBB08CD91B95A06900E742F0 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB08CD81B95A06900E742F0 /* arrow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 		FBB08CCA1B956B1800E742F0 /* ViewToolsProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewToolsProjectTests.m; sourceTree = "<group>"; };
 		FBB08CD51B956B4F00E742F0 /* ViewTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTools.h; sourceTree = "<group>"; };
 		FBB08CD61B956B4F00E742F0 /* ViewTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTools.m; sourceTree = "<group>"; };
+		FBB08CD81B95A06900E742F0 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 		FBB08CAD1B956B1800E742F0 /* ViewToolsProject */ = {
 			isa = PBXGroup;
 			children = (
+				FBB08CD81B95A06900E742F0 /* arrow.png */,
 				FBB08CD41B956B4F00E742F0 /* ViewToolsClass */,
 				FBB08CB21B956B1800E742F0 /* AppDelegate.h */,
 				FBB08CB31B956B1800E742F0 /* AppDelegate.m */,
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBB08CBF1B956B1800E742F0 /* LaunchScreen.xib in Resources */,
+				FBB08CD91B95A06900E742F0 /* arrow.png in Resources */,
 				FBB08CBC1B956B1800E742F0 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +422,7 @@
 				FBB08CD01B956B1800E742F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FBB08CD11B956B1800E742F0 /* Build configuration list for PBXNativeTarget "ViewToolsProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +431,7 @@
 				FBB08CD31B956B1800E742F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

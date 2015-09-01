@@ -29,31 +29,103 @@
         // Test 
         
         // label 用法
-        UILabel *testLabel1 = [_viewTool createLabelWithText:@"測試一下！！測試一下！！測試一下！！測試一下！！測試一下！！測試一下！！" 
-                                           withTextAlignment:(NSTextAlignmentLeft) withIsTemplet:YES];
-        [testLabel1 setBackgroundColor:[UIColor blackColor]];
-        [_mainView addSubview:testLabel1];
+        [self createLabel];
         
         // textField 用法
-        UIView *testTextField = [_viewTool createTextFieldWithText:@"有字" withInnerText:@"請輸入內容" withTextAlignment:(NSTextAlignmentLeft)];
-        //// get TextField in UIView
-        UITextField *realTextField = [[_viewTool getRecentObjects] firstObject];
-        //// and you can add action listener to real UITextField
+        [self createTextField];
         
         // Container View 用法
+        [self createContainerView];
+        
+        // 特殊的按鈕
+        [self createSpecialButton];
         
         // button
-        UIButton *testBtn1 = [_viewTool createButtonWithText:@"TEST!!"];
-        [testBtn1 setBackgroundColor:[UIColor blackColor]];
-        testBtn1.layer.cornerRadius = 5.0;
-        testBtn1.layer.masksToBounds = YES;
-        [_mainView addSubview:testBtn1];
+        [self createButton];
         
         [self endAddMainView];
         [self.view addSubview:_mainView];
     }
     return self;
 }
+
+#pragma mark - Create UI 元件
+-(void)createLabel{
+    UILabel *testLabel1 = [_viewTool createLabelWithText:@"元件背景圖案請自行去 ViewTools 的 #define 設定檔案名稱（或路徑＋檔案名稱），或是改寫內部產生路徑當類別方法。\nPS: 目前黑色區塊為辨識 UIView 元件區塊，所自行設定的。" 
+                                       withTextAlignment:(NSTextAlignmentLeft) withIsTemplet:YES];
+    [testLabel1 setBackgroundColor:[UIColor blackColor]];
+    [_mainView addSubview:testLabel1];
+}
+
+-(void)createTextField{
+    UIView *testTextField = [_viewTool createTextFieldWithText:@"有字" withInnerText:@"請輸入內容" withTextAlignment:(NSTextAlignmentLeft)];
+    //// get TextField in UIView
+    UITextField *realTextField = [[_viewTool getRecentObjects] firstObject];
+    //// and you can add action listener to real UITextField （得到 TextField 實體以後可以自行加入動作等等......）
+}
+
+-(void)createContainerView{
+    //
+    ContainerView *testContainerView1 = [[ContainerView alloc] init];
+    
+    //// 設定 ContainerView 內左間距
+    [testContainerView1 setLeftMargin:15.0f];
+    //// 設定 ContainerView 內的元件與元件之間間距
+    [testContainerView1 setMiddleMargin:6.0f];
+    
+    //// 產生一個 Label
+    UILabel *nameLabel = [_viewTool createLabelWithText:@"姓名" withTextAlignment:(NSTextAlignmentCenter)];
+    
+    //// 產生一個 TextField 的 View
+    UIView *nameTextView = [_viewTool createTextFieldWithText:@"" withInnerText:@"請輸入姓名" withTextAlignment:(NSTextAlignmentLeft) withCustomWidth:100.0f];
+    //// 取得真正 TextField
+    UITextField *nameTextField = [[_viewTool getRecentObjects] firstObject];
+    
+    //// 產生一個 Button
+    UIButton *nameSendButton = [_viewTool createButtonWithText:@"Send!!"];
+    [nameSendButton setTitle:@"Done!!" forState:(UIControlStateHighlighted)];
+    
+    //// 將元件加入 ContainerView 讓他計算
+    [testContainerView1 addUnits:@[ nameLabel , nameTextView , nameSendButton ]];
+    
+    // 將 Container View 加入 mainView
+    [_mainView addSubview:testContainerView1];
+    
+    
+    
+    // 設定測試 Button 顏色讓畫面更清楚（因為目前沒有放圖片）
+    [nameLabel setBackgroundColor:[UIColor blackColor]];
+    [nameTextView setBackgroundColor:[UIColor blackColor]];
+    [nameSendButton setBackgroundColor:[UIColor blackColor]];
+    nameSendButton.layer.cornerRadius = 5.0f;
+    nameSendButton.layer.masksToBounds = YES;
+}
+
+-(void)createSpecialButton{
+    UIButton *specialButton = [_viewTool createButtonWithLeftText:@"左邊文字" withRightText:@"右邊文字" withNeedArrow:YES];
+    specialButton.layer.borderColor=[UIColor blackColor].CGColor;
+    specialButton.layer.borderWidth=5.0f;
+    specialButton.layer.masksToBounds = YES;
+    specialButton.layer.cornerRadius = 10.0f;
+    [specialButton addTarget:self action:@selector(pressedSpecialBtn:) forControlEvents:(UIControlEventTouchUpInside)];
+    [_mainView addSubview:specialButton];
+}
+
+-(void)createButton{
+    UIButton *testBtn1 = [_viewTool createButtonWithText:@"Send!!!"];
+    [testBtn1 setTitle:@"Done?" forState:(UIControlStateHighlighted)];
+    testBtn1.layer.cornerRadius = 5.0;
+    testBtn1.layer.masksToBounds = YES;
+    [_mainView addSubview:testBtn1];
+}
+
+#pragma makr - Pressed
+-(void)pressedSpecialBtn:(id)sender{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Test" message:@"按下左右兩邊有文字按鈕！" delegate:nil 
+                                          cancelButtonTitle:@"確定" otherButtonTitles:nil];
+    [alert show];
+}
+
 
 #pragma mark - appear & disappear
 -(void)viewWillAppear:(BOOL)animated{
