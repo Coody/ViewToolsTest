@@ -19,4 +19,4 @@
 
 ### License
 
->ViewTools is available under the MIT license.
+ViewTools is available under the MIT license.
