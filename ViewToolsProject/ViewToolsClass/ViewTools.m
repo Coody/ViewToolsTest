@@ -26,6 +26,7 @@
 #define D_ViewTools_Button_HightLight_Image (nil)
 #define D_ViewTools_TextField_Image (nil)
 #define D_ViewTools_TextField_Image (nil)
+#define D_ViewTools_TextField_CancelButton_Image (nil)
 
 #pragma mark - 裝元件的容器（左->右來安裝）
 @interface ContainerView()
@@ -198,6 +199,9 @@
         _textFieldTextColor = _allTextDefaultColor;
         _textFieldInnerColor = _allTextDefaultColor;
         
+        // 輸入框中，游標的顏色
+        [[UITextField appearance] setTintColor:[UIColor whiteColor]];
+        
         // 按鈕
         _buttonImage_Normal = [ViewTools getImageFromeBundleByPath:D_ViewTools_Button_Normal_Image];
         _buttonImage_HightLight = [ViewTools getImageFromeBundleByPath:D_ViewTools_Button_HightLight_Image];
@@ -283,6 +287,10 @@
 
 -(void)setTextFont:(UIFont *)textFont{
     _textFont = textFont;
+}
+
+-(void)setTextFieldTintColor:(UIColor *)tempColor{
+    [[UITextField appearance] setTintColor:tempColor];
 }
 
 #pragma mark - 建立按鈕（左邊、右邊都有文字、還有右邊箭頭）
@@ -479,10 +487,11 @@
 //    }
     
     [button setTitle:tempText forState:(UIControlStateNormal)];
+    [button setTitleColor:_btnTextColor forState:UIControlStateNormal];
     
     // 將元件陣列暫時存入 recentObjects
     _recentObjects = nil;
-    _recentObjects = tempRecentObjects;
+    _recentObjects = @[button];
     
     return button;
 }

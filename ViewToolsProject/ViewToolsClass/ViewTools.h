@@ -108,6 +108,9 @@ typedef enum{
 /** 1.12 設定文字大小  */
 -(void)setTextFont:(UIFont *)textFont;
 
+/** 1.13 設定輸入框中，游標顏色 */
+-(void)setTextFieldTintColor:(UIColor *)tempColor;
+
 #pragma mark ：建立按鈕
 /////////////////////////////////////
 /** 
@@ -263,16 +266,16 @@ typedef enum{
  * @brief - 4.1 建立 UITextField 文字輸入元件
  */
 -(UIView *)createTextFieldWithText:(NSString *)tempText 
-                          withInnerText:(NSString *)tempInnerText 
-                      withTextAlignment:(NSTextAlignment)tempTextAlignment;
+                     withInnerText:(NSString *)tempInnerText 
+                 withTextAlignment:(NSTextAlignment)tempTextAlignment;
 
 /**
  * @brief - 4.2 設定 UITextField 文字輸入元件（給設定的寬度）
  */
 -(UIView *)createTextFieldWithText:(NSString *)tempText 
-                          withInnerText:(NSString *)tempInnerText 
-                      withTextAlignment:(NSTextAlignment)tempTextAlignment 
-                        withCustomWidth:(float)tempCustomWidth;
+                     withInnerText:(NSString *)tempInnerText 
+                 withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                   withCustomWidth:(float)tempCustomWidth;
 
 /////////////////////////////////////
 /**
