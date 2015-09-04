@@ -26,6 +26,7 @@
 #define D_ViewTools_Button_HightLight_Image (nil)
 #define D_ViewTools_TextField_Image (nil)
 #define D_ViewTools_TextField_Image (nil)
+#define D_ViewTools_TextField_CancelButton_Image (nil)
 
 #pragma mark - 裝元件的容器（左->右來安裝）
 @interface ContainerView()
@@ -162,6 +163,7 @@
 
 @end
 
+// TODO: 擴充各種 UI 元件的 Attribute String 功能。
 @implementation ViewTools
 
 //+(instancetype)sharedInstance{
@@ -197,6 +199,9 @@
         // TextField Text Color
         _textFieldTextColor = _allTextDefaultColor;
         _textFieldInnerColor = _allTextDefaultColor;
+        
+        // 輸入框中，游標的顏色
+        [[UITextField appearance] setTintColor:[UIColor whiteColor]];
         
         // 按鈕
         _buttonImage_Normal = [ViewTools getImageFromeBundleByPath:D_ViewTools_Button_Normal_Image];
@@ -283,6 +288,10 @@
 
 -(void)setTextFont:(UIFont *)textFont{
     _textFont = textFont;
+}
+
+-(void)setTextFieldTintColor:(UIColor *)tempColor{
+    [[UITextField appearance] setTintColor:tempColor];
 }
 
 #pragma mark - 建立按鈕（左邊、右邊都有文字、還有右邊箭頭）
@@ -458,7 +467,6 @@
                           forState:(UIControlStateDisabled)];
     }
     
-    NSArray *tempRecentObjects = [NSArray array];
     // 建立文字
 //    if ( tempText != nil )
 //    {
@@ -479,10 +487,11 @@
 //    }
     
     [button setTitle:tempText forState:(UIControlStateNormal)];
+    [button setTitleColor:_btnTextColor forState:UIControlStateNormal];
     
     // 將元件陣列暫時存入 recentObjects
     _recentObjects = nil;
-    _recentObjects = tempRecentObjects;
+    _recentObjects = @[button];
     
     return button;
 }
@@ -551,7 +560,7 @@
 }
 
 #pragma mark - 建立 Label
-// 3.1
+// 3.1.1
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment
 {
@@ -560,7 +569,16 @@
                        withTextColor:_labelTextColor];
 }
 
-// 3.2
+// 3.1.2
+-(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment
+{
+    return [self createLabelWithAttributeText:tempText 
+                            withTextAlignment:tempTextAlignment 
+                                withTextColor:_labelTextColor];
+}
+
+// 3.2.1
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment  
                   withTextColor:(UIColor *)tempTextColor
@@ -577,7 +595,16 @@
                        withTextColor:tempTextColor];
 }
 
-// 3.3
+// 3.2.2
+-(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                           withTextColor:(UIColor *)tempTextColor
+{
+    // TODO: 待擴充
+    return nil;
+}
+
+// 3.3.1
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
                   withIsTemplet:(BOOL)tempIsTemplet
@@ -588,7 +615,16 @@
                        withIsTemplet:tempIsTemplet];
 }
 
-// 3.4
+// 3.3.2
+-(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                           withIsTemplet:(BOOL)tempIsTemplet
+{
+    // TODO: 待擴充
+    return nil;
+}
+
+// 3.4.1
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
                   withTextColor:(UIColor *)tempTextColor 
@@ -621,7 +657,17 @@
     }
 }
 
-// 3.5
+// 3.4.2
+-(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                           withTextColor:(UIColor *)tempTextColor 
+                           withIsTemplet:(BOOL)tempIsTemplet
+{
+    // TODO: 待擴充
+    return nil;
+}
+
+// 3.5.1
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
                 withCustomWidth:(float)tempCustomWidth
@@ -632,7 +678,16 @@
                      withCustomWidth:tempCustomWidth];
 }
 
-// 3.6
+// 3.5.2
+-(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                         withCustomWidth:(float)tempCustomWidth
+{
+    // TODO: 待擴充
+    return nil;
+}
+
+// 3.6.1
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment  
                   withTextColor:(UIColor *)tempTextColor
@@ -642,6 +697,16 @@
                    withTextAlignment:tempTextAlignment 
                      withCustomFrame:CGRectMake(0, 0, tempCustomWidth, _viewHeight)
                        withTextColor:tempTextColor];
+}
+
+// 3.6.2
+-(UILabel *)createLabelWithAttributeText:(NSString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                           withTextColor:(UIColor *)tempTextColor 
+                         withCustomWidth:(float)tempCustomWidth
+{
+    // TODO: 待擴充
+    return nil;
 }
 
 // （內部方法，不開放）
