@@ -20,6 +20,12 @@ typedef enum{
 #pragma mark - 容器 View
 @interface ContainerView : UIView
 
+@property (readonly , nonatomic) CGFloat leftMargin;
+@property (readonly , nonatomic) CGFloat rightMargin;
+@property (readonly , nonatomic) CGFloat middleMargin;
+@property (readonly , nonatomic) CGFloat topMargin;
+@property (readonly , nonatomic) CGFloat bottomMargin;
+
 /** 
  * @brief   - 設定容器的高度
  * @details - 

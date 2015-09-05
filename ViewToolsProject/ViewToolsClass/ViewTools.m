@@ -30,12 +30,7 @@
 
 #pragma mark - 裝元件的容器（左->右來安裝）
 @interface ContainerView()
-@property (nonatomic) CGFloat containerViewHight;
-@property (nonatomic) CGFloat leftMargin;
-@property (nonatomic) CGFloat rightMargin;
-@property (nonatomic) CGFloat middleMargin;
-@property (nonatomic) CGFloat topMargin;
-@property (nonatomic) CGFloat bottomMargin;
+@property (assign , nonatomic) CGFloat containerViewHight;
 @end
 
 @implementation ContainerView
@@ -60,6 +55,9 @@
  */
 -(void)setContainerViewHight:(CGFloat)tempHight
 {
+    if ( tempHight < 0) {
+        tempHight = 0;
+    }
     _containerViewHight = tempHight;
     self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,_containerViewHight);
 }
@@ -79,7 +77,7 @@
  * @brief   - 設定元件內的右邊間距
  * @details -（可以不設定，則為預設值；如果有設定左間距，右間距沒設定，會以左間距為主；如果左右都設定，則各自有各自的值）
  */
--(void)setRightMargin:(CGFloat)tempRightMargin;{
+-(void)setRightMargin:(CGFloat)tempRightMargin{
     _rightMargin = tempRightMargin;
 }
 
