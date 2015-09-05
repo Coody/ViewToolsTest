@@ -99,11 +99,11 @@
 }
 
 /**
- * @brief - 加入下邊界間距（暫時想不出比較好的適配方式）
+ * @brief - 加入下邊界間距
  */
-//-(void)setBottomMargin:(CGFloat)tempBottomMargin{
-//    _bottomMargin = tempBottomMargin;
-//}
+-(void)setBottomMargin:(CGFloat)tempBottomMargin{
+    _bottomMargin = tempBottomMargin;
+}
 
 -(void)addUnits:(NSArray *)tempViewArray{
     
@@ -122,8 +122,8 @@
                                 unit.frame.origin.y + _topMargin,
                                 [UIScreen mainScreen].bounds.size.width - _rightMargin - _leftMargin,
                                 unit.frame.size.height);
-        if ( unit.frame.size.height + _topMargin > realHeight ) {
-            realHeight = unit.frame.size.height + _topMargin;
+        if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
+            realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
         }
         [self addSubview:unit];
     }
@@ -149,15 +149,13 @@
                                         unit.frame.size.height);
                 totalX = totalX + _middleMargin + unit.frame.size.width;
             }
-            if ( unit.frame.size.height + _topMargin > realHeight ) {
-                realHeight = unit.frame.size.height + _topMargin;
+            if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
+                realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
             }
             [self addSubview:unit];
         }
     }
-    
     [self setContainerViewHight:realHeight];
-    
 }
 
 @end

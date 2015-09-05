@@ -50,9 +50,9 @@ typedef enum{
 -(void)setTopMargin:(CGFloat)tempTopMargin;
 
 /**
- * @brief - 加入下邊界間距（暫時想不出比較好的適配方式）
+ * @brief - 加入下邊界間距
  */
-//-(void)setBottomMargin:(CGFloat)tempBottomMargin;
+-(void)setBottomMargin:(CGFloat)tempBottomMargin;
 
 
 /**
