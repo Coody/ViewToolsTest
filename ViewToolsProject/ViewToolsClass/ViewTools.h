@@ -45,6 +45,17 @@ typedef enum{
 -(void)setMiddleMargin:(CGFloat)tempMiddleMargin;
 
 /**
+ * @brief - 加入上邊界間距
+ */
+-(void)setTopMargin:(CGFloat)tempTopMargin;
+
+/**
+ * @brief - 加入下邊界間距（暫時想不出比較好的適配方式）
+ */
+//-(void)setBottomMargin:(CGFloat)tempBottomMargin;
+
+
+/**
  * @brief - 加入隨意的元件
  */
 -(void)addUnits:(NSArray *)tempViewArray;

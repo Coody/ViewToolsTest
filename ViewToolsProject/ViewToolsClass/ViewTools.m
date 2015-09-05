@@ -34,6 +34,8 @@
 @property (nonatomic) CGFloat leftMargin;
 @property (nonatomic) CGFloat rightMargin;
 @property (nonatomic) CGFloat middleMargin;
+@property (nonatomic) CGFloat topMargin;
+@property (nonatomic) CGFloat bottomMargin;
 @end
 
 @implementation ContainerView
@@ -44,6 +46,8 @@
         _leftMargin = 0.0f;
         _rightMargin = 0.0f;
         _middleMargin = 0.0f;
+        _topMargin = 0.0f;
+        _bottomMargin = 0.0f;
         _containerViewHight = D_ViewTools_ViewHeight;
         self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,_containerViewHight);
     }
@@ -87,6 +91,20 @@
     _middleMargin = tempMiddleMargin;
 }
 
+/**
+ * @brief - 加入上邊界間距
+ */
+-(void)setTopMargin:(CGFloat)tempTopMargin{
+    _topMargin = tempTopMargin;
+}
+
+/**
+ * @brief - 加入下邊界間距（暫時想不出比較好的適配方式）
+ */
+//-(void)setBottomMargin:(CGFloat)tempBottomMargin{
+//    _bottomMargin = tempBottomMargin;
+//}
+
 -(void)addUnits:(NSArray *)tempViewArray{
     
     // 取得元件內最高的 Height 值，並且設置圍  Container View 的主要 Height
@@ -101,31 +119,38 @@
     else if ( [tempViewArray count] == 1 ) {
         UIView *unit = [tempViewArray firstObject];
         unit.frame = CGRectMake(_leftMargin ,
-                                unit.frame.origin.y,
+                                unit.frame.origin.y + _topMargin,
                                 [UIScreen mainScreen].bounds.size.width - _rightMargin - _leftMargin,
                                 unit.frame.size.height);
-        if ( unit.frame.size.height > realHeight ) {
-            realHeight = unit.frame.size.height;
+        if ( unit.frame.size.height + _topMargin > realHeight ) {
+            realHeight = unit.frame.size.height + _topMargin;
         }
         [self addSubview:unit];
     }
     else{
         for ( UIView *unit in tempViewArray ) {
             if ( unit == [tempViewArray firstObject] ) {
-                unit.frame = CGRectMake(_leftMargin , unit.frame.origin.y, unit.frame.size.width, unit.frame.size.height);
+                unit.frame = CGRectMake(_leftMargin ,
+                                        unit.frame.origin.y + _topMargin,
+                                        unit.frame.size.width,
+                                        unit.frame.size.height);
                 totalX = totalX + _leftMargin + unit.frame.size.width;
             }
             else if( unit == [tempViewArray lastObject] ){
-                unit.frame = CGRectMake( totalX + _middleMargin , unit.frame.origin.y, 
+                unit.frame = CGRectMake(totalX + _middleMargin ,
+                                        unit.frame.origin.y + _topMargin,
                                         [UIScreen mainScreen].bounds.size.width - totalX - _middleMargin - _rightMargin ,
                                         unit.frame.size.height);
             }
             else{
-                unit.frame = CGRectMake( totalX + _middleMargin , unit.frame.origin.y, unit.frame.size.width, unit.frame.size.height);
+                unit.frame = CGRectMake(totalX + _middleMargin ,
+                                        unit.frame.origin.y + _topMargin,
+                                        unit.frame.size.width,
+                                        unit.frame.size.height);
                 totalX = totalX + _middleMargin + unit.frame.size.width;
             }
-            if ( unit.frame.size.height > realHeight ) {
-                realHeight = unit.frame.size.height;
+            if ( unit.frame.size.height + _topMargin > realHeight ) {
+                realHeight = unit.frame.size.height + _topMargin;
             }
             [self addSubview:unit];
         }
@@ -466,25 +491,6 @@
                                     resizingMode:UIImageResizingModeStretch] 
                           forState:(UIControlStateDisabled)];
     }
-    
-    // 建立文字
-//    if ( tempText != nil )
-//    {
-//        CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
-//        UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake((button.frame.size.width - tempSize.width - 6)*0.5,
-//                                                                        0,
-//                                                                        tempSize.width + 6 ,
-//                                                                        _viewHeight)];
-//        [firstLabel setText:tempText];
-//        [firstLabel setTextAlignment:(NSTextAlignmentCenter)];
-//        [firstLabel setTextColor:_btnTextColor];
-//        [firstLabel setFont:_textFont];
-//        [firstLabel setTag:1];
-//        firstLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin ;
-//        [button addSubview:firstLabel];
-//        
-//        tempRecentObjects = @[firstLabel];
-//    }
     
     [button setTitle:tempText forState:(UIControlStateNormal)];
     [button setTitleColor:_btnTextColor forState:UIControlStateNormal];
