@@ -74,7 +74,11 @@
     if( tempWidth < 0 ){
         tempWidth = 0;
     }
-    self.frame = CGRectMake(0, 0, tempWidth ,_containerViewHight);
+    self.frame = CGRectMake(self.frame.origin.x,
+                            self.frame.origin.y,
+                            tempWidth ,
+                            self.frame.size.height);
+    [_bg setFrame:self.frame];
 }
 
 /**
