@@ -20,11 +20,29 @@ typedef enum{
 #pragma mark - 容器 View
 @interface ContainerView : UIView
 
+@property (readonly , nonatomic) CGFloat leftMargin;
+@property (readonly , nonatomic) CGFloat rightMargin;
+@property (readonly , nonatomic) CGFloat middleMargin;
+@property (readonly , nonatomic) CGFloat topMargin;
+@property (readonly , nonatomic) CGFloat bottomMargin;
+@property (strong , nonatomic) UIImageView *bg;
+
 /** 
  * @brief   - 設定容器的高度
  * @details - 
  */
 -(void)setContainerViewHight:(CGFloat)tempHight;
+
+/** 
+ * @brief   - 設定容器的寬度
+ * @details - 
+ */
+-(void)setContainerViewWidth:(CGFloat)tempWidth;
+
+/**
+ * @brief - 設定背景圖片
+ */
+-(void)setBackgroundImage:(UIImage *)tempBGImage;
 
 /** 
  * @brief   - 設定元件內的左邊間距
@@ -54,11 +72,13 @@ typedef enum{
  */
 -(void)setBottomMargin:(CGFloat)tempBottomMargin;
 
-
 /**
- * @brief - 加入隨意的元件
+ * @brief   - 加入隨意的元件
+ * @details - 只要是 UIView 都可以加入，但是建議以 ViewTools 的建立元件為主。
  */
 -(void)addUnits:(NSArray *)tempViewArray;
+
+//-(void)removeAllUnits;
 
 @end
 
@@ -82,12 +102,15 @@ typedef enum{
  */
 /** 1.1.1 總設定 View 元件的標準高度 */
 -(void)setViewHeight:(CGFloat)tempViewHeight;
+-(CGFloat)getViewHeight;
 
 /** 1.1.2 總設定 View 內文字的顏色 */
 -(void)setAllTextColor:(UIColor *)tempColor; 
 
 /** 1.2 設定 Button 的 Image */
--(void)setButtonImage:(UIImage *)tempButtonImage andButtonHightLightImage:(UIImage *)tempButtonHightLightImage; 
+-(void)setButtonImage:(UIImage *)tempButtonImage 
+andButtonHightLightImage:(UIImage *)tempButtonHightLightImage 
+andButtonDisableImage:(UIImage *)tempDisableImage; 
 
 /** 1.3 設定按鈕左邊的文字顏色 */
 -(void)setButtonTextColor:(UIColor *)tempColor;
@@ -125,18 +148,52 @@ typedef enum{
 #pragma mark ：建立按鈕
 /////////////////////////////////////
 /** 
- * @brief - 2.1 建立特殊按鈕（左邊、右邊都有文字、還有右邊箭頭）
+ * @brief - 2.1.1 建立特殊按鈕（左邊、右邊都有文字、還有右邊箭頭）
  */
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText 
                         withRightText:(NSString *)tempRightText 
                         withNeedArrow:(BOOL)tempIsNeedArrow;
 /** 
- * @brief - 2.2 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
+ * @brief - 2.1.2 建立 Attributed 字串的特殊按鈕
+ */
+-(UIButton *)createButtonWithLeftAttributedText:(NSMutableAttributedString *)tempLeftText 
+                        withRightAttributedText:(NSMutableAttributedString *)tempRightText 
+                                  withNeedArrow:(BOOL)tempIsNeedArrow;
+
+/** 
+ * @brief - 2.1.3 建立 Attributed 字串的特殊按鈕
+ */
+-(UIButton *)createButtonWithLeftAttributedText:(NSMutableAttributedString *)tempLeftText 
+                                 withLineHeight:(CGFloat)tempLeftLineHeight  
+                        withRightAttributedText:(NSMutableAttributedString *)tempRightText 
+                                 withLineHeight:(CGFloat)tempRightLineHeight 
+                                  withNeedArrow:(BOOL)tempIsNeedArrow;
+
+/** 
+ * @brief - 2.2.1 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
  */
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText 
                         withRightText:(NSString *)tempRightText 
                         withNeedArrow:(BOOL)tempIsNeedArrow 
                       withCustomWidth:(float)tempCustomWidth;
+
+/** 
+ * @brief - 2.2.2 建立Attributed 字串的特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
+ */
+-(UIButton *)createButtonWithLeftAttributeText:(NSMutableAttributedString *)tempLeftText 
+                        withRightAttributeText:(NSMutableAttributedString *)tempRightText 
+                                 withNeedArrow:(BOOL)tempIsNeedArrow 
+                               withCustomWidth:(float)tempCustomWidth;
+
+/** 
+ * @brief - 2.2.3 建立Attributed 字串的特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
+ */
+-(UIButton *)createButtonWithLeftAttributedText:(NSMutableAttributedString *)tempLeftText 
+                                 withLineHeight:(CGFloat)tempLeftLineHeight  
+                        withRightAttributedText:(NSMutableAttributedString *)tempRightText 
+                                 withLineHeight:(CGFloat)tempRightLineHeight 
+                                  withNeedArrow:(BOOL)tempIsNeedArrow 
+                                withCustomWidth:(float)tempCustomWidth;
 
 /** 
  * @brief - 2.3 建立一般按鈕（中間有置中的文字）
@@ -190,7 +247,14 @@ typedef enum{
 /**
  * @brief - 3.1.2 建立 UILabel 特殊文字元件（寬度為文字寬度）
  */
--(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment;
+
+/**
+ * @brief - 3.1.3 建立 UILabel 特殊文字元件（寬度為文字寬度）
+ */
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                          withLineHeight:(CGFloat)tempLineHeight
                        withTextAlignment:(NSTextAlignment)tempTextAlignment;
 
 /**
@@ -203,8 +267,16 @@ typedef enum{
 /**
  * @brief - 3.2.2 建立 UILabel 文字元件（寬度為文字寬度，設定顏色）
  */
--(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                           withTextColor:(UIColor *)tempTextColor;
+
+/**
+ * @brief - 3.2.3 建立 UILabel 文字元件（寬度為文字寬度，設定顏色）
+ */
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                          withLineHeight:(CGFloat)tempLineHeight  
                            withTextColor:(UIColor *)tempTextColor;
 
 /**
@@ -217,8 +289,17 @@ typedef enum{
 /**
  * @brief - 3.3.2 建立 UILabel 文字元件（寬度為樣板寬度（左邊、右邊有一點距離））
  */
--(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                           withIsTemplet:(BOOL)tempIsTemplet;
+
+
+/**
+ * @brief - 3.3.3 建立 UILabel 文字元件（寬度為樣板寬度（左邊、右邊有一點距離））
+ */
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                          withLineHeight:(CGFloat)tempLineHeight 
                            withIsTemplet:(BOOL)tempIsTemplet;
 
 /**
@@ -232,8 +313,17 @@ typedef enum{
 /**
  * @brief - 3.4.2 建立 UILabel 文字元件（寬度為樣板寬度（左邊、右邊有一點距離））
  */
--(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                           withTextColor:(UIColor *)tempTextColor 
+                           withIsTemplet:(BOOL)tempIsTemplet;
+
+/**
+ * @brief - 3.4.3 建立 UILabel 文字元件（寬度為樣板寬度（左邊、右邊有一點距離））
+ */
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                          withLineHeight:(CGFloat)tempLineHeight 
                            withTextColor:(UIColor *)tempTextColor 
                            withIsTemplet:(BOOL)tempIsTemplet;
 
@@ -247,8 +337,16 @@ typedef enum{
 /**
  * @brief - 3.5.2 設定 UILabel 文字元件（給設定的寬度）
  */
--(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                         withCustomWidth:(float)tempCustomWidth;
+
+/**
+ * @brief - 3.5.3 設定 UILabel 文字元件（給設定的寬度）
+ */
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                          withLineHeight:(CGFloat)tempLineHeight 
                          withCustomWidth:(float)tempCustomWidth;
 
 /**
@@ -262,14 +360,44 @@ typedef enum{
 /**
  * @brief - 3.6.2 設定 UILabel 文字元件（給設定的寬度）
  */
--(UILabel *)createLabelWithAttributeText:(NSAttributedString *)tempText 
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
                            withTextColor:(UIColor *)tempTextColor 
                          withCustomWidth:(float)tempCustomWidth;
 
 /**
- * @brief - 
+ * @brief - 3.6.3 設定 UILabel 文字元件（給設定的寬度）
  */
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                          withLineHeight:(CGFloat)tempLineHeight  
+                           withTextColor:(UIColor *)tempTextColor 
+                         withCustomWidth:(float)tempCustomWidth;
+
+/**
+ * @brief - 3.7.1 給定設定的 Frame
+ */
+-(UILabel *)createLabelWithText:(NSString *)tempText 
+              withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                withCustomFrame:(CGRect)tempFrame
+                  withTextColor:(UIColor *)tempTextColor;
+
+/**
+ * @brief - 3.7.2 給定設定的 Frame
+ */
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                         withCustomFrame:(CGRect)tempFrame 
+                           withTextColor:(UIColor *)tempTextColor;
+
+/**
+ * @brief - 3.7.3 給定設定的 Frame
+ */
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                          withLineHeight:(CGFloat)tempLineHeight
+                         withCustomFrame:(CGRect)tempFrame 
+                           withTextColor:(UIColor *)tempTextColor;
 
 #pragma mark ：建立 UITextField 文字輸入元件
 /////////////////////////////////////

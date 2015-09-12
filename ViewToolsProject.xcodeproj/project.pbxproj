@@ -15,6 +15,7 @@
 		FBB08CCB1B956B1800E742F0 /* ViewToolsProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CCA1B956B1800E742F0 /* ViewToolsProjectTests.m */; };
 		FBB08CD71B956B4F00E742F0 /* ViewTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CD61B956B4F00E742F0 /* ViewTools.m */; };
 		FBB08CD91B95A06900E742F0 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB08CD81B95A06900E742F0 /* arrow.png */; };
+		FBD248DB1BA412CF0002190D /* UITextFieldTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FBD248DA1BA412CF0002190D /* UITextFieldTools.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,8 @@
 		FBB08CD51B956B4F00E742F0 /* ViewTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTools.h; sourceTree = "<group>"; };
 		FBB08CD61B956B4F00E742F0 /* ViewTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTools.m; sourceTree = "<group>"; };
 		FBB08CD81B95A06900E742F0 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		FBD248D91BA412CF0002190D /* UITextFieldTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextFieldTools.h; sourceTree = "<group>"; };
+		FBD248DA1BA412CF0002190D /* UITextFieldTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextFieldTools.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +131,8 @@
 			children = (
 				FBB08CD51B956B4F00E742F0 /* ViewTools.h */,
 				FBB08CD61B956B4F00E742F0 /* ViewTools.m */,
+				FBD248D91BA412CF0002190D /* UITextFieldTools.h */,
+				FBD248DA1BA412CF0002190D /* UITextFieldTools.m */,
 			);
 			path = ViewToolsClass;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 			files = (
 				FBB08CB71B956B1800E742F0 /* ViewController.m in Sources */,
 				FBB08CB41B956B1800E742F0 /* AppDelegate.m in Sources */,
+				FBD248DB1BA412CF0002190D /* UITextFieldTools.m in Sources */,
 				FBB08CD71B956B4F00E742F0 /* ViewTools.m in Sources */,
 				FBB08CB11B956B1800E742F0 /* main.m in Sources */,
 			);
