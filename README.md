@@ -11,12 +11,12 @@ ViewToolsClass 資料夾裡面包含三個類別：
 * UITextFieldTools 類別：擴充 UITextField 的辨識字元、截斷字元功能
 
 # 使用方式
-## ViewTools & ContainerView
+#### ViewTools & ContainerView
 * 將 ViewTools.h , ViewTools.m 類別加入專案，
 * 支援的UIView 元件： UILabel , UITextField , UIButton , 繼承自 UIView 的類別。
 * ContainerView 可以將上述的元禁加入後、左右排列，產生各種您想要的元件。
 
-## UITextFieldTools
+#### UITextFieldTools
 * （待補）
 
 # DEMO
