@@ -16,7 +16,7 @@
 /** 所需要限制的長度 */
 @property (nonatomic , assign) NSUInteger substringLength;
 
-/** 所需要比對的「正規表達式」字串 */
+/** 所需要比對的「正規表達式(Regular Expression)」字串 */
 @property (nonatomic , strong) NSString *predicateString;
 /** 正規表達式確認後的結果 */
 @property (nonatomic , readonly) BOOL isPredicateLegal;
