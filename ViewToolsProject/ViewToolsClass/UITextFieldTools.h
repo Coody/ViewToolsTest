@@ -45,4 +45,10 @@
  */
 -(void)checkWordWithSender:(id)sender;
 
+/**
+ * @brief - 會確認所有曾在 UITextFieldTools 中，設定過的設定值
+ *
+ */
+-(void)checkAllSettingsInTools:(id)sender;
+
 @end

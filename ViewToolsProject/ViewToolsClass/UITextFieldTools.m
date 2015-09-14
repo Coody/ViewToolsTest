@@ -80,5 +80,14 @@
     }
 }
 
+/**
+ * @brief - 會確認所有曾在 UITextFieldTools 中，設定過的設定值
+ *
+ */
+-(void)checkAllSettingsInTools:(id)sender{
+    [self checkStringMinWithSender:sender]; // 最小字串
+    [self checkStringLengthWithSender:sender];  // 最大長度截斷
+    [self checkWordWithSender:sender];  // 是否符合正規表達式
+}
 
 @end
