@@ -16,6 +16,12 @@
 /** 所需要限制的長度 */
 @property (nonatomic , assign) NSUInteger substringLength;
 
+/** 最小長度 */
+@property (nonatomic , assign) NSUInteger minStringLength;
+
+/** 比對最小長度後的結果 */
+@property (nonatomic , readonly) BOOL isMinStringLegal;
+
 /** 所需要比對的「正規表達式」字串 */
 @property (nonatomic , strong) NSString *predicateString;
 /** 正規表達式確認後的結果 */
@@ -26,6 +32,17 @@
  * @warning - 請先設定 _substringLength 你要限制的長度
  */
 -(void)checkStringLengthWithSender:(id)sender;
+
+/**
+ * @brief   - 會確認目前 UITextField 的字串的最小長度，將結果存入 property: isMinStringLegal
+ * @warning - 請先設定 _minStringLength 你要確認的最小長度
+ */
+-(void)checkStringMinWithSender:(id)sender;
+
+/**
+ * @brief - 會依照正規表達式來確認 UITextField 的字串是否符合規則
+ * @warning - 請先設定 _predicateString 正規表達式的規則（例：要英文數字以及電話號碼就 @[a-zA-Z0-9] 即可）
+ */
 -(void)checkWordWithSender:(id)sender;
 
 @end
