@@ -85,6 +85,8 @@ typedef enum{
 #pragma mark - Create UI 元件
 @interface ViewTools : NSObject
 
+@property (nonatomic , strong , readonly) UIFont *textFont;
+
 // TODO: 暫時拔掉單例作法，如果畫面想要自行設定可以設定詳細資訊，避免某個畫面設定完後，變更到其他畫面！
 //+(instancetype)sharedInstance;
 
@@ -424,5 +426,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
  * @param - tempFont: 字型、與字體大小
  */
 +(CGSize)getTextFrameWithWidth:(float)tempWidth withText:(NSString *)tempText withFont:(UIFont *)tempFont;
+
+/**
+ * @brief - 給一個 Attribute String，回傳字的 Size
+ * @param - tempWidth: 給寬度（如果想問此字串寬度就直接給 CGFLOAT_MAX）
+ * @param - tempText: Attribute 字串
+ * @param - tempFont: 字型、與字體大小
+ */
++(CGSize)getTextFrameWithWidth:(float)tempWidth withAttributeText:(NSAttributedString *)tempText withFont:(UIFont *)tempFont;
 
 @end

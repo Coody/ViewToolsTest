@@ -197,7 +197,6 @@
 @interface ViewTools()
 // 一般設定
 @property (nonatomic) CGFloat viewHeight;
-@property (nonatomic , strong) UIFont *textFont;
 @property (nonatomic , strong) UIColor *allTextDefaultColor;
 @property (nonatomic , strong) UIColor *btnTextColor;
 @property (nonatomic , strong) UIColor *btnLeftTextColor;
@@ -220,7 +219,6 @@
 
 @end
 
-// TODO: 擴充各種 UI 元件的 Attribute String 功能。
 @implementation ViewTools
 
 //+(instancetype)sharedInstance{
@@ -457,7 +455,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                       _viewHeight);
         [firstLabel setTag:1];
         [firstLabel setNumberOfLines:0];
-        firstLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        firstLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         [button addSubview:firstLabel];
         
         // 將元件加入陣列（等等會暫時存入 recentObject）
@@ -474,7 +472,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                        secondLabel.frame.size.width,
                                        _viewHeight);
         [secondLabel setTag:2];
-        secondLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        secondLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         [button addSubview:secondLabel];
         
         // 將元件加入陣列（等等會暫時存入 recentObject）
