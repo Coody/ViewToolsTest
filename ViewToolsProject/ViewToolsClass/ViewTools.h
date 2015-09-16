@@ -26,6 +26,7 @@ typedef enum{
 @property (readonly , nonatomic) CGFloat topMargin;
 @property (readonly , nonatomic) CGFloat bottomMargin;
 @property (strong , nonatomic) UIImageView *bg;
+@property (assign , nonatomic) BOOL isLeftToRight;
 
 /** 
  * @brief   - 設定容器的高度
@@ -79,6 +80,11 @@ typedef enum{
 -(void)addUnits:(NSArray *)tempViewArray;
 
 //-(void)removeAllUnits;
+
+/**
+ * @brief - 設定要從左邊往右對齊，還是右邊往左對齊
+ */
+-(void)setIsLeftToRight:(BOOL)isLeftToRight;
 
 @end
 
@@ -399,6 +405,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
                           withLineHeight:(CGFloat)tempLineHeight
                          withCustomFrame:(CGRect)tempFrame 
+                           withTextColor:(UIColor *)tempTextColor;
+
+// 3.7.4 不理會重算大小，給固定設定的 Frame（待修正，如果 frame 的寬高設定太小有可能字不夠放進來）
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                          withLineHeight:(CGFloat)tempLineHeight 
+                   withStaticCustomFrame:(CGRect)tempFrame 
                            withTextColor:(UIColor *)tempTextColor;
 
 #pragma mark ：建立 UITextField 文字輸入元件
