@@ -14,7 +14,7 @@ ViewToolsClass 資料夾裡面包含三個類別：
 #### ViewTools & ContainerView
 * 將 ViewTools.h , ViewTools.m 類別加入專案，
 * 支援的UIView 元件： UILabel , UITextField , UIButton , 繼承自 UIView 的類別。
-* ContainerView 可以將上述的元禁加入後、左右排列，產生各種您想要的元件。
+* ContainerView 可以將上述的元件加入後、依照左右排列（或是從右邊元件為主由右往左計算大小排列），來產生各種您想要的元件。
 
 #### UITextFieldTools
 * （待補）
