@@ -3,7 +3,7 @@
 //  ViewToolsProject
 //
 //  Created by Coody on 2015/9/1.
-//  Copyright (c) 2015年 Coody. All rights reserved.
+//  Copyright (c) 2015年 Coody.
 //
 
 #import <UIKit/UIKit.h>
