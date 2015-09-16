@@ -40,6 +40,7 @@
 -(id)init{
     self = [super init];
     if ( self ) {
+        _isLeftToRight = YES;
         _leftMargin = 0.0f;
         _rightMargin = 0.0f;
         _middleMargin = 0.0f;
@@ -134,6 +135,17 @@
 
 -(void)addUnits:(NSArray *)tempViewArray{
     
+    /* 反轉陣列的方法（目前沒用到，但留著做記錄，未來可能會用到） */
+    if ( !_isLeftToRight ) {
+        NSEnumerator *enumerator = [tempViewArray reverseObjectEnumerator];
+        NSMutableArray *reverseArray = [[NSMutableArray alloc] init];
+        for ( id unit in enumerator ) {
+            [reverseArray addObject:unit];
+        }
+        tempViewArray = reverseArray;
+    }
+    
+    
     // 優先加入背景
     [self addSubview:_bg];
     
@@ -160,24 +172,50 @@
     else{
         for ( UIView *unit in tempViewArray ) {
             if ( unit == [tempViewArray firstObject] ) {
-                unit.frame = CGRectMake(_leftMargin ,
-                                        unit.frame.origin.y + _topMargin,
-                                        unit.frame.size.width,
-                                        unit.frame.size.height);
-                totalX = totalX + _leftMargin + unit.frame.size.width;
+                if ( _isLeftToRight ) {
+                    unit.frame = CGRectMake(_leftMargin ,
+                                            unit.frame.origin.y + _topMargin,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = totalX + _leftMargin + unit.frame.size.width;
+                }
+                else{
+                    unit.frame = CGRectMake(self.frame.size.width - _rightMargin - unit.frame.size.width,
+                                            unit.frame.origin.y + _topMargin,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = unit.frame.origin.y;
+                }
             }
             else if( unit == [tempViewArray lastObject] ){
-                unit.frame = CGRectMake(totalX + _middleMargin ,
-                                        unit.frame.origin.y + _topMargin,
-                                        self.frame.size.width - totalX - _middleMargin - _rightMargin ,
-                                        unit.frame.size.height);
+                if ( _isLeftToRight ) {
+                    unit.frame = CGRectMake(totalX + _middleMargin ,
+                                            unit.frame.origin.y + _topMargin,
+                                            self.frame.size.width - totalX - _middleMargin - _rightMargin ,
+                                            unit.frame.size.height);
+                }
+                else{
+                    unit.frame = CGRectMake(_leftMargin ,
+                                            unit.frame.origin.y + _topMargin,
+                                            totalX - _leftMargin - _middleMargin ,
+                                            unit.frame.size.height);
+                }
             }
             else{
-                unit.frame = CGRectMake(totalX + _middleMargin ,
-                                        unit.frame.origin.y + _topMargin,
-                                        unit.frame.size.width,
-                                        unit.frame.size.height);
-                totalX = totalX + _middleMargin + unit.frame.size.width;
+                if ( _isLeftToRight ) {
+                    unit.frame = CGRectMake(totalX + _middleMargin ,
+                                            unit.frame.origin.y + _topMargin,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = totalX + _middleMargin + unit.frame.size.width;
+                }
+                else{
+                    unit.frame = CGRectMake(totalX - _middleMargin - unit.frame.size.width ,
+                                            unit.frame.origin.y + _topMargin,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = totalX - _middleMargin - unit.frame.size.width;
+                }
             }
             if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
                 realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
@@ -189,15 +227,26 @@
     [_bg setFrame:self.frame];
 }
 
+-(void)setIsLeftToRight:(BOOL)isLeftToRight{
+    if ( _isLeftToRight != isLeftToRight ) {
+        _isLeftToRight = isLeftToRight;
+        if ( [self.subviews count] > 0 ) {
+            NSArray *unitArray = self.subviews;
+            for ( UIView *unit in unitArray ) {
+                [unit removeFromSuperview];
+            }
+            
+            [self addUnits:unitArray];
+        }
+    }
+}
+
 @end
-
-
 
 #pragma mark - Create UI 元件
 @interface ViewTools()
 // 一般設定
 @property (nonatomic) CGFloat viewHeight;
-@property (nonatomic , strong) UIFont *textFont;
 @property (nonatomic , strong) UIColor *allTextDefaultColor;
 @property (nonatomic , strong) UIColor *btnTextColor;
 @property (nonatomic , strong) UIColor *btnLeftTextColor;
@@ -220,7 +269,6 @@
 
 @end
 
-// TODO: 擴充各種 UI 元件的 Attribute String 功能。
 @implementation ViewTools
 
 //+(instancetype)sharedInstance{
@@ -457,7 +505,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                       _viewHeight);
         [firstLabel setTag:1];
         [firstLabel setNumberOfLines:0];
-        firstLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        firstLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         [button addSubview:firstLabel];
         
         // 將元件加入陣列（等等會暫時存入 recentObject）
@@ -474,7 +522,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                        secondLabel.frame.size.width,
                                        _viewHeight);
         [secondLabel setTag:2];
-        secondLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        secondLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         [button addSubview:secondLabel];
         
         // 將元件加入陣列（等等會暫時存入 recentObject）
@@ -908,7 +956,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         return [self createLabelWithAttributeText:tempText 
                                 withTextAlignment:tempTextAlignment 
                                    withLineHeight:tempLineHeight 
-                                  withCustomFrame:CGRectMake(D_ViewTools_Label_Left_Margin,
+                            withStaticCustomFrame:CGRectMake(D_ViewTools_Label_Left_Margin,
                                                              0,
                                                              [UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2,
                                                              CGFLOAT_MAX) 
@@ -1050,8 +1098,36 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     [label setTextColor:tempTextColor];
     label.numberOfLines = 0;
     [label setAttributedText:tempText];
-    CGSize tempSize = [label sizeThatFits:CGSizeMake(CGFLOAT_MAX, _viewHeight)];
-    [label setFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y, tempSize.width, _viewHeight)];
+    CGSize tempSize = [label sizeThatFits:CGSizeMake(tempFrame.size.width, tempFrame.size.height)];
+    [label setFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y, tempSize.width, tempSize.height)];
+    label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
+    // 將元件陣列暫時存入 recentObjects
+    _recentObjects = nil;
+    _recentObjects = @[label];
+    
+    return label;
+}
+
+// 3.7.4 不理會重算大小，給固定設定的 Frame（待修正，如果 frame 的寬高設定太小有可能字不夠放進來）
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                          withLineHeight:(CGFloat)tempLineHeight 
+                   withStaticCustomFrame:(CGRect)tempFrame 
+                           withTextColor:(UIColor *)tempTextColor
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:tempFrame];
+    // 加入 Center
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setAlignment:tempTextAlignment];
+    [paragraphStyle setLineHeightMultiple:tempLineHeight];
+    [tempText addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [tempText.string length])];
+    [label setFont:_textFont];
+    [label setTextColor:tempTextColor];
+    label.numberOfLines = 0;
+    [label setAttributedText:tempText];
+    CGSize tempSize = [label sizeThatFits:CGSizeMake(tempFrame.size.width, tempFrame.size.height)];
+    [label setFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y, tempFrame.size.width , tempSize.height)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     // 將元件陣列暫時存入 recentObjects

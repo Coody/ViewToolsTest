@@ -26,6 +26,7 @@ typedef enum{
 @property (readonly , nonatomic) CGFloat topMargin;
 @property (readonly , nonatomic) CGFloat bottomMargin;
 @property (strong , nonatomic) UIImageView *bg;
+@property (assign , nonatomic) BOOL isLeftToRight;
 
 /** 
  * @brief   - 設定容器的高度
@@ -80,10 +81,17 @@ typedef enum{
 
 //-(void)removeAllUnits;
 
+/**
+ * @brief - 設定要從左邊往右對齊，還是右邊往左對齊
+ */
+-(void)setIsLeftToRight:(BOOL)isLeftToRight;
+
 @end
 
 #pragma mark - Create UI 元件
 @interface ViewTools : NSObject
+
+@property (nonatomic , strong , readonly) UIFont *textFont;
 
 // TODO: 暫時拔掉單例作法，如果畫面想要自行設定可以設定詳細資訊，避免某個畫面設定完後，變更到其他畫面！
 //+(instancetype)sharedInstance;
@@ -399,6 +407,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                          withCustomFrame:(CGRect)tempFrame 
                            withTextColor:(UIColor *)tempTextColor;
 
+// 3.7.4 不理會重算大小，給固定設定的 Frame（待修正，如果 frame 的寬高設定太小有可能字不夠放進來）
+-(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
+                       withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                          withLineHeight:(CGFloat)tempLineHeight 
+                   withStaticCustomFrame:(CGRect)tempFrame 
+                           withTextColor:(UIColor *)tempTextColor;
+
 #pragma mark ：建立 UITextField 文字輸入元件
 /////////////////////////////////////
 /**
@@ -424,5 +439,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
  * @param - tempFont: 字型、與字體大小
  */
 +(CGSize)getTextFrameWithWidth:(float)tempWidth withText:(NSString *)tempText withFont:(UIFont *)tempFont;
+
+/**
+ * @brief - 給一個 Attribute String，回傳字的 Size
+ * @param - tempWidth: 給寬度（如果想問此字串寬度就直接給 CGFLOAT_MAX）
+ * @param - tempText: Attribute 字串
+ * @param - tempFont: 字型、與字體大小
+ */
++(CGSize)getTextFrameWithWidth:(float)tempWidth withAttributeText:(NSAttributedString *)tempText withFont:(UIFont *)tempFont;
 
 @end

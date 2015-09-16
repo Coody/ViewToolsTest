@@ -14,7 +14,7 @@
 		FBB08CBF1B956B1800E742F0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB08CBD1B956B1800E742F0 /* LaunchScreen.xib */; };
 		FBB08CCB1B956B1800E742F0 /* ViewToolsProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CCA1B956B1800E742F0 /* ViewToolsProjectTests.m */; };
 		FBB08CD71B956B4F00E742F0 /* ViewTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CD61B956B4F00E742F0 /* ViewTools.m */; };
-		FBB08CD91B95A06900E742F0 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB08CD81B95A06900E742F0 /* arrow.png */; };
+		FBB08CD91B95A06900E742F0 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB08CD81B95A06900E742F0 /* arrow@2x.png */; };
 		FBD248DB1BA412CF0002190D /* UITextFieldTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FBD248DA1BA412CF0002190D /* UITextFieldTools.m */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +43,7 @@
 		FBB08CCA1B956B1800E742F0 /* ViewToolsProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewToolsProjectTests.m; sourceTree = "<group>"; };
 		FBB08CD51B956B4F00E742F0 /* ViewTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTools.h; sourceTree = "<group>"; };
 		FBB08CD61B956B4F00E742F0 /* ViewTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTools.m; sourceTree = "<group>"; };
-		FBB08CD81B95A06900E742F0 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		FBB08CD81B95A06900E742F0 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
 		FBD248D91BA412CF0002190D /* UITextFieldTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextFieldTools.h; sourceTree = "<group>"; };
 		FBD248DA1BA412CF0002190D /* UITextFieldTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextFieldTools.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,7 +87,7 @@
 		FBB08CAD1B956B1800E742F0 /* ViewToolsProject */ = {
 			isa = PBXGroup;
 			children = (
-				FBB08CD81B95A06900E742F0 /* arrow.png */,
+				FBB08CD81B95A06900E742F0 /* arrow@2x.png */,
 				FBB08CD41B956B4F00E742F0 /* ViewToolsClass */,
 				FBB08CB21B956B1800E742F0 /* AppDelegate.h */,
 				FBB08CB31B956B1800E742F0 /* AppDelegate.m */,
@@ -218,7 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBB08CBF1B956B1800E742F0 /* LaunchScreen.xib in Resources */,
-				FBB08CD91B95A06900E742F0 /* arrow.png in Resources */,
+				FBB08CD91B95A06900E742F0 /* arrow@2x.png in Resources */,
 				FBB08CBC1B956B1800E742F0 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
