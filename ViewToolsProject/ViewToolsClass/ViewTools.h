@@ -90,6 +90,12 @@ typedef enum{
 @end
 
 #pragma mark - Create UI 元件
+typedef enum : NSInteger{
+    EnumLabelStaticType_LeftStatic = 0,
+    EnumLabelStaticType_RightStatic = 1,
+    EnumLabelStaticType_None = 2
+}EnumLabelStaticType;
+
 @interface ViewTools : NSObject
 
 @property (nonatomic , strong , readonly) UIFont *textFont;
@@ -203,6 +209,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                                  withLineHeight:(CGFloat)tempRightLineHeight 
                                   withNeedArrow:(BOOL)tempIsNeedArrow 
                                 withCustomWidth:(float)tempCustomWidth;
+
+// 2.2.4 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+-(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
+                        withRightText:(NSString *)tempRightText 
+                        withNeedArrow:(BOOL)tempIsNeedArrow 
+                      withCustomWidth:(float)tempCustomWidth 
+                      withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType;
 
 /** 
  * @brief - 2.3 建立一般按鈕（中間有置中的文字）
