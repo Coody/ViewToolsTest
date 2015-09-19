@@ -239,20 +239,29 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 -(UIButton *)createRedButtonWithText:(NSString *)tempText 
                      withCustomWidth:(float)tempCustomWidth;
 
+// 2.7 建立一般按鈕共用方法（給定 Text , CustomWidth , 是否為 Red Button ）
+-(UIButton *)createButtonWithText:(NSString *)tempText 
+                  withCustomWidth:(float)tempCustomWidth 
+                  withIsRedButton:(BOOL)tempIsRedButton;
+
+// 2.8 建立一般按鈕共用方法（給定 Text , CustomFrame , 是否為 Red Button ）
+-(UIButton *)createButtonWithText:(NSString *)tempText 
+                  withCustomFrame:(CGRect)tempCustomFrame 
+                  withIsRedButton:(BOOL)tempIsRedButton;
+
 /**
- * @brief - 2.7 建立只有文字的 button （基本型：紅色字體、底下有線）
+ * @brief - 2.9 建立只有文字的 button （基本型：紅色字體、底下有線）
  */
 -(UIButton *)createTextButtonWithText:(NSString *)tempText;
 
 /**
- * @brief - 2.8 建立只有文字的 button （可設定顏色、底線是否需要）
+ * @brief - 2.10 建立只有文字的 button （可設定顏色、底線是否需要）
  */
 -(UIButton *)createTextButtonWithText:(NSString *)tempText 
                         withTextColor:(UIColor *)tempColor 
                              withLine:(BOOL)isNeedLine;
-
 /**
- * @brief - 2.9 建立只有文字的 button （可設定顏色、底線是否需要、字體大小）
+ * @brief - 2.11 建立只有文字的 button （可設定顏色、底線是否需要、字體大小）
  */
 -(UIButton *)createTextButtonWithText:(NSString *)tempText 
                         withTextColor:(UIColor *)tempColor 
