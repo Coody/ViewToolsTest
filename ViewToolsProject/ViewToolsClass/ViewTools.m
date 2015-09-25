@@ -64,7 +64,10 @@
         tempHight = 0;
     }
     _containerViewHight = tempHight;
-    self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,_containerViewHight);
+    self.frame = CGRectMake(self.frame.origin.x,
+                            self.frame.origin.y,
+                            self.frame.size.width,
+                            _containerViewHight);
 }
 
 /** 
@@ -80,7 +83,7 @@
                             self.frame.origin.y,
                             tempWidth ,
                             self.frame.size.height);
-    [_bg setFrame:self.frame];
+    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 /**
@@ -88,6 +91,7 @@
  */
 -(void)setBackgroundImage:(UIImage *)tempBGImage{
     if ( tempBGImage != nil ) {
+        [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [_bg setImage:[tempBGImage resizableImageWithCapInsets:UIEdgeInsetsMake(5,5,5,5) 
                                                   resizingMode:UIImageResizingModeStretch]];
     }
@@ -225,7 +229,7 @@
         }
     }
     [self setContainerViewHight:realHeight];
-    [_bg setFrame:self.frame];
+    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 -(void)setIsLeftToRight:(BOOL)isLeftToRight{
