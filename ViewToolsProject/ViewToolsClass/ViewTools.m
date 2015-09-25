@@ -91,6 +91,7 @@
  */
 -(void)setBackgroundImage:(UIImage *)tempBGImage{
     if ( tempBGImage != nil ) {
+        [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [_bg setImage:[tempBGImage resizableImageWithCapInsets:UIEdgeInsetsMake(5,5,5,5) 
                                                   resizingMode:UIImageResizingModeStretch]];
     }
@@ -228,7 +229,7 @@
         }
     }
     [self setContainerViewHight:realHeight];
-    [_bg setFrame:self.frame];
+    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 -(void)setIsLeftToRight:(BOOL)isLeftToRight{
