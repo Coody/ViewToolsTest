@@ -66,7 +66,7 @@
     _containerViewHight = tempHight;
     self.frame = CGRectMake(self.frame.origin.x,
                             self.frame.origin.y,
-                            [UIScreen mainScreen].bounds.size.width,
+                            self.frame.size.width,
                             _containerViewHight);
 }
 
