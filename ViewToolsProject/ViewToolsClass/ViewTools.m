@@ -83,7 +83,7 @@
                             self.frame.origin.y,
                             tempWidth ,
                             self.frame.size.height);
-    [_bg setFrame:self.frame];
+    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 /**
