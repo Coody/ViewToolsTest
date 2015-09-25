@@ -64,7 +64,10 @@
         tempHight = 0;
     }
     _containerViewHight = tempHight;
-    self.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,_containerViewHight);
+    self.frame = CGRectMake(self.frame.origin.x,
+                            self.frame.origin.y,
+                            [UIScreen mainScreen].bounds.size.width,
+                            _containerViewHight);
 }
 
 /** 
