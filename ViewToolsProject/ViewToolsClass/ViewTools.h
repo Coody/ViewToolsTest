@@ -87,6 +87,9 @@ typedef enum{
  */
 -(void)setIsLeftToRight:(BOOL)isLeftToRight;
 
+/** 移除所有元件 */
+-(void)removeAllUnits;
+
 @end
 
 #pragma mark - Create UI 元件
@@ -218,9 +221,14 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                       withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType;
 
 /** 
- * @brief - 2.3 建立一般按鈕（中間有置中的文字）
+ * @brief - 2.3.1 建立一般按鈕（中間有置中的文字）
  */
 -(UIButton *)createButtonWithText:(NSString *)tempText;
+
+/** 
+ * @brief - 2.3.2 建立一般按鈕（中間有置中的文字、左右有留 5 pixel 的空）
+ */
+-(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText;
 
 /** 
  * @brief - 2.4 建立一般按鈕（給設定的寬度）（中間有置中的文字）
