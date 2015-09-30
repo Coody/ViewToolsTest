@@ -1,18 +1,26 @@
 //
 //  UITextFieldTools.h
-//  
+//  Prime
 //
 //  Created by Coody on 2015/9/12.
-//  Copyright (c) 2015年 Coody.
-//  This code is distributed under the terms and conditions of the MIT license.
+//  Copyright (c) 2015年 Coody. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+
+@protocol UITextFieldTools_Protocol <NSObject>
+
+-(void)endCheckWithSender:(id)sender;
+
+@end
 
 /**
  * @brief - 擴充 UITextField 的辨識字元、截斷字元功能
  */
 @interface UITextFieldTools : NSObject
+
+/** 非必要的 Delegate */
+@property (nonatomic , weak) id < UITextFieldTools_Protocol > delegate;
 
 /** 所需要限制的長度 */
 @property (nonatomic , assign) NSUInteger substringLength;

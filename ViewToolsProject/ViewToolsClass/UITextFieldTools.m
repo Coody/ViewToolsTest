@@ -1,10 +1,9 @@
 //
 //  UITextFieldTools.m
-//  
+//  Prime
 //
 //  Created by Coody on 2015/9/12.
-//  Copyright (c) 2015年 Coody.
-//  This code is distributed under the terms and conditions of the MIT license.
+//  Copyright (c) 2015年 Coody. All rights reserved.
 //
 
 #import "UITextFieldTools.h"
@@ -43,6 +42,10 @@
         if ( [textField.text length] > _substringLength ) {
             textField.text = [textField.text substringToIndex:_substringLength];
         }
+        
+        if ( [_delegate respondsToSelector:@selector(endCheckWithSender:)] ) {
+            [_delegate endCheckWithSender:sender];
+        }
     }
 }
 
@@ -62,6 +65,10 @@
         else{
             _isMinStringLegal = NO;
         }
+        
+        if ( [_delegate respondsToSelector:@selector(endCheckWithSender:)] ) {
+            [_delegate endCheckWithSender:sender];
+        }
     }
 }
 
@@ -78,6 +85,10 @@
         UITextField *textField = (UITextField *)sender;
         NSPredicate *phonePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@" , _predicateString];
         _isPredicateLegal = [phonePredicate evaluateWithObject:textField.text];
+        
+        if ( [_delegate respondsToSelector:@selector(endCheckWithSender:)] ) {
+            [_delegate endCheckWithSender:sender];
+        }
     }
 }
 
@@ -89,6 +100,10 @@
     [self checkStringMinWithSender:sender]; // 最小字串
     [self checkStringLengthWithSender:sender];  // 最大長度截斷
     [self checkWordWithSender:sender];  // 是否符合正規表達式
+    
+    if ( [_delegate respondsToSelector:@selector(endCheckWithSender:)] ) {
+        [_delegate endCheckWithSender:sender];
+    }
 }
 
 @end

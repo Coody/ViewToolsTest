@@ -155,13 +155,13 @@
     [self addSubview:_bg];
     
     // 取得元件內最高的 Height 值，並且設置圍  Container View 的主要 Height
+    _containerViewHight = self.frame.size.height;
     CGFloat realHeight = _containerViewHight;
     
     // 計算內部左右元件 x 的位置 
     CGFloat totalX = 0.0f;
     if ( [tempViewArray count] == 0 ) {
         NSLog(@" \n**** WARNING!!!! 沒有加入任何元件!!!! ****");
-        return;
     }
     else if ( [tempViewArray count] == 1 ) {
         UIView *unit = [tempViewArray firstObject];
@@ -230,6 +230,12 @@
     }
     [self setContainerViewHight:realHeight];
     [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+}
+
+-(void)removeAllUnits{
+    for ( UIView *unit in self.subviews ) {
+        [unit removeFromSuperview];
+    }
 }
 
 -(void)setIsLeftToRight:(BOOL)isLeftToRight{
@@ -685,11 +691,23 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return button;
 }
 
-// 2.3 建立一般按鈕
+// 2.3.1 建立一般按鈕（左右沒有留空）
 -(UIButton *)createButtonWithText:(NSString *)tempText
 {
     return [self createButtonWithText:tempText 
                       withCustomWidth:[UIScreen mainScreen].bounds.size.width];
+}
+
+/** 
+ * @brief - 2.3.2 建立一般按鈕（中間有置中的文字、左右有留 5 pixel 的空）
+ */
+-(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText{
+    return [self createButtonWithText:tempText 
+                      withCustomFrame:CGRectMake(5, 
+                                                 0, 
+                                                 [UIScreen mainScreen].bounds.size.width - 10,
+                                                 _viewHeight) 
+                      withIsRedButton:NO];
 }
 
 // 2.4.1 建立一般按鈕（給設定的寬度）
@@ -723,9 +741,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                   withIsRedButton:(BOOL)tempIsRedButton
 {
     return [self createButtonWithText:tempText 
-                      withCustomFrame:CGRectMake(5, 
+                      withCustomFrame:CGRectMake(0, 
                                                  0, 
-                                                 tempCustomWidth  - 10,
+                                                 tempCustomWidth,
                                                  _viewHeight)
                       withIsRedButton:tempIsRedButton];
 }
@@ -1071,10 +1089,18 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     CGSize tempSize = [ViewTools getTextFrameWithWidth:tempCustomWidth 
                                               withText:tempText 
                                               withFont:_textFont];
-    return [self createLabelWithText:tempText 
-                   withTextAlignment:tempTextAlignment 
-                     withCustomFrame:CGRectMake(0, 0, tempSize.width, tempSize.height)
-                       withTextColor:tempTextColor];
+    if ( tempSize.height > _viewHeight ) {
+        return [self createLabelWithText:tempText 
+                       withTextAlignment:tempTextAlignment 
+                         withCustomFrame:CGRectMake(0, 0, tempSize.width, tempSize.height)
+                           withTextColor:tempTextColor];
+    }
+    else{
+        return [self createLabelWithText:tempText 
+                       withTextAlignment:tempTextAlignment 
+                         withCustomFrame:CGRectMake(0, 0, tempSize.width, _viewHeight)
+                           withTextColor:tempTextColor];
+    }
 }
 
 // 3.6.2
