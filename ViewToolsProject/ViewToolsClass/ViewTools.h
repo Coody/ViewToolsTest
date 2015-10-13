@@ -87,6 +87,11 @@ typedef enum{
  */
 -(void)setIsLeftToRight:(BOOL)isLeftToRight;
 
+/**
+ * @brief - 重新確認內部位置（如果內部需要重新排列時）
+ */
+-(void)recheckInnerView;
+
 /** 移除所有元件 */
 -(void)removeAllUnits;
 

@@ -189,7 +189,7 @@
                                             unit.frame.origin.y + _topMargin,
                                             unit.frame.size.width,
                                             unit.frame.size.height);
-                    totalX = unit.frame.origin.y;
+                    totalX = unit.frame.origin.x;
                 }
             }
             else if( unit == [tempViewArray lastObject] ){
@@ -250,6 +250,100 @@
             [self addUnits:unitArray];
         }
     }
+}
+
+-(void)recheckInnerView{
+    /* 反轉陣列的方法（目前沒用到，但留著做記錄，未來可能會用到） */
+    NSArray *totalViewArray = self.subviews;
+    NSMutableArray *tempViewArray = [[NSMutableArray alloc] init];
+    for ( UIView *unit in totalViewArray ) {
+        if ( unit != _bg ) {
+            [tempViewArray addObject:unit];
+        }
+    }
+    if ( !_isLeftToRight ) {
+        NSEnumerator *enumerator = [tempViewArray reverseObjectEnumerator];
+        NSMutableArray *reverseArray = [[NSMutableArray alloc] init];
+        for ( id unit in enumerator ) {
+            [reverseArray addObject:unit];
+        }
+        tempViewArray = reverseArray;
+    }
+    
+    // 取得元件內最高的 Height 值，並且設置圍  Container View 的主要 Height
+    _containerViewHight = self.frame.size.height;
+    CGFloat realHeight = _containerViewHight;
+    
+    // 計算內部左右元件 x 的位置 
+    CGFloat totalX = 0.0f;
+    if ( [tempViewArray count] == 0 ) {
+        NSLog(@" \n**** WARNING!!!! 沒有加入任何元件!!!! ****");
+    }
+    else if ( [tempViewArray count] == 1 ) {
+        UIView *unit = [tempViewArray firstObject];
+        unit.frame = CGRectMake(_leftMargin ,
+                                unit.frame.origin.y,
+                                self.frame.size.width - _rightMargin - _leftMargin,
+                                unit.frame.size.height);
+        if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
+            realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
+        }
+    }
+    else{
+        for ( UIView *unit in tempViewArray ) {
+            if ( unit == [tempViewArray firstObject] ) {
+                if ( _isLeftToRight ) {
+                    unit.frame = CGRectMake(_leftMargin ,
+                                            unit.frame.origin.y,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = totalX + _leftMargin + unit.frame.size.width;
+                }
+                else{
+                    unit.frame = CGRectMake(self.frame.size.width - _rightMargin - unit.frame.size.width,
+                                            unit.frame.origin.y,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = unit.frame.origin.x;
+                }
+            }
+            else if( unit == [tempViewArray lastObject] ){
+                if ( _isLeftToRight ) {
+                    unit.frame = CGRectMake(totalX + _middleMargin ,
+                                            unit.frame.origin.y,
+                                            self.frame.size.width - totalX - _middleMargin - _rightMargin ,
+                                            unit.frame.size.height);
+                }
+                else{
+                    unit.frame = CGRectMake(_leftMargin ,
+                                            unit.frame.origin.y,
+                                            totalX - _leftMargin - _middleMargin ,
+                                            unit.frame.size.height);
+                }
+            }
+            else{
+                if ( _isLeftToRight ) {
+                    unit.frame = CGRectMake(totalX + _middleMargin ,
+                                            unit.frame.origin.y,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = totalX + _middleMargin + unit.frame.size.width;
+                }
+                else{
+                    unit.frame = CGRectMake(totalX - _middleMargin - unit.frame.size.width ,
+                                            unit.frame.origin.y,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = totalX - _middleMargin - unit.frame.size.width;
+                }
+            }
+            if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
+                realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
+            }
+        }
+    }
+    [self setContainerViewHight:realHeight];
+    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 @end
