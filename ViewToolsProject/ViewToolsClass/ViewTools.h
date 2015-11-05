@@ -80,7 +80,7 @@ typedef enum{
  */
 -(void)addUnits:(NSArray *)tempViewArray;
 
-//-(void)removeAllUnits;
+-(void)removeAllUnits;
 
 /**
  * @brief - 設定要從左邊往右對齊，還是右邊往左對齊
@@ -92,10 +92,8 @@ typedef enum{
  */
 -(void)recheckInnerView;
 
-/** 移除所有元件 */
--(void)removeAllUnits;
-
 @end
+
 
 #pragma mark - Create UI 元件
 typedef enum : NSInteger{
@@ -110,6 +108,11 @@ typedef enum : NSInteger{
 
 // TODO: 暫時拔掉單例作法，如果畫面想要自行設定可以設定詳細資訊，避免某個畫面設定完後，變更到其他畫面！
 //+(instancetype)sharedInstance;
+
+#pragma mark ：取得目前主要元件
+/////////////////////////////////////
+/** 取得目前主要元件陣列 */
+-(NSArray *)getRecentObjects;
 
 #pragma mark ：取得目前主要元件
 /////////////////////////////////////
@@ -218,12 +221,31 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                                   withNeedArrow:(BOOL)tempIsNeedArrow 
                                 withCustomWidth:(float)tempCustomWidth;
 
-// 2.2.4 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+/**
+ * @brief - 2.2.4 建立特殊按鈕（預設畫面寬度 - 12）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+ */
+-(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
+                        withRightText:(NSString *)tempRightText 
+                        withNeedArrow:(BOOL)tempIsNeedArrow 
+                      withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType;
+
+/**
+ * @brief - 2.2.5 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+ */
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
                         withRightText:(NSString *)tempRightText 
                         withNeedArrow:(BOOL)tempIsNeedArrow 
                       withCustomWidth:(float)tempCustomWidth 
                       withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType;
+
+///**
+// * @brief - 2.2.6 建立特殊按鈕（給設定的 frame ）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+// */
+//-(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
+//                        withRightText:(NSString *)tempRightText 
+//                        withNeedArrow:(BOOL)tempIsNeedArrow 
+//                      withCustomFrame:(CGRect)tempCustomFrame 
+//                      withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType;
 
 /** 
  * @brief - 2.3.1 建立一般按鈕（中間有置中的文字）
@@ -467,6 +489,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                  withTextAlignment:(NSTextAlignment)tempTextAlignment 
                    withCustomWidth:(float)tempCustomWidth;
 
+#pragma mark - 其他工具
 /////////////////////////////////////
 /**
  * @brief - 給一串字，回傳字的 Size
