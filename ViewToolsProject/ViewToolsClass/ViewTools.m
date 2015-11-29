@@ -54,6 +54,12 @@
     return self;
 }
 
+-(void)dealloc{
+    for ( UIView *unit in self.subviews ) {
+        [unit removeFromSuperview];
+    }
+}
+
 /** 
  * @brief   - 設定容器的高度
  * @details - 
@@ -252,6 +258,100 @@
     }
 }
 
+-(void)recheckInnerView{
+    /* 反轉陣列的方法（目前沒用到，但留著做記錄，未來可能會用到） */
+    NSArray *totalViewArray = self.subviews;
+    NSMutableArray *tempViewArray = [[NSMutableArray alloc] init];
+    for ( UIView *unit in totalViewArray ) {
+        if ( unit != _bg ) {
+            [tempViewArray addObject:unit];
+        }
+    }
+    if ( !_isLeftToRight ) {
+        NSEnumerator *enumerator = [tempViewArray reverseObjectEnumerator];
+        NSMutableArray *reverseArray = [[NSMutableArray alloc] init];
+        for ( id unit in enumerator ) {
+            [reverseArray addObject:unit];
+        }
+        tempViewArray = reverseArray;
+    }
+    
+    // 取得元件內最高的 Height 值，並且設置圍  Container View 的主要 Height
+    _containerViewHight = self.frame.size.height;
+    CGFloat realHeight = _containerViewHight;
+    
+    // 計算內部左右元件 x 的位置 
+    CGFloat totalX = 0.0f;
+    if ( [tempViewArray count] == 0 ) {
+        NSLog(@" \n**** WARNING!!!! 沒有加入任何元件!!!! ****");
+    }
+    else if ( [tempViewArray count] == 1 ) {
+        UIView *unit = [tempViewArray firstObject];
+        unit.frame = CGRectMake(_leftMargin ,
+                                unit.frame.origin.y,
+                                self.frame.size.width - _rightMargin - _leftMargin,
+                                unit.frame.size.height);
+        if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
+            realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
+        }
+    }
+    else{
+        for ( UIView *unit in tempViewArray ) {
+            if ( unit == [tempViewArray firstObject] ) {
+                if ( _isLeftToRight ) {
+                    unit.frame = CGRectMake(_leftMargin ,
+                                            unit.frame.origin.y,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = totalX + _leftMargin + unit.frame.size.width;
+                }
+                else{
+                    unit.frame = CGRectMake(self.frame.size.width - _rightMargin - unit.frame.size.width,
+                                            unit.frame.origin.y,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = unit.frame.origin.x;
+                }
+            }
+            else if( unit == [tempViewArray lastObject] ){
+                if ( _isLeftToRight ) {
+                    unit.frame = CGRectMake(totalX + _middleMargin ,
+                                            unit.frame.origin.y,
+                                            self.frame.size.width - totalX - _middleMargin - _rightMargin ,
+                                            unit.frame.size.height);
+                }
+                else{
+                    unit.frame = CGRectMake(_leftMargin ,
+                                            unit.frame.origin.y,
+                                            totalX - _leftMargin - _middleMargin ,
+                                            unit.frame.size.height);
+                }
+            }
+            else{
+                if ( _isLeftToRight ) {
+                    unit.frame = CGRectMake(totalX + _middleMargin ,
+                                            unit.frame.origin.y,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = totalX + _middleMargin + unit.frame.size.width;
+                }
+                else{
+                    unit.frame = CGRectMake(totalX - _middleMargin - unit.frame.size.width ,
+                                            unit.frame.origin.y,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalX = totalX - _middleMargin - unit.frame.size.width;
+                }
+            }
+            if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
+                realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
+            }
+        }
+    }
+    [self setContainerViewHight:realHeight];
+    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+}
+
 @end
 
 #pragma mark - Create UI 元件
@@ -330,6 +430,16 @@
         _textFieldImage = [ViewTools getImageFromeBundleByPath:D_ViewTools_TextField_Image];
     }
     return self;
+}
+
+-(void)dealloc{
+    _buttonImage_Normal = nil;
+    _buttonImage_HightLight = nil;
+    _buttonImage_Disable = nil;
+    _buttonImage_Red_Normal = nil;
+    _buttonImage_Red_HightLight = nil;
+    _arrowImage = nil;
+    _textFieldImage = nil;
 }
 
 #pragma mark ：取得目前主要元件
@@ -467,11 +577,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                         withRightText:(NSString *)tempRightText 
                         withNeedArrow:(BOOL)tempIsNeedArrow 
                       withCustomWidth:(float)tempCustomWidth
-{
+{    
     return [self createButtonWithLeftText:tempLeftText 
                             withRightText:tempRightText 
                             withNeedArrow:tempIsNeedArrow 
-                          withCustomWidth:tempCustomWidth 
                           withLabelStatic:EnumLabelStaticType_None];
 }
 
@@ -521,7 +630,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     if ( tempIsNeedArrow ) 
     {
         arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
-        [arrowImageView setFrame:CGRectMake(tempCustomWidth - arrowImageView.frame.size.width - D_ViewTools_Label_Left_Margin - 6,
+        [arrowImageView setFrame:CGRectMake(tempCustomWidth - arrowImageView.frame.size.width - D_ViewTools_Label_Left_Margin - 12,
                                             (_viewHeight - arrowImageView.frame.size.height)*0.5 ,
                                             arrowImageView.frame.size.width,
                                             arrowImageView.frame.size.height)];
@@ -579,17 +688,41 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return button;
 }
 
-// 2.2.4 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+// 2.2.4 建立特殊按鈕（預設畫面寬度 - 12）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+-(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
+                        withRightText:(NSString *)tempRightText 
+                        withNeedArrow:(BOOL)tempIsNeedArrow 
+                      withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType
+{
+    return [self createButtonWithLeftText:tempLeftText
+                            withRightText:tempRightText 
+                            withNeedArrow:tempIsNeedArrow 
+                          withCustomFrame:CGRectMake(6, 0, [UIScreen mainScreen].bounds.size.width - 12, _viewHeight )  
+                          withLabelStatic:tempEnumLabelStaticType];
+}
+
+// 2.2.5 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
                         withRightText:(NSString *)tempRightText 
                         withNeedArrow:(BOOL)tempIsNeedArrow 
                       withCustomWidth:(float)tempCustomWidth 
                       withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6, 
-                                                                  0, 
-                                                                  tempCustomWidth - 12,
-                                                                  _viewHeight)];
+    return [self createButtonWithLeftText:tempLeftText
+                            withRightText:tempRightText 
+                            withNeedArrow:tempIsNeedArrow 
+                          withCustomFrame:CGRectMake(0, 0, tempCustomWidth, _viewHeight ) 
+                          withLabelStatic:tempEnumLabelStaticType];
+}
+
+// 2.2.6 建立特殊按鈕（給設定的 frame ）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+-(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
+                        withRightText:(NSString *)tempRightText 
+                        withNeedArrow:(BOOL)tempIsNeedArrow 
+                      withCustomFrame:(CGRect)tempCustomFrame 
+                      withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType
+{
+    UIButton *button = [[UIButton alloc] initWithFrame:tempCustomFrame];
     [button setImageEdgeInsets:UIEdgeInsetsMake(2, 5, 2, 5)];
     [button setBackgroundImage:[_buttonImage_Normal 
                                 resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
@@ -610,7 +743,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     if ( tempIsNeedArrow ) 
     {
         arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
-        [arrowImageView setFrame:CGRectMake(tempCustomWidth - arrowImageView.frame.size.width - D_ViewTools_Label_Left_Margin - 6,
+        [arrowImageView setFrame:CGRectMake(tempCustomFrame.size.width - arrowImageView.frame.size.width - D_ViewTools_Label_Left_Margin,
                                             (_viewHeight - arrowImageView.frame.size.height)*0.5 ,
                                             arrowImageView.frame.size.width,
                                             arrowImageView.frame.size.height)];
@@ -639,7 +772,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
             
             firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin + 6,
                                           0,
-                                          button.frame.size.width - D_ViewTools_Label_Left_Margin*2 - arrowImageView.frame.size.width - tempSize.width - 6,
+                                          button.frame.size.width - D_ViewTools_Label_Left_Margin*2 - arrowImageView.frame.size.width - tempSize.width - 12,
                                           _viewHeight);
         }
         else{
@@ -671,7 +804,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                            _viewHeight);
         }
         else{
-            secondLabel.frame = CGRectMake(button.frame.size.width - arrowImageView.frame.size.width - 6 - secondLabel.frame.size.width - D_ViewTools_Label_Left_Margin ,
+            secondLabel.frame = CGRectMake(button.frame.size.width - arrowImageView.frame.size.width - 12 - secondLabel.frame.size.width - D_ViewTools_Label_Left_Margin ,
                                            0,
                                            secondLabel.frame.size.width,
                                            _viewHeight);
@@ -690,6 +823,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     
     return button;
 }
+
 
 // 2.3.1 建立一般按鈕（左右沒有留空）
 -(UIButton *)createButtonWithText:(NSString *)tempText
@@ -854,11 +988,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     else{
         [textButton setTitle:tempText forState:UIControlStateNormal];
     }
+    [textButton titleLabel].lineBreakMode = YES;
     [[textButton titleLabel] setFont:tempFont];
     [textButton setTitleColor:tempColor forState:UIControlStateNormal];
     return textButton;
 }
-
 
 #pragma mark - 建立 Label
 // 3.1.1
@@ -1098,7 +1232,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     else{
         return [self createLabelWithText:tempText 
                        withTextAlignment:tempTextAlignment 
-                         withCustomFrame:CGRectMake(0, 0, tempSize.width, _viewHeight)
+                         withCustomFrame:CGRectMake(0, 0, tempCustomWidth, _viewHeight)
                            withTextColor:tempTextColor];
     }
 }
@@ -1284,6 +1418,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     
     return allView;
 }
+
 
 #pragma mark - 其他工具
 // 求一般 NSString 的 frame
