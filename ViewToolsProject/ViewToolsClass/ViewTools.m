@@ -10,16 +10,20 @@
 #import "ViewTools.h"
 #import <CoreText/CoreText.h>
 
+///////////////////////////////////////////////////////////////////
 // 設定元件標準高度（可自行設定）
-#define D_ViewTools_ViewHeight (41.0f)
+#define D_ViewTools_ViewHeight (40.0f)
 // 設定元件與左邊畫面的距離
-#define D_ViewTools_Label_Left_Margin (15)
+#define D_ViewTools_Label_Left_Margin (12)
+#define D_ViewTools_Label_Middle_Margin (12)
 // 設定文字大小
 #define D_ViewTools_Text_Font [UIFont boldSystemFontOfSize:16.0f]
 // 設定文字顏色
 #define D_ViewTools_Text_Color [UIColor whiteColor]
 // 設定 TextField 內文字的顏色
 #define D_ViewTools_TextField_Inner_Color [UIColor grayColor]
+///////////////////////////////////////////////////////////////////
+// 如果不需要設定請直接使用 nil 即可
 // 設定 Image 的名稱（不帶 .png ）
 #define D_ViewTools_Arrow_Image (@"arrow")
 #define D_ViewTools_Button_Red_Normal_Image (nil)
@@ -30,6 +34,9 @@
 #define D_ViewTools_TextField_Image (nil)
 #define D_ViewTools_TextField_Image (nil)
 #define D_ViewTools_TextField_CancelButton_Image (nil)
+
+NSInteger const kArrowImage_Tag = 6481;
+
 
 #pragma mark - 裝元件的容器（左->右來安裝）
 @interface ContainerView()
@@ -626,17 +633,28 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     // 建立箭頭
-    UIImageView *arrowImageView;
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
+    CGFloat arrowWidth = 0.0f;
+    [arrowImageView setFrame:CGRectMake(tempCustomWidth - arrowImageView.frame.size.width - D_ViewTools_Label_Left_Margin - D_ViewTools_Label_Middle_Margin,
+                                        (_viewHeight - arrowImageView.frame.size.height)*0.5 ,
+                                        arrowImageView.frame.size.width,
+                                        arrowImageView.frame.size.height)];
+    [button addSubview:arrowImageView];
+    arrowImageView.tag = kArrowImage_Tag;
+    arrowImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    
     if ( tempIsNeedArrow ) 
     {
-        arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
-        [arrowImageView setFrame:CGRectMake(tempCustomWidth - arrowImageView.frame.size.width - D_ViewTools_Label_Left_Margin - 12,
-                                            (_viewHeight - arrowImageView.frame.size.height)*0.5 ,
-                                            arrowImageView.frame.size.width,
-                                            arrowImageView.frame.size.height)];
-        [button addSubview:arrowImageView];
-        arrowImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        [arrowImageView setAlpha:1.0f];
+        arrowWidth = arrowImageView.frame.size.width;
     }
+    else
+    {
+        [arrowImageView setAlpha:0.0f];
+        arrowWidth = 0.0f;
+    }
+    
+    
     
     // 將內部元進整理成陣列回傳（多個元件時）
     NSMutableArray *tempReturnObjects = [[NSMutableArray alloc] init];
@@ -669,7 +687,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         UILabel *secondLabel = [privateViewTools createLabelWithAttributeText:tempRightText 
                                                                withLineHeight:tempRightLineHeight 
                                                             withTextAlignment:(NSTextAlignmentRight)];
-        secondLabel.frame = CGRectMake(button.frame.size.width - arrowImageView.frame.size.width - 6 - secondLabel.frame.size.width - D_ViewTools_Label_Left_Margin ,
+        secondLabel.frame = CGRectMake(button.frame.size.width - arrowWidth - D_ViewTools_Label_Middle_Margin - secondLabel.frame.size.width - D_ViewTools_Label_Left_Margin ,
                                        0,
                                        secondLabel.frame.size.width,
                                        _viewHeight);
@@ -740,15 +758,24 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     
     // 建立箭頭
     UIImageView *arrowImageView;
+    CGFloat arrowWidth = 0.0f;
+    arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
+    [arrowImageView setFrame:CGRectMake(tempCustomFrame.size.width - arrowImageView.frame.size.width - D_ViewTools_Label_Left_Margin,
+                                        (_viewHeight - arrowImageView.frame.size.height)*0.5,
+                                        arrowImageView.frame.size.width,
+                                        arrowImageView.frame.size.height)];
+    [button addSubview:arrowImageView];
+    arrowImageView.tag = kArrowImage_Tag;
+    arrowImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
     if ( tempIsNeedArrow ) 
     {
-        arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
-        [arrowImageView setFrame:CGRectMake(tempCustomFrame.size.width - arrowImageView.frame.size.width - D_ViewTools_Label_Left_Margin,
-                                            (_viewHeight - arrowImageView.frame.size.height)*0.5 ,
-                                            arrowImageView.frame.size.width,
-                                            arrowImageView.frame.size.height)];
-        [button addSubview:arrowImageView];
-        arrowImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        [arrowImageView setAlpha:1.0f];
+        arrowWidth = arrowImageView.frame.size.width;
+    }
+    else
+    {
+        [arrowImageView setAlpha:0.0f];
+        arrowWidth = 0.0f;
     }
     
     // 將內部元進整理成陣列回傳（多個元件時）
@@ -772,7 +799,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
             
             firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin + 6,
                                           0,
-                                          button.frame.size.width - D_ViewTools_Label_Left_Margin*2 - arrowImageView.frame.size.width - tempSize.width - 12,
+                                          button.frame.size.width - D_ViewTools_Label_Left_Margin*2 - arrowWidth - tempSize.width - 6,
                                           _viewHeight);
         }
         else{
@@ -800,11 +827,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         if ( tempEnumLabelStaticType == EnumLabelStaticType_LeftStatic ) {
             secondLabel.frame = CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width,
                                            0,
-                                           button.frame.size.width - D_ViewTools_Label_Left_Margin*2 - arrowImageView.frame.size.width - firstLabel.frame.size.width - 12 ,
+                                           button.frame.size.width - D_ViewTools_Label_Left_Margin*2 - arrowWidth - firstLabel.frame.size.width - D_ViewTools_Label_Middle_Margin ,
                                            _viewHeight);
         }
         else{
-            secondLabel.frame = CGRectMake(button.frame.size.width - arrowImageView.frame.size.width - 12 - secondLabel.frame.size.width - D_ViewTools_Label_Left_Margin ,
+            secondLabel.frame = CGRectMake(button.frame.size.width - D_ViewTools_Label_Left_Margin - arrowWidth - D_ViewTools_Label_Middle_Margin - secondLabel.frame.size.width ,
                                            0,
                                            secondLabel.frame.size.width,
                                            _viewHeight);
@@ -961,7 +988,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                              withLine:(BOOL)isNeedLine 
                          withTextFont:(UIFont *)tempFont
 {
-    CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
+    CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:tempFont];
     if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
         tempSize = [ViewTools getTextFrameWithWidth:[UIScreen mainScreen].bounds.size.width 
                                            withText:tempText 
@@ -979,7 +1006,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         NSDictionary *attrDict = @{NSFontAttributeName:tempFont,
                                    NSForegroundColorAttributeName:tempColor};
         NSMutableAttributedString *title =[[NSMutableAttributedString alloc] initWithString:tempText 
-                                                                                 attributes:attrDict]; 
+                                                                                 attributes:attrDict];
         [title addAttribute:NSUnderlineStyleAttributeName 
                       value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] 
                       range:NSMakeRange(0,[tempText length])];
@@ -992,6 +1019,23 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     [[textButton titleLabel] setFont:tempFont];
     [textButton setTitleColor:tempColor forState:UIControlStateNormal];
     return textButton;
+}
+
+#pragma mark 左右有 Text 的按鈕擴充
+// 2.12 額外設定左右有 Text 按鈕的 Arrow 是否顯示？
++(void)isNeedArrow:(BOOL)isNeedArrow withButton:(UIButton *)tempButton
+{
+    for ( UIView *unit in tempButton.subviews ) {
+        if ( unit.tag == kArrowImage_Tag ) {
+            if ( isNeedArrow == YES ) {
+                [unit setAlpha:1.0f];
+            }
+            else{
+                [unit setAlpha:0.0f];
+            }
+            break;
+        }
+    }
 }
 
 #pragma mark - 建立 Label
@@ -1226,7 +1270,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     if ( tempSize.height > _viewHeight ) {
         return [self createLabelWithText:tempText 
                        withTextAlignment:tempTextAlignment 
-                         withCustomFrame:CGRectMake(0, 0, tempSize.width, tempSize.height)
+                         withCustomFrame:CGRectMake(0, 0, tempCustomWidth, tempSize.height)
                            withTextColor:tempTextColor];
     }
     else{
@@ -1419,9 +1463,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return allView;
 }
 
-
 #pragma mark - 其他工具
-// 求一般 NSString 的 frame
 // 求一般 NSString 的 frame
 +(CGSize)getTextFrameWithWidth:(float)tempWidth withText:(NSString *)tempText withFont:(UIFont *)tempFont{
     return ([tempText boundingRectWithSize:CGSizeMake(tempWidth, CGFLOAT_MAX) 
@@ -1430,7 +1472,6 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                    context:nil].size);
 }
 
-/** 最好不要用，這個方法算出來的 Frame 有時會出錯！ */
 +(CGSize)getTextFrameWithWidth:(float)tempWidth withAttributeText:(NSAttributedString *)tempText withFont:(UIFont *)tempFont{
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)tempText);
     CGSize targetSize = CGSizeMake(tempWidth, CGFLOAT_MAX);
@@ -1439,7 +1480,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return fitSize;
 }
 
-
+#if 1
 +(UIImage *)getImageFromeBundleByPath:(NSString *)tempPath{
     return [ViewTools getImageFromeFullPath:[NSString stringWithFormat: @"%@/%@", [NSBundle mainBundle].bundlePath, tempPath] 
                                    withType:EnumImageType_Png];
@@ -1502,6 +1543,45 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     }
     
     return cachedImage;
+}
+#endif
+
++ (NSInteger)numberOfCharactersThatFitLabelWithText:(NSString *)tempText withFont:(UIFont *)tempFont withSize:(CGSize)tempSize{
+    
+    // Create an 'CTFramesetterRef' from an attributed string
+    CTFontRef fontRef = CTFontCreateWithName((CFStringRef)tempFont.fontName, tempFont.pointSize, NULL);
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:(__bridge id)fontRef forKey:(id)kCTFontAttributeName];
+    CFRelease(fontRef);
+    NSAttributedString *attributedString  = [[NSAttributedString alloc] initWithString:tempText attributes:attributes];
+    CTFramesetterRef frameSetterRef = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attributedString);
+    
+    // Get a suggested character count that would fit the attributed string
+    CFRange characterFitRange;
+    CGSize tempSize2 = CGSizeMake(tempSize.width + 3, tempSize.height + 3);
+    CTFramesetterSuggestFrameSizeWithConstraints(frameSetterRef, CFRangeMake(0,0), NULL, tempSize2 , &characterFitRange);
+    CFRelease(frameSetterRef);
+    return (NSInteger)characterFitRange.length;
+}
+
+//+ (NSString *)actuallyRenderedText:(NSString *)tempText withFrame:(CGRect)tempFrame{
+//    CTFontRef fontRef = CTFontCreateWithName((CFStringRef)[UIFont systemFontOfSize:13.0f].fontName, [UIFont systemFontOfSize:13.0f].pointSize, NULL);
+//    NSDictionary *attributes = [NSDictionary dictionaryWithObject:(__bridge id)fontRef forKey:(id)kCTFontAttributeName];
+//    CFRelease(fontRef);
+//
+//    NSAttributedString *attributedString  = [[NSAttributedString alloc] initWithString:tempText attributes:attributes];
+//    CTFramesetterRef frameSetterRef = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attributedString);
+//    CFRange actuallyRenderedRange = CTFrameGetVisibleStringRange(tempFrame);
+//    NSString *actuallyRenderedText = [attributedString.string substringWithRange:NSMakeRange(actuallyRenderedRange.location, actuallyRenderedRange.length)];
+//}
+
++ (NSArray *)revertArray:(NSArray *)tempOriginalArray{
+    NSMutableArray *newArray = [[NSMutableArray alloc] init];
+    /* 反轉陣列的方法（目前沒用到，但留著做記錄，未來可能會用到） */
+    NSEnumerator *enumerator = [tempOriginalArray reverseObjectEnumerator];
+    for ( id unit in enumerator ) {
+        [newArray addObject:unit];
+    }
+    return newArray;
 }
 
 @end

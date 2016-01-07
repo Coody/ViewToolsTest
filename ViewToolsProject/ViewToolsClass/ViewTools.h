@@ -18,6 +18,10 @@ typedef enum{
     EnumImageType_Gif
 }EnumImageType;
 
+// 箭頭 image 的 tag
+extern NSInteger const kArrowImage_Tag;
+
+
 #pragma mark - 容器 View
 @interface ContainerView : UIView
 
@@ -94,11 +98,16 @@ typedef enum{
 
 @end
 
-
 #pragma mark - Create UI 元件
+/**
+ * @brief - 設定左右兩邊有文字時，哪一邊的文字要固定寬度？
+ */
 typedef enum : NSInteger{
+    /** 左邊固定寬度 */
     EnumLabelStaticType_LeftStatic = 0,
+    /** 右邊固定寬度 */
     EnumLabelStaticType_RightStatic = 1,
+    /** 不設定 */
     EnumLabelStaticType_None = 2
 }EnumLabelStaticType;
 
@@ -108,11 +117,6 @@ typedef enum : NSInteger{
 
 // TODO: 暫時拔掉單例作法，如果畫面想要自行設定可以設定詳細資訊，避免某個畫面設定完後，變更到其他畫面！
 //+(instancetype)sharedInstance;
-
-#pragma mark ：取得目前主要元件
-/////////////////////////////////////
-/** 取得目前主要元件陣列 */
--(NSArray *)getRecentObjects;
 
 #pragma mark ：取得目前主要元件
 /////////////////////////////////////
@@ -175,19 +179,29 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 /////////////////////////////////////
 /** 
  * @brief - 2.1.1 建立特殊按鈕（左邊、右邊都有文字、還有右邊箭頭）
+ * @param - tempLeftText    : 左邊文字
+ * @param - tempRightText   : 右邊文字
+ * @param - tempIsNeedArrow : 是否需要右邊箭頭
  */
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText 
                         withRightText:(NSString *)tempRightText 
                         withNeedArrow:(BOOL)tempIsNeedArrow;
 /** 
  * @brief - 2.1.2 建立 Attributed 字串的特殊按鈕
+ * @param - tempLeftText    : 左邊 Mutable Attributed 文字
+ * @param - tempRightText   : 右邊 Mutable Attributed 文字
+ * @param - tempIsNeedArrow : 是否需要右邊箭頭
  */
 -(UIButton *)createButtonWithLeftAttributedText:(NSMutableAttributedString *)tempLeftText 
                         withRightAttributedText:(NSMutableAttributedString *)tempRightText 
                                   withNeedArrow:(BOOL)tempIsNeedArrow;
 
 /** 
- * @brief - 2.1.3 建立 Attributed 字串的特殊按鈕
+ * @brief - 2.1.3 建立 Attributed 字串的特殊按鈕（左右有文字、右邊有箭頭的按鈕）
+ * @param - tempLeftText       : 左邊 Mutable Attributed 文字
+ * @param - tempLeftLineHeight : 文字間距（如果 Attributed String 超過一行時）
+ * @param - tempRightText      : 右邊 Mutable Attributed 文字
+ * @param - tempIsNeedArrow    : 是否要有右邊的箭頭？
  */
 -(UIButton *)createButtonWithLeftAttributedText:(NSMutableAttributedString *)tempLeftText 
                                  withLineHeight:(CGFloat)tempLeftLineHeight  
@@ -197,6 +211,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 
  * @brief - 2.2.1 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
+ * @param - tempLeftText       : 左邊文字
+ * @param - tempRightText      : 右邊文字
+ * @param - tempIsNeedArrow    : 是否要有右邊的箭頭？
+ * @param - tempCustomWidth    : 自行設定寬度
  */
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText 
                         withRightText:(NSString *)tempRightText 
@@ -205,6 +223,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 
  * @brief - 2.2.2 建立Attributed 字串的特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
+ * @param - tempLeftText       : 左邊 Mutable Attributed 文字
+ * @param - tempRightText      : 右邊 Mutable Attributed 文字
+ * @param - tempIsNeedArrow    : 是否要有右邊的箭頭？
+ * @param - tempCustomWidth    : 自行設定寬度
  */
 -(UIButton *)createButtonWithLeftAttributeText:(NSMutableAttributedString *)tempLeftText 
                         withRightAttributeText:(NSMutableAttributedString *)tempRightText 
@@ -213,6 +235,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 
  * @brief - 2.2.3 建立Attributed 字串的特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
+ * @param - tempLeftText       : 左邊 Mutable Attributed 文字
+ * @param - tempLeftLineHeight : 文字間距（如果 Attributed String 超過一行時）
+ * @param - tempRightText      : 右邊 Mutable Attributed 文字
+ * @param - tempIsNeedArrow    : 是否要有右邊的箭頭？
+ * @param - tempCustomWidth    : 自行設定寬度
  */
 -(UIButton *)createButtonWithLeftAttributedText:(NSMutableAttributedString *)tempLeftText 
                                  withLineHeight:(CGFloat)tempLeftLineHeight  
@@ -223,6 +250,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /**
  * @brief - 2.2.4 建立特殊按鈕（預設畫面寬度 - 12）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+ * @param - tempLeftText            : 左邊 Mutable Attributed 文字
+ * @param - tempRightText           : 右邊 Mutable Attributed 文字
+ * @param - tempIsNeedArrow         : 是否要有右邊的箭頭？
+ * @param - tempEnumLabelStaticType : 左邊（或右邊）的文字是否要固定寬度（另一邊就會設定寬度到剛好填滿整個按鈕寬度）
  */
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
                         withRightText:(NSString *)tempRightText 
@@ -231,6 +262,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /**
  * @brief - 2.2.5 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
+ * @param - tempLeftText            : 左邊 Mutable Attributed 文字
+ * @param - tempRightText           : 右邊 Mutable Attributed 文字
+ * @param - tempIsNeedArrow         : 是否要有右邊的箭頭？
+ * @param - tempCustomWidth    : 自行設定寬度
+ * @param - tempEnumLabelStaticType : 左邊（或右邊）的文字是否要固定寬度（另一邊就會設定寬度到剛好填滿整個按鈕寬度）
  */
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
                         withRightText:(NSString *)tempRightText 
@@ -249,59 +285,95 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 
  * @brief - 2.3.1 建立一般按鈕（中間有置中的文字）
+ * @param - tempText : 中間有置中的文字
  */
 -(UIButton *)createButtonWithText:(NSString *)tempText;
 
 /** 
- * @brief - 2.3.2 建立一般按鈕（中間有置中的文字、左右有留 5 pixel 的空）
+ * @brief   - 2.3.2 建立一般按鈕（中間有置中的文字、左右有留 5 pixel 的空）
+ * @details - 左右有留 5 pixel 的空間
+ * @param   - tempText : 中間有置中的文字
  */
 -(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText;
 
 /** 
  * @brief - 2.4 建立一般按鈕（給設定的寬度）（中間有置中的文字）
+ * @param - tempText        : 中間有置中的文字
+ * @param - tempCustomWidth : 自行設定寬度
  */
 -(UIButton *)createButtonWithText:(NSString *)tempText
                   withCustomWidth:(float)tempCustomWidth;
 
 /**
  * @brief - 2.5 建立紅色按鈕（中間有置中的文字）
+ * @param - tempText : 中間有置中的文字
  */
 -(UIButton *)createRedButtonWithText:(NSString *)tempText;
 
 /** 
  * @brief - 2.6 建立紅色按鈕（給設定的寬度）（中間有置中的文字）
+ * @param - tempText        : 中間有置中的文字
+ * @param - tempCustomWidth : 自行設定寬度
  */
 -(UIButton *)createRedButtonWithText:(NSString *)tempText 
                      withCustomWidth:(float)tempCustomWidth;
 
-// 2.7 建立一般按鈕共用方法（給定 Text , CustomWidth , 是否為 Red Button ）
+/** 
+ * @brief - 2.7 建立一般按鈕共用方法（給定 Text , CustomWidth , 是否為 Red Button ）
+ * @param - tempText        : 中間有置中的文字
+ * @param - tempCustomWidth : 自行設定寬度
+ * @param - tempIsRedButton : 是否為紅色按鈕
+ */
 -(UIButton *)createButtonWithText:(NSString *)tempText 
                   withCustomWidth:(float)tempCustomWidth 
                   withIsRedButton:(BOOL)tempIsRedButton;
 
-// 2.8 建立一般按鈕共用方法（給定 Text , CustomFrame , 是否為 Red Button ）
+/** 
+ * @brief - 2.8 建立一般按鈕共用方法（給定 Text , CustomFrame , 是否為 Red Button ）
+ * @param - tempText        : 中間有置中的文字
+ * @param - tempCustomWidth : 自行設定 Frame
+ * @param - tempIsRedButton : 是否為紅色按鈕  
+ */
 -(UIButton *)createButtonWithText:(NSString *)tempText 
                   withCustomFrame:(CGRect)tempCustomFrame 
                   withIsRedButton:(BOOL)tempIsRedButton;
 
 /**
- * @brief - 2.9 建立只有文字的 button （基本型：紅色字體、底下有線）
+ * @brief - 2.9 建立只有文字（或是有底線的文字）的 button （基本型：紅色字體、底下有線）
+ * @param - tempText : （紅色＋底線）文字
  */
 -(UIButton *)createTextButtonWithText:(NSString *)tempText;
 
 /**
  * @brief - 2.10 建立只有文字的 button （可設定顏色、底線是否需要）
+ * @param - tempText   : 文字
+ * @param - tempColor  : （文字＋底線的）顏色
+ * @param - isNeedLine : 是否需要底線？ 
  */
 -(UIButton *)createTextButtonWithText:(NSString *)tempText 
                         withTextColor:(UIColor *)tempColor 
                              withLine:(BOOL)isNeedLine;
 /**
  * @brief - 2.11 建立只有文字的 button （可設定顏色、底線是否需要、字體大小）
+ * @param - tempText   : 文字
+ * @param - tempColor  : （文字＋底線的）顏色
+ * @param - isNeedLine : 是否需要底線？ 
+ * @param - tempFont   : 文字字體
  */
 -(UIButton *)createTextButtonWithText:(NSString *)tempText 
                         withTextColor:(UIColor *)tempColor 
                              withLine:(BOOL)isNeedLine 
                          withTextFont:(UIFont *)tempFont;
+
+#pragma mark 左右有 Text 的按鈕擴充
+/**
+ * @brief   - 2.12 額外設定左右有 Text 按鈕的 Arrow 是否顯示？
+ * @details - 強制將 tempButton 的箭頭取消（會自動檢查是否有 Arrow）
+ * @warning - 此為類別方法！！且只有 ViewTools 所產生的有箭頭按鈕才可以取消箭頭顯示！
+ */
++(void)isNeedArrow:(BOOL)isNeedArrow 
+        withButton:(UIButton *)tempButton;
+
 
 #pragma mark ：建立 UILabel 文字元件
 /////////////////////////////////////
@@ -377,7 +449,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                   withIsTemplet:(BOOL)tempIsTemplet;
 
 /**
- * @brief - 3.4.2 建立 UILabel 文字元件（寬度為樣板寬度（左邊、右邊有一點距離））
+ * @brief - 3.4.2 建立 UILabel ，並且使用 AttributedText 文字元件（寬度為樣板寬度（左邊、右邊有一點距離））
  */
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -385,7 +457,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                            withIsTemplet:(BOOL)tempIsTemplet;
 
 /**
- * @brief - 3.4.3 建立 UILabel 文字元件（寬度為樣板寬度（左邊、右邊有一點距離））
+ * @brief - 3.4.3 建立 UILabel ，並且使用 AttributedText 文字元件（寬度為樣板寬度（左邊、右邊有一點距離））
  */
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -394,21 +466,21 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                            withIsTemplet:(BOOL)tempIsTemplet;
 
 /**
- * @brief - 3.5.1 設定 UILabel 文字元件（給設定的寬度）
+ * @brief - 3.5.1 設定 UILabel 文字元件（給設定的寬度，如果文字高度超過 viewTools 預設的高度，會自動適配）
  */
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
                 withCustomWidth:(float)tempCustomWidth;
 
 /**
- * @brief - 3.5.2 設定 UILabel 文字元件（給設定的寬度）
+ * @brief - 3.5.2 設定 UILabel ，並且使用 AttributedText 文字元件（給設定的寬度）
  */
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
                          withCustomWidth:(float)tempCustomWidth;
 
 /**
- * @brief - 3.5.3 設定 UILabel 文字元件（給設定的寬度）
+ * @brief - 3.5.3 設定 UILabel ，並且使用 AttributedText 文字元件（給設定的寬度）
  */
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -416,7 +488,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                          withCustomWidth:(float)tempCustomWidth;
 
 /**
- * @brief - 3.6.1 設定 UILabel 文字元件（給設定的寬度）
+ * @brief - 3.6.1 設定 UILabel 文字元件（給設定的寬度，如果文字高度超過 viewTools 預設的高度，會自動適配）
  */
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment  
@@ -424,7 +496,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                 withCustomWidth:(float)tempCustomWidth;
 
 /**
- * @brief - 3.6.2 設定 UILabel 文字元件（給設定的寬度）
+ * @brief - 3.6.2 設定 UILabel ，並且使用 AttributedText 文字元件（給設定的寬度）
  */
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -432,7 +504,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                          withCustomWidth:(float)tempCustomWidth;
 
 /**
- * @brief - 3.6.3 設定 UILabel 文字元件（給設定的寬度）
+ * @brief - 3.6.3 設定 UILabel ，並且使用 AttributedText 文字元件（給設定的寬度）
  */
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -441,7 +513,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                          withCustomWidth:(float)tempCustomWidth;
 
 /**
- * @brief - 3.7.1 給定設定的 Frame
+ * @brief - 3.7.1 建立 Label（ 給設定的 Frame ）
  */
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -449,7 +521,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                   withTextColor:(UIColor *)tempTextColor;
 
 /**
- * @brief - 3.7.2 給定設定的 Frame
+ * @brief - 3.7.2 建立 Label，並且使用 AttributedText 文字元件（給設定的 Frame 、設定文字主要的顏色）
  */
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -457,7 +529,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                            withTextColor:(UIColor *)tempTextColor;
 
 /**
- * @brief - 3.7.3 給定設定的 Frame
+ * @brief - 3.7.3 建立 Label，並且使用 AttributedText 文字元件（給設定的 Frame 、設定文件間隔、設定文字主要的顏色）
  */
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -489,7 +561,6 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                  withTextAlignment:(NSTextAlignment)tempTextAlignment 
                    withCustomWidth:(float)tempCustomWidth;
 
-#pragma mark - 其他工具
 /////////////////////////////////////
 /**
  * @brief - 給一串字，回傳字的 Size
@@ -497,7 +568,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
  * @param - tempText: 字串
  * @param - tempFont: 字型、與字體大小
  */
-+(CGSize)getTextFrameWithWidth:(float)tempWidth withText:(NSString *)tempText withFont:(UIFont *)tempFont;
++(CGSize)getTextFrameWithWidth:(float)tempWidth 
+                      withText:(NSString *)tempText 
+                      withFont:(UIFont *)tempFont;
 
 /**
  * @brief - 給一個 Attribute String，回傳字的 Size
@@ -505,6 +578,20 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
  * @param - tempText: Attribute 字串
  * @param - tempFont: 字型、與字體大小
  */
-+(CGSize)getTextFrameWithWidth:(float)tempWidth withAttributeText:(NSAttributedString *)tempText withFont:(UIFont *)tempFont;
++(CGSize)getTextFrameWithWidth:(float)tempWidth 
+             withAttributeText:(NSAttributedString *)tempText 
+                      withFont:(UIFont *)tempFont;
+
+/**
+ * @brief - 
+ */
++ (NSInteger)numberOfCharactersThatFitLabelWithText:(NSString *)tempText withFont:(UIFont *)tempFont withSize:(CGSize)tempSize;
+
+//+ (NSString *)actuallyRenderedText:(NSString *)tempText withFrame:(CGRect)tempFrame;
+
+/** 
+ * @brief - 反轉陣列
+ */
++ (NSArray *)revertArray:(NSArray *)tempOriginalArray;
 
 @end
