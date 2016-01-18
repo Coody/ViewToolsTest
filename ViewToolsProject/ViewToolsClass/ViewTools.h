@@ -3,7 +3,6 @@
 //  Prime
 //
 //  Created by Coody on 2015/8/21.
-//  Copyright (c) 2015年 Coody.
 //  This code is distributed under the terms and conditions of the MIT license.
 //
 
@@ -11,15 +10,43 @@
 
 #import <UIKit/UIKit.h>
 
+
+///////////////////////////////////////////////////////////////////
+// 設定元件標準高度（可自行設定）
+#define D_ViewTools_ViewHeight (40.0f)
+// 設定元件與左邊畫面的距離
+#define D_ViewTools_Label_Left_Margin (12)
+#define D_ViewTools_Label_Middle_Margin (12)
+// 設定文字大小
+#define D_ViewTools_Text_Font [UIFont boldSystemFontOfSize:16.0f]
+// 設定文字顏色
+#define D_ViewTools_Text_Color [UIColor whiteColor]
+// 設定 TextField 內文字的顏色
+#define D_ViewTools_TextField_Inner_Color [UIColor grayColor]
+///////////////////////////////////////////////////////////////////
+// 如果不需要設定請直接使用 nil 即可
+// 設定 Image 的名稱（不帶 .png ）
+#define D_ViewTools_Arrow_Image (@"arrow")
+#define D_ViewTools_Button_Red_Normal_Image (nil)
+#define D_ViewTools_Button_Red_HightLight_Image (nil)
+#define D_ViewTools_Button_Normal_Image (nil)
+#define D_ViewTools_Button_HightLight_Image (nil)
+#define D_ViewTools_Button_Disable_Image (nil)
+#define D_ViewTools_TextField_Image (nil)
+#define D_ViewTools_TextField_Image (nil)
+#define D_ViewTools_TextField_CancelButton_Image (nil)
+
+
+// 箭頭 image 的 tag
+extern NSInteger const kArrowImage_Tag;
+
+
 typedef enum{
     EnumImageType_None = -1,
     EnumImageType_Png,
     EnumImageType_Jpg,
     EnumImageType_Gif
 }EnumImageType;
-
-// 箭頭 image 的 tag
-extern NSInteger const kArrowImage_Tag;
 
 
 #pragma mark - 容器 View
@@ -31,7 +58,8 @@ extern NSInteger const kArrowImage_Tag;
 @property (readonly , nonatomic) CGFloat topMargin;
 @property (readonly , nonatomic) CGFloat bottomMargin;
 @property (strong , nonatomic) UIImageView *bg;
-@property (assign , nonatomic) BOOL isLeftToRight;
+@property (assign , nonatomic) BOOL isVertical;
+@property (assign , nonatomic) BOOL isRevertArrangement;
 
 /** 
  * @brief   - 設定容器的高度
@@ -89,7 +117,7 @@ extern NSInteger const kArrowImage_Tag;
 /**
  * @brief - 設定要從左邊往右對齊，還是右邊往左對齊
  */
--(void)setIsLeftToRight:(BOOL)isLeftToRight;
+-(void)setIsRevertArrangement:(BOOL)isRevertArrangement;
 
 /**
  * @brief - 重新確認內部位置（如果內部需要重新排列時）
