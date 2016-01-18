@@ -30,6 +30,7 @@
         [_mainView setTopMargin:D_Top_Distance];
         [_mainView setMiddleMargin:D_Center_Distance];
         [_mainView setLeftMargin:D_Center_Distance];
+        [_mainView setRightMargin:D_Center_Distance];
         _viewArray = [[NSMutableArray alloc] init];
         
         // Test 

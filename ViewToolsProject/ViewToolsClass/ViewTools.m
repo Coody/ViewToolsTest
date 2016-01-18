@@ -151,17 +151,6 @@ NSInteger const kArrowImage_Tag = 6481;
     if ( [tempViewArray count] == 0 ) {
         NSLog(@" \n**** WARNING!!!! 沒有加入任何元件!!!! ****");
     }
-    else if ( [tempViewArray count] == 1 ) {
-        UIView *unit = [tempViewArray firstObject];
-        unit.frame = CGRectMake(_leftMargin ,
-                                unit.frame.origin.y + _topMargin,
-                                self.frame.size.width - _rightMargin - _leftMargin,
-                                unit.frame.size.height);
-        if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
-            realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
-        }
-        [self addSubview:unit];
-    }
     else{
         
         // isVertical == YES , 是否是上下加入元件？ 
@@ -174,16 +163,16 @@ NSInteger const kArrowImage_Tag = 6481;
             for ( UIView *unit in tempViewArray ) {
                 if ( unit == [tempViewArray firstObject] ) {
                     
-                    unit.frame = CGRectMake(unit.frame.origin.x + _leftMargin ,
+                    unit.frame = CGRectMake(unit.frame.origin.x,
                                             unit.frame.origin.y + _topMargin,
-                                            self.frame.size.width - _leftMargin - _rightMargin,
+                                            unit.frame.size.width,
                                             unit.frame.size.height);
                     totalY = unit.frame.origin.y + unit.frame.size.height;
                 }
                 else{
-                    unit.frame = CGRectMake(unit.frame.origin.x + _leftMargin ,
+                    unit.frame = CGRectMake(unit.frame.origin.x,
                                             unit.frame.origin.y + _middleMargin + totalY,
-                                            self.frame.size.width - _leftMargin - _rightMargin,
+                                            unit.frame.size.width,
                                             unit.frame.size.height);
                     if ( unit == [tempViewArray lastObject] ) {
                         totalY = totalY + unit.frame.size.height + _bottomMargin;
@@ -200,57 +189,70 @@ NSInteger const kArrowImage_Tag = 6481;
             
         }
         else{
-            for ( UIView *unit in tempViewArray ) {
-                if ( unit == [tempViewArray firstObject] ) {
-                    if ( _isRevertArrangement ) {
-                        unit.frame = CGRectMake(self.frame.size.width - unit.frame.origin.x - _rightMargin - unit.frame.size.width,
-                                                unit.frame.origin.y + _topMargin,
-                                                unit.frame.size.width,
-                                                unit.frame.size.height);
-                        totalX = unit.frame.origin.x;
-                    }
-                    else{
-                        unit.frame = CGRectMake(unit.frame.origin.x + _leftMargin ,
-                                                unit.frame.origin.y + _topMargin,
-                                                unit.frame.size.width,
-                                                unit.frame.size.height);
-                        totalX = unit.frame.origin.x + unit.frame.size.width;
-                    }
-                }
-                else if( unit == [tempViewArray lastObject] ){
-                    if ( _isRevertArrangement ) {
-                        unit.frame = CGRectMake(_leftMargin ,
-                                                unit.frame.origin.y + _topMargin,
-                                                totalX - _leftMargin - _middleMargin ,
-                                                unit.frame.size.height);
-                    }
-                    else{
-                        unit.frame = CGRectMake(unit.frame.origin.x + totalX + _middleMargin ,
-                                                unit.frame.origin.y + _topMargin,
-                                                self.frame.size.width - totalX - _middleMargin - _rightMargin ,
-                                                unit.frame.size.height);
-                    }
-                }
-                else{
-                    if ( _isRevertArrangement ) {
-                        unit.frame = CGRectMake(totalX - _middleMargin - unit.frame.size.width ,
-                                                unit.frame.origin.y + _topMargin,
-                                                unit.frame.size.width,
-                                                unit.frame.size.height);
-                        totalX = totalX - _middleMargin - unit.frame.size.width;
-                    }
-                    else{
-                        unit.frame = CGRectMake(unit.frame.origin.x + totalX + _middleMargin ,
-                                                unit.frame.origin.y + _topMargin,
-                                                unit.frame.size.width,
-                                                unit.frame.size.height);
-                        totalX = totalX + _middleMargin + unit.frame.size.width;
-                    }
-                }
+            if ( [tempViewArray count] == 1 ) {
+                UIView *unit = [tempViewArray firstObject];
+                unit.frame = CGRectMake(_leftMargin ,
+                                        unit.frame.origin.y + _topMargin,
+                                        self.frame.size.width - _rightMargin - _leftMargin,
+                                        unit.frame.size.height);
                 if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
                     realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
                 }
                 [self addSubview:unit];
+            }
+            else{
+                for ( UIView *unit in tempViewArray ) {
+                    if ( unit == [tempViewArray firstObject] ) {
+                        if ( _isRevertArrangement ) {
+                            unit.frame = CGRectMake(self.frame.size.width - unit.frame.origin.x - _rightMargin - unit.frame.size.width,
+                                                    unit.frame.origin.y + _topMargin,
+                                                    unit.frame.size.width,
+                                                    unit.frame.size.height);
+                            totalX = unit.frame.origin.x;
+                        }
+                        else{
+                            unit.frame = CGRectMake(unit.frame.origin.x + _leftMargin ,
+                                                    unit.frame.origin.y + _topMargin,
+                                                    unit.frame.size.width,
+                                                    unit.frame.size.height);
+                            totalX = unit.frame.origin.x + unit.frame.size.width;
+                        }
+                    }
+                    else if( unit == [tempViewArray lastObject] ){
+                        if ( _isRevertArrangement ) {
+                            unit.frame = CGRectMake(_leftMargin ,
+                                                    unit.frame.origin.y + _topMargin,
+                                                    totalX - _leftMargin - _middleMargin ,
+                                                    unit.frame.size.height);
+                        }
+                        else{
+                            unit.frame = CGRectMake(unit.frame.origin.x + totalX + _middleMargin ,
+                                                    unit.frame.origin.y + _topMargin,
+                                                    self.frame.size.width - totalX - _middleMargin - _rightMargin ,
+                                                    unit.frame.size.height);
+                        }
+                    }
+                    else{
+                        if ( _isRevertArrangement ) {
+                            unit.frame = CGRectMake(totalX - _middleMargin - unit.frame.size.width ,
+                                                    unit.frame.origin.y + _topMargin,
+                                                    unit.frame.size.width,
+                                                    unit.frame.size.height);
+                            totalX = totalX - _middleMargin - unit.frame.size.width;
+                        }
+                        else{
+                            unit.frame = CGRectMake(unit.frame.origin.x + totalX + _middleMargin ,
+                                                    unit.frame.origin.y + _topMargin,
+                                                    unit.frame.size.width,
+                                                    unit.frame.size.height);
+                            totalX = totalX + _middleMargin + unit.frame.size.width;
+                        }
+                    }
+                    if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
+                        realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
+                    }
+                    [self addSubview:unit];
+                }
             }
         }
     }
@@ -1170,7 +1172,8 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createLabelWithText:tempText 
                    withTextAlignment:tempTextAlignment
                      withCustomFrame:CGRectMake(0,0,tempSize.width,tempHeight) 
-                       withTextColor:tempTextColor];
+                       withTextColor:tempTextColor 
+                withIsNeedAutoLayout:NO];
 }
 
 // 3.2.2
@@ -1256,7 +1259,8 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                                     0, 
                                                     [UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2,
                                                     tempHeight) 
-                           withTextColor:tempTextColor];
+                           withTextColor:tempTextColor 
+                    withIsNeedAutoLayout:NO];
     }
     else{
         return [self createLabelWithText:tempText
@@ -1401,19 +1405,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                 withCustomFrame:(CGRect)tempFrame
                   withTextColor:(UIColor *)tempTextColor
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:tempFrame];
-    [label setTextAlignment:tempTextAlignment];
-    [label setText:tempText];
-    [label setFont:_textFont];
-    [label setTextColor:tempTextColor];
-    [label setNumberOfLines:0];
-    label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    
-    // 將元件陣列暫時存入 recentObjects
-    _recentObjects = nil;
-    _recentObjects = @[label];
-    
-    return label;
+    return [self createLabelWithText:tempText 
+                   withTextAlignment:tempTextAlignment 
+                     withCustomFrame:tempFrame
+                       withTextColor:tempTextColor 
+                withIsNeedAutoLayout:YES];
 }
 
 // 3.7.2 給定設定的 Frame
@@ -1499,7 +1495,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     [label setTextColor:tempTextColor];
     [label setNumberOfLines:0];
     if ( needAutoLayout ) {
-        label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
     }
     else{
         label.autoresizingMask = UIViewAutoresizingNone;
