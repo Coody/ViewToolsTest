@@ -914,7 +914,12 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 -(UIButton *)createButtonWithText:(NSString *)tempText
 {
     return [self createButtonWithText:tempText 
-                      withCustomWidth:[UIScreen mainScreen].bounds.size.width];
+                      withCustomFrame:CGRectMake(0, 
+                                                 0, 
+                                                 [UIScreen mainScreen].bounds.size.width,
+                                                 _viewHeight)
+                      withIsRedButton:NO 
+                 withIsNeedAutoLayout:YES];
 }
 
 /** 
@@ -1138,6 +1143,24 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                        withTextColor:_labelTextColor];
 }
 
+// 3.1.1-2
+-(UILabel *)createLabelWithText:(NSString *)tempText 
+              withTextAlignment:(NSTextAlignment)tempTextAlignment 
+           withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
+{
+    CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
+    CGFloat tempHeight = _viewHeight;
+    if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
+        tempSize = [ViewTools getTextFrameWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
+        tempHeight = tempSize.height;
+    }
+    return [self createLabelWithText:tempText 
+                   withTextAlignment:tempTextAlignment
+                     withCustomFrame:CGRectMake(0,0,tempSize.width,tempHeight) 
+                       withTextColor:_labelTextColor 
+                withIsNeedAutoLayout:isNeedAutoLayout];
+}
+
 // 3.1.2
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment
@@ -1176,6 +1199,25 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                 withIsNeedAutoLayout:NO];
 }
 
+// 3.2.1-2
+-(UILabel *)createLabelWithText:(NSString *)tempText 
+              withTextAlignment:(NSTextAlignment)tempTextAlignment  
+                  withTextColor:(UIColor *)tempTextColor 
+           withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
+{
+    CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
+    CGFloat tempHeight = _viewHeight;
+    if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
+        tempSize = [ViewTools getTextFrameWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
+        tempHeight = tempSize.height;
+    }
+    return [self createLabelWithText:tempText 
+                   withTextAlignment:tempTextAlignment
+                     withCustomFrame:CGRectMake(0,0,tempSize.width,tempHeight) 
+                       withTextColor:tempTextColor 
+                withIsNeedAutoLayout:isNeedAutoLayout];
+}
+
 // 3.2.2
 -(UILabel *)createLabelWithAttributeText:(NSMutableAttributedString *)tempText 
                        withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -1204,6 +1246,18 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
                   withIsTemplet:(BOOL)tempIsTemplet
+{
+    return [self createLabelWithText:tempText 
+                   withTextAlignment:tempTextAlignment 
+                       withTextColor:_labelTextColor
+                       withIsTemplet:tempIsTemplet];
+}
+
+// 3.3.1
+-(UILabel *)createLabelWithText:(NSString *)tempText 
+              withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                  withIsTemplet:(BOOL)tempIsTemplet 
+           withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
 {
     return [self createLabelWithText:tempText 
                    withTextAlignment:tempTextAlignment 

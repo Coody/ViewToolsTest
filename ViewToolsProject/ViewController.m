@@ -62,7 +62,8 @@
 #pragma mark - Create UI 元件
 -(void)createLabel{
     UILabel *testLabel1 = [_viewTool createLabelWithText:@"元件背景圖案請自行去 ViewTools 的 #define 設定檔案名稱（或路徑＋檔案名稱），或是改寫內部產生路徑當類別方法。\nPS: 目前黑色區塊為辨識 UIView 元件區塊，所自行設定的。" 
-                                       withTextAlignment:(NSTextAlignmentLeft) withIsTemplet:YES];
+                                       withTextAlignment:(NSTextAlignmentLeft) 
+                                    withIsNeedAutoLayout:YES];
     [testLabel1 setBackgroundColor:[UIColor blackColor]];
     [_viewArray addObject:testLabel1];
 }
