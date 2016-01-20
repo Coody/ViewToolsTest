@@ -178,7 +178,7 @@ NSInteger const kArrowImage_Tag = 6481;
                         totalY = totalY + unit.frame.size.height + _bottomMargin;
                     }
                     else{
-                        totalY = totalY + unit.frame.size.height;
+                        totalY = totalY + unit.frame.size.height + _middleMargin;
                     }
                 }
                 if ( totalY > realHeight ) {
@@ -583,10 +583,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                         withRightAttributedText:(NSMutableAttributedString *)tempRightText 
                                   withNeedArrow:(BOOL)tempIsNeedArrow
 {
-    return [self createButtonWithLeftAttributeText:tempLeftText 
-                            withRightAttributeText:tempRightText 
-                                     withNeedArrow:tempIsNeedArrow 
-                                   withCustomWidth:[UIScreen mainScreen].bounds.size.width];
+    return [self createButtonWithLeftAttributedText:tempLeftText 
+                                     withLineHeight:1.0f 
+                            withRightAttributedText:tempRightText 
+                                     withLineHeight:1.0f 
+                                      withNeedArrow:tempIsNeedArrow
+                                    withCustomWidth:[UIScreen mainScreen].bounds.size.width 
+                               withIsNeedAutoLayout:YES];
 }
 
 // 2.1.3 建立 Attribute 字串的特殊按鈕
@@ -601,7 +604,8 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                             withRightAttributedText:tempRightText 
                                      withLineHeight:tempRightLineHeight 
                                       withNeedArrow:tempIsNeedArrow 
-                                    withCustomWidth:[UIScreen mainScreen].bounds.size.width];
+                                    withCustomWidth:[UIScreen mainScreen].bounds.size.width 
+                               withIsNeedAutoLayout:YES];
 }
 
 // 2.2.1 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
@@ -613,7 +617,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createButtonWithLeftText:tempLeftText
                             withRightText:tempRightText 
                             withNeedArrow:tempIsNeedArrow 
-                          withCustomFrame:CGRectMake(6, 0, [UIScreen mainScreen].bounds.size.width - 12, _viewHeight )  
+                          withCustomFrame:CGRectMake(0, 0, tempCustomWidth , _viewHeight )  
                           withLabelStatic:EnumLabelStaticType_None 
                      withIsNeedAutoLayout:NO];
 }

@@ -17,6 +17,7 @@
 @property (nonatomic , strong) ViewTools *viewTool;
 @property (nonatomic , strong) ContainerView *mainView;
 @property (nonatomic , strong) NSMutableArray *viewArray;
+@property (nonatomic , strong) UIScrollView *scrollView;
 @end
 
 @implementation ViewController
@@ -24,7 +25,39 @@
 -(id)init{
     self = [super init];
     if ( self ) {
+        
+        // Unit Test
+        
+        // ViewTools
         _viewTool = [[ViewTools alloc] init];
+        [_viewTool setViewHeight:45];
+        NSLog(@" show view tools Height = %f" , [_viewTool getViewHeight]);
+        [_viewTool setAllTextColor:[UIColor orangeColor]];
+        
+        // 目前不塞圖
+        [_viewTool setButtonImage:nil 
+         andButtonHightLightImage:nil 
+            andButtonDisableImage:nil];
+        
+        [_viewTool setButtonTextColor:[UIColor whiteColor]];
+        [_viewTool setButtonLeftTextColor:[UIColor grayColor]];
+        [_viewTool setButtonRightTextColor:[UIColor blueColor]];
+        
+        // 目前不另外設定 Arrow 的圖片
+//        [_viewTool setArrowImage:nil];
+        // 不設定 TextField 的外框框
+//        [_viewTool setTextFieldImage:nil];
+        
+        [_viewTool setTextFieldTintColor:[UIColor blueColor]];
+        [_viewTool setTextFieldTextColor:[UIColor greenColor]];
+        [_viewTool setTextFieldInnerColor:[UIColor darkGrayColor]];
+        
+        [_viewTool setLabelTextColor:[UIColor darkGrayColor]];
+        [_viewTool setTextButtonColor:[UIColor grayColor]];
+        [_viewTool setTextFont:[UIFont systemFontOfSize:14.0f]];
+        
+        
+        // ContainerView
         _mainView = [[ContainerView alloc] init];
         _mainView.isVertical = YES;
         [_mainView setTopMargin:D_Top_Distance];
@@ -33,7 +66,61 @@
         [_mainView setRightMargin:D_Center_Distance];
         _viewArray = [[NSMutableArray alloc] init];
         
-        // Test 
+        
+        // 2.1.1
+        {
+            UIButton *button1 = [_viewTool createButtonWithLeftText:@"測試1" withRightText:@"測試1" withNeedArrow:YES];
+            UIButton *button2 = [_viewTool createButtonWithLeftText:@"測試2" withRightText:@"測試2" withNeedArrow:NO];
+            [button1 setBackgroundColor:[UIColor darkGrayColor]];
+            [button2 setBackgroundColor:[UIColor darkGrayColor]];
+            [_viewArray addObjectsFromArray:@[button1 , button2]];
+        }
+        
+        {
+            UIButton *button1 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"Test1"] 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"Test2"] 
+                                                                withNeedArrow:YES];
+            UIButton *button2 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"Test1"] 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"Test2"] 
+                                                                withNeedArrow:NO];
+            [button1 setBackgroundColor:[UIColor darkGrayColor]];
+            [button2 setBackgroundColor:[UIColor darkGrayColor]];
+            [_viewArray addObjectsFromArray:@[button1 , button2]];
+        }
+        
+        {
+            ContainerView *containerView1 = [[ContainerView alloc] init];
+            [containerView1 setLeftMargin:12.0f];
+            [containerView1 setMiddleMargin:10.0f];
+            [_viewTool setViewHeight:80.0f];
+            UIButton *button1 = [_viewTool createButtonWithLeftText:@"test1" withRightText:@"test2" withNeedArrow:YES withCustomWidth:140];
+            UIButton *button2 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"Test2\ntest3"] 
+                                                               withLineHeight:1.2 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"Test2\ntest3"] 
+                                                               withLineHeight:2.0 
+                                                                withNeedArrow:NO];
+            [button1 setBackgroundColor:[UIColor darkGrayColor]];
+            [button2 setBackgroundColor:[UIColor darkGrayColor]];
+            [containerView1 addUnits:@[button1,button2]];
+            
+            ContainerView *containerView2 = [[ContainerView alloc] init];
+            [containerView2 setLeftMargin:12.0f];
+            [containerView2 setMiddleMargin:10.0f];
+            UIButton *button3 = [_viewTool createButtonWithLeftText:@"test1" withRightText:@"test2" withNeedArrow:NO withCustomWidth:140];
+            UIButton *button4 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"Test3\ntest3"] 
+                                                               withLineHeight:2.0 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"Test2\ntest3"] 
+                                                               withLineHeight:1.5 
+                                                                withNeedArrow:YES];
+            [button3 setBackgroundColor:[UIColor darkGrayColor]];
+            [button4 setBackgroundColor:[UIColor darkGrayColor]];
+            [containerView2 addUnits:@[button3,button4]];
+            
+            [_viewArray addObjectsFromArray:@[containerView1 , containerView2]];
+            [_viewTool setViewHeight:45.0f];
+        }
+        
+        
         
         // label 用法
         [self createLabel];
@@ -50,11 +137,14 @@
         // button
         [self createButton];
         
-//        [self endAddMainView];
-        
         [_mainView addUnits:_viewArray];
         
-        [self.view addSubview:_mainView];
+        _scrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _scrollView.contentSize = _mainView.frame.size;
+        _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [_scrollView setScrollEnabled:YES];
+        [_scrollView addSubview:_mainView];
+        [self.view addSubview:_scrollView];
     }
     return self;
 }
@@ -72,6 +162,7 @@
     UIView *testTextField = [_viewTool createTextFieldWithText:@"有字" withInnerText:@"請輸入內容" withTextAlignment:(NSTextAlignmentLeft)];
     //// get TextField in UIView
     UITextField *realTextField = [[_viewTool getRecentObjects] firstObject];
+    [realTextField setBackgroundColor:[UIColor whiteColor]];
     //// and you can add action listener to real UITextField （得到 TextField 實體以後可以自行加入動作等等......）
     [_viewArray addObject:testTextField];
 }
@@ -165,15 +256,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - private methods
--(void)endAddMainView{
-//    CGFloat recent_Y_Distance = D_Top_Distance;
-//    for ( UIView *unit in _mainView.subviews ) {
-//        unit.frame = CGRectMake(unit.frame.origin.x, recent_Y_Distance, unit.frame.size.width, unit.frame.size.height);
-//        recent_Y_Distance = recent_Y_Distance + unit.frame.size.height + D_Center_Distance;
-//    }
 }
 
 

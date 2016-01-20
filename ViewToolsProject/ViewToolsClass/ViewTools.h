@@ -170,7 +170,7 @@ typedef enum : NSInteger{
 andButtonHightLightImage:(UIImage *)tempButtonHightLightImage 
 andButtonDisableImage:(UIImage *)tempDisableImage; 
 
-/** 1.3 設定按鈕左邊的文字顏色 */
+/** 1.3 設定按鈕的文字顏色 */
 -(void)setButtonTextColor:(UIColor *)tempColor;
 
 /** 1.4 設定按鈕左邊的文字顏色（使用 ViewTolls 實體內的元件設定都會改變（在這之後使用 viewTolls 建立的才會使用新的值來做設定）） */
@@ -405,7 +405,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                   withTextColor:(UIColor *)tempTextColor;
 
 /**
- * @brief - 3.2.1 文字、位置、文字顏色、AutoLayout、寬度為文字寬度
+ * @brief - 3.2.1-2 文字、位置、文字顏色、AutoLayout、寬度為文字寬度
  */
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment  
