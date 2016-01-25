@@ -23,6 +23,8 @@
 #define D_ViewTools_Text_Color [UIColor whiteColor]
 // 設定 TextField 內文字的顏色
 #define D_ViewTools_TextField_Inner_Color [UIColor grayColor]
+// 設定產生 Button 時，左右的預留間距
+#define D_ViewTools_Button_LeftRight_Margin (6)
 ///////////////////////////////////////////////////////////////////
 // 如果不需要設定請直接使用 nil 即可
 // 設定 Image 的名稱（不帶 .png ）
@@ -280,19 +282,19 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 //                      withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType;
 
 /** 
- * @brief - 2.3.1 文字
+ * @brief - 2.3.1 文字（按鈕）
  */
 -(UIButton *)createButtonWithText:(NSString *)tempText;
 
 /** 
- * @brief   - 2.3.2 文字（左右留 5 pixel 的空間）
+ * @brief   - 2.3.2 文字（按鈕，左右留 5 pixel 的空間）
  * @details - 左右有留 5 pixel 的空間
  * @param   - tempText : 中間有置中的文字
  */
 -(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText;
 
 /** 
- * @brief - 2.4 文字、自定寬度
+ * @brief - 2.4 文字、自定寬度（按鈕）
  * @param - tempText        : 中間有置中的文字
  * @param - tempCustomWidth : 自行設定寬度
  */

@@ -617,7 +617,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createButtonWithLeftText:tempLeftText
                             withRightText:tempRightText 
                             withNeedArrow:tempIsNeedArrow 
-                          withCustomFrame:CGRectMake(0, 0, tempCustomWidth , _viewHeight )  
+                          withCustomFrame:CGRectMake(D_ViewTools_Button_LeftRight_Margin, 0, tempCustomWidth - D_ViewTools_Button_LeftRight_Margin*2 , _viewHeight )  
                           withLabelStatic:EnumLabelStaticType_None 
                      withIsNeedAutoLayout:NO];
 }
@@ -662,9 +662,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                 withCustomWidth:(float)tempCustomWidth 
                            withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(6, 
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(D_ViewTools_Button_LeftRight_Margin, 
                                                                   0, 
-                                                                  tempCustomWidth - 12,
+                                                                  tempCustomWidth - D_ViewTools_Button_LeftRight_Margin*2,
                                                                   _viewHeight)];
     [button setImageEdgeInsets:UIEdgeInsetsMake(2, 5, 2, 5)];
     [button setBackgroundImage:[_buttonImage_Normal 
@@ -722,7 +722,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         UILabel *firstLabel = [privateViewTools createLabelWithAttributeText:tempLeftText 
                                                               withLineHeight:tempLeftLineHeight
                                                            withTextAlignment:(NSTextAlignmentLeft)];
-        firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin + 6,
+        firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin + D_ViewTools_Button_LeftRight_Margin,
                                       0,
                                       firstLabel.frame.size.width,
                                       _viewHeight);
@@ -769,7 +769,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createButtonWithLeftText:tempLeftText
                             withRightText:tempRightText 
                             withNeedArrow:tempIsNeedArrow 
-                          withCustomFrame:CGRectMake(6, 0, [UIScreen mainScreen].bounds.size.width - 12, _viewHeight )  
+                          withCustomFrame:CGRectMake(D_ViewTools_Button_LeftRight_Margin, 0, [UIScreen mainScreen].bounds.size.width - D_ViewTools_Button_LeftRight_Margin*2, _viewHeight )  
                           withLabelStatic:tempEnumLabelStaticType 
                      withIsNeedAutoLayout:YES];
 }
@@ -859,13 +859,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                                    withFont:_textFont];
             }
             
-            firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin + 6,
+            firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin + D_ViewTools_Button_LeftRight_Margin,
                                           0,
-                                          button.frame.size.width - D_ViewTools_Label_Left_Margin*2 - arrowWidth - tempSize.width - 6,
+                                          button.frame.size.width - D_ViewTools_Label_Left_Margin*2 - arrowWidth - tempSize.width - D_ViewTools_Button_LeftRight_Margin,
                                           _viewHeight);
         }
         else{
-            firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin + 6,
+            firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin + D_ViewTools_Button_LeftRight_Margin,
                                           0,
                                           firstLabel.frame.size.width,
                                           _viewHeight);
@@ -931,9 +931,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
  */
 -(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText{
     return [self createButtonWithText:tempText 
-                      withCustomFrame:CGRectMake(5, 
+                      withCustomFrame:CGRectMake(D_ViewTools_Button_LeftRight_Margin, 
                                                  0, 
-                                                 [UIScreen mainScreen].bounds.size.width - 10,
+                                                 [UIScreen mainScreen].bounds.size.width - D_ViewTools_Button_LeftRight_Margin*2,
                                                  _viewHeight) 
                       withIsRedButton:NO 
                  withIsNeedAutoLayout:YES];
