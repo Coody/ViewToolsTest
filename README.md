@@ -1,6 +1,5 @@
 # ViewToolsTest 
 ![建立者](https://img.shields.io/badge/建立者-Coody-orange.svg)
-![License](https://img.shields.io/dub/l/vibe-d.svg)
 
 用來快速建立 view 元件的工具（可以不用管排版）
 
@@ -21,7 +20,3 @@ ViewToolsClass 資料夾裡面包含三個類別：
 
 # DEMO
 >（待補）
-
-### License
-
-ViewTools is available under the MIT license.
