@@ -17,6 +17,7 @@
 // 設定元件與左邊畫面的距離
 #define D_ViewTools_Label_Left_Margin (12)
 #define D_ViewTools_Label_Middle_Margin (12)
+#define D_ViewTools_Label_Right_Margin (12)
 // 設定文字大小
 #define D_ViewTools_Text_Font [UIFont boldSystemFontOfSize:16.0f]
 // 設定文字顏色
