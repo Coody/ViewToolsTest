@@ -582,9 +582,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
  * @param - tempText: 字串
  * @param - tempFont: 字型、與字體大小
  */
-+(CGSize)getTextFrameWithWidth:(float)tempWidth 
-                      withText:(NSString *)tempText 
-                      withFont:(UIFont *)tempFont;
++(CGSize)getTextSizeWithWidth:(float)tempWidth 
+                     withText:(NSString *)tempText 
+                     withFont:(UIFont *)tempFont;
 
 /**
  * @brief - 給一個 Attribute String，回傳字的 Size
@@ -592,9 +592,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
  * @param - tempText: Attribute 字串
  * @param - tempFont: 字型、與字體大小
  */
-+(CGSize)getTextFrameWithWidth:(float)tempWidth 
-             withAttributeText:(NSAttributedString *)tempText 
-                      withFont:(UIFont *)tempFont;
++(CGSize)getTextSizeWithWidth:(float)tempWidth 
+            withAttributeText:(NSAttributedString *)tempText 
+                     withFont:(UIFont *)tempFont;
 
 /**
  * @brief - 

@@ -9,6 +9,7 @@
 #import "ViewTools.h"
 #import <CoreText/CoreText.h>
 
+
 NSInteger const kArrowImage_Tag = 6481;
 
 
@@ -153,6 +154,51 @@ NSInteger const kArrowImage_Tag = 6481;
     }
     else{
         
+#define D_TestConstrain
+#ifdef D_TestConstrain
+        
+        NSMutableString *constrainString = [[NSMutableString alloc] init];
+        if ( _isVertical ) {
+            [constrainString appendString:@"V:"];
+        }
+        else{
+            [constrainString appendString:@"H:"];
+        }
+        
+        int countI = 1;
+        NSMutableDictionary *viewDic = [NSMutableDictionary dictionary];
+        if ( [tempViewArray count] == 1 ) {
+            UIView *unit = [tempViewArray firstObject];
+            [unit setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [self addSubview:unit];
+            NSString *viewName = @"view1";
+            if ( _isVertical ) {
+                [constrainString appendString:[NSString stringWithFormat:@"|-%.0f-[view1(>=0)]" , _topMargin]];
+                [viewDic setObject:[tempViewArray firstObject] forKey:viewName];
+            }
+            else{
+                [constrainString appendString:[NSString stringWithFormat:@"|-%f-[view1(>=0)]-%f-|" , _leftMargin , _rightMargin ]];
+                [viewDic setObject:[tempViewArray firstObject] forKey:viewName];
+            }
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:constrainString 
+                                                                         options:0 
+                                                                         metrics:nil 
+                                                                           views:viewDic]];
+            
+        }
+        else{
+//            for ( UIView *uint in tempViewArray ) {
+//                
+//                
+//                
+//            }
+        }
+        
+        
+        
+#else
+        
+        
         // isVertical == YES , 是否是上下加入元件？ 
         // isVertical == NO , 是否是左右加入元件？
         if ( _isVertical ) {
@@ -255,10 +301,13 @@ NSInteger const kArrowImage_Tag = 6481;
                 }
             }
         }
+        
+#endif
+        
     }
     
-    [self setContainerViewHight:realHeight];
-    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+//    [self setContainerViewHight:realHeight];
+//    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     
 }
 
@@ -662,23 +711,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                 withCustomWidth:(float)tempCustomWidth 
                            withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 
-                                                                  0, 
-                                                                  tempCustomWidth,
-                                                                  _viewHeight)];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(2, 5, 2, 5)];
-    [button setBackgroundImage:[_buttonImage_Normal 
-                                resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
-                                resizingMode:UIImageResizingModeStretch] 
-                      forState:(UIControlStateNormal)];
-    [button setBackgroundImage:[_buttonImage_HightLight  
-                                resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
-                                resizingMode:UIImageResizingModeStretch] 
-                      forState:(UIControlStateHighlighted)];
-    [button setBackgroundImage:[_buttonImage_Disable  
-                                resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
-                                resizingMode:UIImageResizingModeStretch] 
-                      forState:(UIControlStateDisabled)];
+    UIButton *button = [self getBasicButtonWithFrame:CGRectMake(0, 
+                                                                0, 
+                                                                tempCustomWidth,
+                                                                _viewHeight)];
     if ( isNeedAutoLayout ) {
         button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
@@ -700,7 +736,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     if ( tempIsNeedArrow ) 
     {
         [arrowImageView setAlpha:1.0f];
-        arrowWidth = arrowImageView.frame.size.width;
+        arrowWidth = arrowImageView.frame.size.width + D_ViewTools_Label_Right_Margin;
     }
     else
     {
@@ -731,6 +767,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         firstLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [button addSubview:firstLabel];
         
+#ifdef D_DEBUG
+        [firstLabel setBackgroundColor:[UIColor greenColor]];
+#endif
+        
         // 將元件加入陣列（等等會暫時存入 recentObject）
         [tempReturnObjects addObject:firstLabel];
     }
@@ -741,22 +781,17 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         UILabel *secondLabel = [privateViewTools createLabelWithAttributeText:tempRightText 
                                                                withLineHeight:tempRightLineHeight 
                                                             withTextAlignment:(NSTextAlignmentRight)];
-        if ( tempIsNeedArrow ) {
-            secondLabel.frame = CGRectMake(button.frame.size.width - arrowWidth - secondLabel.frame.size.width - D_ViewTools_Label_Left_Margin - 6 ,
-                                           0,
-                                           secondLabel.frame.size.width,
-                                           _viewHeight);
-        }
-        else{
-            secondLabel.frame = CGRectMake(button.frame.size.width - secondLabel.frame.size.width - D_ViewTools_Label_Left_Margin ,
-                                           0,
-                                           secondLabel.frame.size.width,
-                                           _viewHeight);
-        }
-        
+        secondLabel.frame = CGRectMake(button.frame.size.width - arrowWidth - secondLabel.frame.size.width - D_ViewTools_Label_Right_Margin ,
+                                       0,
+                                       secondLabel.frame.size.width,
+                                       _viewHeight);
         [secondLabel setTag:2];
         secondLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [button addSubview:secondLabel];
+        
+#ifdef D_DEBUG
+        [secondLabel setBackgroundColor:[UIColor greenColor]];
+#endif
         
         // 將元件加入陣列（等等會暫時存入 recentObject）
         [tempReturnObjects addObject:secondLabel];
@@ -806,20 +841,8 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                       withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType 
                  withIsNeedAutoLayout:(BOOL)needAutoLayout
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:tempCustomFrame];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(2, 5, 2, 5)];
-    [button setBackgroundImage:[_buttonImage_Normal 
-                                resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
-                                resizingMode:UIImageResizingModeStretch] 
-                      forState:(UIControlStateNormal)];
-    [button setBackgroundImage:[_buttonImage_HightLight  
-                                resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
-                                resizingMode:UIImageResizingModeStretch] 
-                      forState:(UIControlStateHighlighted)];
-    [button setBackgroundImage:[_buttonImage_Disable  
-                                resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
-                                resizingMode:UIImageResizingModeStretch] 
-                      forState:(UIControlStateDisabled)];
+    UIButton *button = [self getBasicButtonWithFrame:tempCustomFrame];
+    
     if ( needAutoLayout ) {
         button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
@@ -872,8 +895,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [firstLabel setTag:1];
         [firstLabel setNumberOfLines:0];
         [button addSubview:firstLabel];
-        
+       
+#ifdef D_DEBUG
         [firstLabel setBackgroundColor:[UIColor greenColor]];
+#endif
         
         [tempReturnObjects addObject:firstLabel];
     }
@@ -884,7 +909,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [secondLebal setNumberOfLines:0];
         [button addSubview:secondLebal];
         
+#ifdef D_DEBUG
         [secondLebal setBackgroundColor:[UIColor greenColor]];
+#endif
         
         [tempReturnObjects addObject:secondLebal];
     }
@@ -953,9 +980,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
             
             // 計算右邊寬度
             if ( tempRightText != nil ) {
-                tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX 
-                                                   withText:tempRightText 
-                                                   withFont:_textFont];
+                tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX 
+                                                  withText:tempRightText 
+                                                  withFont:_textFont];
             }
             
             firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin,
@@ -1110,13 +1137,6 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 {
     UIButton *button = [[UIButton alloc] initWithFrame:tempCustomFrame];
     
-    if ( isNeedAutoLayout ) {
-        button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    }
-    else{
-        button.autoresizingMask = UIViewAutoresizingNone;
-    }
-    
     [button setImageEdgeInsets:UIEdgeInsetsMake(2, 5, 2, 5)];
     if ( tempIsRedButton ) {
         [button setBackgroundImage:[_buttonImage_Red_Normal 
@@ -1141,10 +1161,17 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                     resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
                                     resizingMode:UIImageResizingModeStretch] 
                           forState:(UIControlStateHighlighted)];
-        //        [button setBackgroundImage:[_buttonImage_Disable
-        //                                    resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
-        //                                    resizingMode:UIImageResizingModeStretch] 
-        //                          forState:(UIControlStateDisabled)];
+//        [button setBackgroundImage:[_buttonImage_Disable
+//                                    resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
+//                                    resizingMode:UIImageResizingModeStretch] 
+//                          forState:(UIControlStateDisabled)];
+    }
+    
+    if ( isNeedAutoLayout ) {
+        button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    }
+    else{
+        button.autoresizingMask = UIViewAutoresizingNone;
     }
     
     [button setTitle:tempText forState:UIControlStateNormal];
@@ -1189,11 +1216,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                              withLine:(BOOL)isNeedLine 
                          withTextFont:(UIFont *)tempFont
 {
-    CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:tempFont];
+    CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:tempFont];
     if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
-        tempSize = [ViewTools getTextFrameWithWidth:[UIScreen mainScreen].bounds.size.width 
-                                           withText:tempText 
-                                           withFont:tempFont];
+        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width 
+                                          withText:tempText 
+                                          withFont:tempFont];
     }
     if ( tempSize.height <= _viewHeight ) {
         tempSize.height = _viewHeight;
@@ -1254,10 +1281,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
            withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
 {
-    CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
+    CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
     CGFloat tempHeight = _viewHeight;
     if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
-        tempSize = [ViewTools getTextFrameWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
+        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
         tempHeight = tempSize.height;
     }
     return [self createLabelWithText:tempText 
@@ -1292,10 +1319,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
               withTextAlignment:(NSTextAlignment)tempTextAlignment  
                   withTextColor:(UIColor *)tempTextColor
 {
-    CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
+    CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
     CGFloat tempHeight = _viewHeight;
     if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
-        tempSize = [ViewTools getTextFrameWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
+        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
         tempHeight = tempSize.height;
     }
     return [self createLabelWithText:tempText 
@@ -1311,10 +1338,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                   withTextColor:(UIColor *)tempTextColor 
            withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
 {
-    CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
+    CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
     CGFloat tempHeight = _viewHeight;
     if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
-        tempSize = [ViewTools getTextFrameWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
+        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
         tempHeight = tempSize.height;
     }
     return [self createLabelWithText:tempText 
@@ -1402,15 +1429,15 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                   withIsTemplet:(BOOL)tempIsTemplet
 {
     if ( tempIsTemplet == YES ) {
-        CGSize tempSize = [ViewTools getTextFrameWithWidth:CGFLOAT_MAX 
-                                                  withText:tempText 
-                                                  withFont:_textFont];
+        CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX 
+                                                 withText:tempText 
+                                                 withFont:_textFont];
         CGFloat tempHeight = _viewHeight;
         if ( tempSize.width > [UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2 ) {
             // 改成限制寬度來計算高度
-            tempSize = [ViewTools getTextFrameWithWidth:([UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2) 
-                                               withText:tempText 
-                                               withFont:_textFont];
+            tempSize = [ViewTools getTextSizeWithWidth:([UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2) 
+                                              withText:tempText 
+                                              withFont:_textFont];
             tempHeight = tempSize.height;
         }
         return [self createLabelWithText:tempText 
@@ -1516,9 +1543,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                   withTextColor:(UIColor *)tempTextColor
                 withCustomWidth:(float)tempCustomWidth
 {
-    CGSize tempSize = [ViewTools getTextFrameWithWidth:tempCustomWidth 
-                                              withText:tempText 
-                                              withFont:_textFont];
+    CGSize tempSize = [ViewTools getTextSizeWithWidth:tempCustomWidth 
+                                             withText:tempText 
+                                             withFont:_textFont];
     if ( tempSize.height > _viewHeight ) {
         return [self createLabelWithText:tempText 
                        withTextAlignment:tempTextAlignment 
@@ -1595,10 +1622,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     UILabel *label = [[UILabel alloc] initWithFrame:tempFrame];
     // 加入 Center
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setAlignment:tempTextAlignment];
     [paragraphStyle setLineHeightMultiple:tempLineHeight];
+    [paragraphStyle setAlignment:tempTextAlignment];
     [tempText addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [tempText.string length])];
-    [label setFont:_textFont];
+    [tempText addAttribute:NSFontAttributeName value:_textFont range:NSMakeRange(0, tempText.length)];
     [label setTextColor:tempTextColor];
     label.numberOfLines = 0;
     [label setAttributedText:tempText];
@@ -1759,14 +1786,20 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 
 #pragma mark - 其他工具
 // 求一般 NSString 的 frame
-+(CGSize)getTextFrameWithWidth:(float)tempWidth withText:(NSString *)tempText withFont:(UIFont *)tempFont{
++(CGSize)getTextSizeWithWidth:(float)tempWidth 
+                     withText:(NSString *)tempText 
+                     withFont:(UIFont *)tempFont
+{
     return ([tempText boundingRectWithSize:CGSizeMake(tempWidth, CGFLOAT_MAX) 
                                    options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                 attributes:@{NSFontAttributeName:tempFont} 
                                    context:nil].size);
 }
 
-+(CGSize)getTextFrameWithWidth:(float)tempWidth withAttributeText:(NSAttributedString *)tempText withFont:(UIFont *)tempFont{
++(CGSize)getTextSizeWithWidth:(float)tempWidth 
+            withAttributeText:(NSAttributedString *)tempText 
+                     withFont:(UIFont *)tempFont
+{
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)tempText);
     CGSize targetSize = CGSizeMake(tempWidth, CGFLOAT_MAX);
     CGSize fitSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, [tempText length]), NULL, targetSize, NULL);
@@ -1876,6 +1909,25 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [newArray addObject:unit];
     }
     return newArray;
+}
+
+#pragma mark - Private Methods
+-(UIButton *)getBasicButtonWithFrame:(CGRect)tempCustomFrame{
+    UIButton *button = [[UIButton alloc] initWithFrame:tempCustomFrame];
+    [button setImageEdgeInsets:UIEdgeInsetsMake(2, 5, 2, 5)];
+    [button setBackgroundImage:[_buttonImage_Normal 
+                                resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
+                                resizingMode:UIImageResizingModeStretch] 
+                      forState:(UIControlStateNormal)];
+    [button setBackgroundImage:[_buttonImage_HightLight  
+                                resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
+                                resizingMode:UIImageResizingModeStretch] 
+                      forState:(UIControlStateHighlighted)];
+    [button setBackgroundImage:[_buttonImage_Disable  
+                                resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
+                                resizingMode:UIImageResizingModeStretch] 
+                      forState:(UIControlStateDisabled)];
+    return button;
 }
 
 @end
