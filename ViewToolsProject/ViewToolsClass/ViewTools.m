@@ -1,9 +1,8 @@
 //
 //  ViewTools.m
-//  Prime
+//
 //
 //  Created by Coody on 2015/8/21.
-//  This code is distributed under the terms and conditions of the MIT license.
 //
 
 #import "ViewTools.h"
@@ -154,7 +153,7 @@ NSInteger const kArrowImage_Tag = 6481;
     }
     else{
         
-#define D_TestConstrain
+        
 #ifdef D_TestConstrain
         
         NSMutableString *constrainString = [[NSMutableString alloc] init];
@@ -306,8 +305,8 @@ NSInteger const kArrowImage_Tag = 6481;
         
     }
     
-//    [self setContainerViewHight:realHeight];
-//    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    [self setContainerViewHight:realHeight];
+    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     
 }
 
@@ -624,7 +623,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                             withNeedArrow:tempIsNeedArrow 
                           withCustomFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, _viewHeight )  
                           withLabelStatic:EnumLabelStaticType_None 
-                     withIsNeedAutoLayout:YES];
+                     withIsNeedAutoResize:YES];
 }
 
 // 2.1.2 建立 Attribute 字串的特殊按鈕
@@ -638,7 +637,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                      withLineHeight:1.0f 
                                       withNeedArrow:tempIsNeedArrow
                                     withCustomWidth:[UIScreen mainScreen].bounds.size.width 
-                               withIsNeedAutoLayout:YES];
+                               withIsNeedAutoResize:YES];
 }
 
 // 2.1.3 建立 Attribute 字串的特殊按鈕
@@ -654,7 +653,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                      withLineHeight:tempRightLineHeight 
                                       withNeedArrow:tempIsNeedArrow 
                                     withCustomWidth:[UIScreen mainScreen].bounds.size.width 
-                               withIsNeedAutoLayout:YES];
+                               withIsNeedAutoResize:YES];
 }
 
 // 2.2.1 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
@@ -668,7 +667,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                             withNeedArrow:tempIsNeedArrow 
                           withCustomFrame:CGRectMake(0, 0, tempCustomWidth, _viewHeight )  
                           withLabelStatic:EnumLabelStaticType_None 
-                     withIsNeedAutoLayout:NO];
+                     withIsNeedAutoResize:NO];
 }
 
 // 2.2.2 建立Attributed 字串的特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭）
@@ -683,7 +682,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                      withLineHeight:1.0f 
                                       withNeedArrow:tempIsNeedArrow
                                     withCustomWidth:tempCustomWidth 
-                               withIsNeedAutoLayout:NO];
+                               withIsNeedAutoResize:NO];
 }
 
 // 2.2.3
@@ -700,7 +699,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                      withLineHeight:tempRightLineHeight 
                                       withNeedArrow:tempIsNeedArrow 
                                     withCustomWidth:tempCustomWidth 
-                               withIsNeedAutoLayout:NO];
+                               withIsNeedAutoResize:NO];
 }
 
 -(UIButton *)createButtonWithLeftAttributedText:(NSMutableAttributedString *)tempLeftText 
@@ -709,13 +708,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                  withLineHeight:(CGFloat)tempRightLineHeight 
                                   withNeedArrow:(BOOL)tempIsNeedArrow 
                                 withCustomWidth:(float)tempCustomWidth 
-                           withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
+                           withIsNeedAutoResize:(BOOL)isNeedAutoResize
 {
     UIButton *button = [self getBasicButtonWithFrame:CGRectMake(0, 
                                                                 0, 
                                                                 tempCustomWidth,
                                                                 _viewHeight)];
-    if ( isNeedAutoLayout ) {
+    if ( isNeedAutoResize ) {
         button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
     else{
@@ -815,7 +814,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                             withNeedArrow:tempIsNeedArrow 
                           withCustomFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, _viewHeight )  
                           withLabelStatic:tempEnumLabelStaticType 
-                     withIsNeedAutoLayout:YES];
+                     withIsNeedAutoResize:YES];
 }
 
 // 2.2.5 建立特殊按鈕（給設定的寬度）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
@@ -830,7 +829,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                             withNeedArrow:tempIsNeedArrow 
                           withCustomFrame:CGRectMake(0, 0, tempCustomWidth, _viewHeight ) 
                           withLabelStatic:tempEnumLabelStaticType 
-                     withIsNeedAutoLayout:NO];
+                     withIsNeedAutoResize:NO];
 }
 
 // 2.2.6 建立特殊按鈕（給設定的 frame ）（左邊、右邊都有文字、還有右邊箭頭，固定某一邊的 Label ，另一邊的寬會延長至某一邊的 Label）
@@ -839,11 +838,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                         withNeedArrow:(BOOL)tempIsNeedArrow 
                       withCustomFrame:(CGRect)tempCustomFrame 
                       withLabelStatic:(EnumLabelStaticType)tempEnumLabelStaticType 
-                 withIsNeedAutoLayout:(BOOL)needAutoLayout
+                 withIsNeedAutoResize:(BOOL)needAutoResize
 {
     UIButton *button = [self getBasicButtonWithFrame:tempCustomFrame];
     
-    if ( needAutoLayout ) {
+    if ( needAutoResize ) {
         button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
     else{
@@ -929,7 +928,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                              0,
                                              button.frame.size.width - firstLabel.frame.size.width - D_ViewTools_Label_Left_Margin - D_ViewTools_Label_Middle_Margin - D_ViewTools_Label_Right_Margin - arrowWidth ,
                                              secondLebal.frame.size.height )];
-            secondLebal.autoresizingMask = UIViewAutoresizingFlexibleWidth | secondLebal.autoresizingMask;
+            secondLebal.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         }
             break;
         case EnumLabelStaticType_RightStatic:
@@ -939,7 +938,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                             0,
                                             button.frame.size.width - secondLebal.frame.origin.x - secondLebal.frame.size.width - D_ViewTools_Label_Left_Margin - D_ViewTools_Label_Middle_Margin - D_ViewTools_Label_Right_Margin - arrowWidth ,
                                             firstLabel.frame.size.height)];
-            firstLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | firstLabel.autoresizingMask;
+            firstLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             [secondLebal setFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + D_ViewTools_Label_Middle_Margin,
                                              0,
                                              secondLebal.frame.size.width,
@@ -1052,7 +1051,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                                  [UIScreen mainScreen].bounds.size.width,
                                                  _viewHeight)
                       withIsRedButton:NO 
-                 withIsNeedAutoLayout:YES];
+                 withIsNeedAutoResize:YES];
 }
 
 /** 
@@ -1060,12 +1059,12 @@ andButtonDisableImage:(UIImage *)tempDisableImage
  */
 -(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText{
     return [self createButtonWithText:tempText 
-                      withCustomFrame:CGRectMake(0, 
+                      withCustomFrame:CGRectMake(6, 
                                                  0, 
-                                                 [UIScreen mainScreen].bounds.size.width,
+                                                 [UIScreen mainScreen].bounds.size.width - 12,
                                                  _viewHeight) 
                       withIsRedButton:NO 
-                 withIsNeedAutoLayout:YES];
+                 withIsNeedAutoResize:YES];
 }
 
 // 2.4.1 建立一般按鈕（給設定的寬度）
@@ -1078,7 +1077,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                                  tempCustomWidth,
                                                  _viewHeight)
                       withIsRedButton:NO 
-                 withIsNeedAutoLayout:NO];
+                 withIsNeedAutoResize:NO];
 }
 
 // 2.5 建立一般紅色按鈕
@@ -1090,7 +1089,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                                  [UIScreen mainScreen].bounds.size.width,
                                                  _viewHeight)
                       withIsRedButton:YES 
-                 withIsNeedAutoLayout:YES];
+                 withIsNeedAutoResize:YES];
 }
 // 2.6 建立一般紅色按鈕（給設定的寬度）
 -(UIButton *)createRedButtonWithText:(NSString *)tempText 
@@ -1102,7 +1101,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                                  tempCustomWidth,
                                                  _viewHeight)
                       withIsRedButton:YES 
-                 withIsNeedAutoLayout:NO];
+                 withIsNeedAutoResize:NO];
 }
 
 // 2.7 建立一般按鈕共用方法（給定 Text , CustomWidth , 是否為 Red Button ）
@@ -1116,7 +1115,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                                  tempCustomWidth,
                                                  _viewHeight)
                       withIsRedButton:tempIsRedButton 
-                 withIsNeedAutoLayout:NO];
+                 withIsNeedAutoResize:NO];
 }
 
 // 2.8 建立一般按鈕共用方法（給定 Text , CustomFrame , 是否為 Red Button ）
@@ -1127,13 +1126,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createButtonWithText:tempText 
                       withCustomFrame:tempCustomFrame 
                       withIsRedButton:tempIsRedButton 
-                 withIsNeedAutoLayout:NO];
+                 withIsNeedAutoResize:NO];
 }
 
 -(UIButton *)createButtonWithText:(NSString *)tempText 
                   withCustomFrame:(CGRect)tempCustomFrame 
                   withIsRedButton:(BOOL)tempIsRedButton 
-             withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
+             withIsNeedAutoResize:(BOOL)isNeedAutoResize
 {
     UIButton *button = [[UIButton alloc] initWithFrame:tempCustomFrame];
     
@@ -1167,7 +1166,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 //                          forState:(UIControlStateDisabled)];
     }
     
-    if ( isNeedAutoLayout ) {
+    if ( isNeedAutoResize ) {
         button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
     else{
@@ -1216,6 +1215,22 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                              withLine:(BOOL)isNeedLine 
                          withTextFont:(UIFont *)tempFont
 {
+    return [self createTextButtonWithText:tempText 
+                            withTextColor:tempColor 
+                                 withLine:isNeedLine 
+                             withTextFont:tempFont 
+                 withIsNeedAutoResizeMask:NO];
+}
+
+/**
+ * @brief - 2.12 建立只有文字的 button （可設定顏色、底線是否需要、字體大小）
+ */
+-(UIButton *)createTextButtonWithText:(NSString *)tempText 
+                        withTextColor:(UIColor *)tempColor 
+                             withLine:(BOOL)isNeedLine 
+                         withTextFont:(UIFont *)tempFont 
+             withIsNeedAutoResizeMask:(BOOL)isNeedAutoResizeMask
+{
     CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:tempFont];
     if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
         tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width 
@@ -1225,7 +1240,6 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     if ( tempSize.height <= _viewHeight ) {
         tempSize.height = _viewHeight;
     }
-    
     
     UIButton *textButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [textButton setFrame:CGRectMake(0, 0, tempSize.width, tempSize.height)];
@@ -1246,11 +1260,19 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     [textButton titleLabel].lineBreakMode = YES;
     [[textButton titleLabel] setFont:tempFont];
     [textButton setTitleColor:tempColor forState:UIControlStateNormal];
+    
+    if ( isNeedAutoResizeMask ) {
+        textButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    }
+    else{
+        textButton.autoresizingMask = UIViewAutoresizingNone;
+    }
+    
     return textButton;
 }
 
 #pragma mark 左右有 Text 的按鈕擴充
-// 2.12 額外設定左右有 Text 按鈕的 Arrow 是否顯示？
+// 2.13 額外設定左右有 Text 按鈕的 Arrow 是否顯示？
 +(void)isNeedArrow:(BOOL)isNeedArrow withButton:(UIButton *)tempButton
 {
     for ( UIView *unit in tempButton.subviews ) {
@@ -1279,7 +1301,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 // 3.1.1-2
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
-           withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
+           withIsNeedAutoResize:(BOOL)isNeedAutoResize
 {
     CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
     CGFloat tempHeight = _viewHeight;
@@ -1291,7 +1313,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                    withTextAlignment:tempTextAlignment
                      withCustomFrame:CGRectMake(0,0,tempSize.width,tempHeight) 
                        withTextColor:_labelTextColor 
-                withIsNeedAutoLayout:isNeedAutoLayout];
+                withIsNeedAutoResize:isNeedAutoResize];
 }
 
 // 3.1.2
@@ -1329,14 +1351,14 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                    withTextAlignment:tempTextAlignment
                      withCustomFrame:CGRectMake(0,0,tempSize.width,tempHeight) 
                        withTextColor:tempTextColor 
-                withIsNeedAutoLayout:NO];
+                withIsNeedAutoResize:NO];
 }
 
 // 3.2.1-2
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment  
                   withTextColor:(UIColor *)tempTextColor 
-           withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
+           withIsNeedAutoResize:(BOOL)isNeedAutoResize
 {
     CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
     CGFloat tempHeight = _viewHeight;
@@ -1348,7 +1370,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                    withTextAlignment:tempTextAlignment
                      withCustomFrame:CGRectMake(0,0,tempSize.width,tempHeight) 
                        withTextColor:tempTextColor 
-                withIsNeedAutoLayout:isNeedAutoLayout];
+                withIsNeedAutoResize:isNeedAutoResize];
 }
 
 // 3.2.2
@@ -1390,7 +1412,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
                   withIsTemplet:(BOOL)tempIsTemplet 
-           withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
+           withIsNeedAutoResize:(BOOL)isNeedAutoResize
 {
     return [self createLabelWithText:tempText 
                    withTextAlignment:tempTextAlignment 
@@ -1447,7 +1469,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                                     [UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2,
                                                     tempHeight) 
                            withTextColor:tempTextColor 
-                    withIsNeedAutoLayout:NO];
+                    withIsNeedAutoResize:NO];
     }
     else{
         return [self createLabelWithText:tempText
@@ -1596,7 +1618,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                    withTextAlignment:tempTextAlignment 
                      withCustomFrame:tempFrame
                        withTextColor:tempTextColor 
-                withIsNeedAutoLayout:YES];
+                withIsNeedAutoResize:YES];
 }
 
 // 3.7.2 給定設定的 Frame
@@ -1673,7 +1695,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
                 withCustomFrame:(CGRect)tempFrame
                   withTextColor:(UIColor *)tempTextColor 
-           withIsNeedAutoLayout:(BOOL)needAutoLayout
+           withIsNeedAutoResize:(BOOL)needAutoResize
 {
     UILabel *label = [[UILabel alloc] initWithFrame:tempFrame];
     [label setTextAlignment:tempTextAlignment];
@@ -1681,7 +1703,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     [label setFont:_textFont];
     [label setTextColor:tempTextColor];
     [label setNumberOfLines:0];
-    if ( needAutoLayout ) {
+    if ( needAutoResize ) {
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
     }
     else{
@@ -1707,7 +1729,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                            withInnerText:tempInnerText 
                        withTextAlignment:tempTextAlignment 
                          withCustomWidth:[UIScreen mainScreen].bounds.size.width 
-                    withIsNeedAutoLayout:YES];
+                    withIsNeedAutoResize:YES];
 }
 
 /**
@@ -1722,7 +1744,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                            withInnerText:tempInnerText 
                        withTextAlignment:tempTextAlignment 
                          withCustomWidth:tempCustomWidth 
-                    withIsNeedAutoLayout:NO];
+                    withIsNeedAutoResize:NO];
 }
 
 /**
@@ -1732,11 +1754,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                      withInnerText:(NSString *)tempInnerText 
                  withTextAlignment:(NSTextAlignment)tempTextAlignment 
                    withCustomWidth:(float)tempCustomWidth 
-              withIsNeedAutoLayout:(BOOL)isNeedAutoLayout
+              withIsNeedAutoResize:(BOOL)isNeedAutoResize
 {
     // 回傳的總 View 容器
     UIView *allView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tempCustomWidth, _viewHeight)];
-    if ( isNeedAutoLayout ) {
+    if ( isNeedAutoResize ) {
         allView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
     else{

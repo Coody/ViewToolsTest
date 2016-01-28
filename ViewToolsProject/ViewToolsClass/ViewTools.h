@@ -1,9 +1,8 @@
 //
 //  ViewTools.h
-//  Prime
+//
 //
 //  Created by Coody on 2015/8/21.
-//  This code is distributed under the terms and conditions of the MIT license.
 //
 
 #import <Foundation/Foundation.h>
@@ -288,7 +287,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 
  * @brief   - 2.3.2 文字（按鈕，左右留 5 pixel 的空間）
- * @details - 左右有留 5 pixel 的空間
+ * @details - 左右有留 6 pixel 的空間
  * @param   - tempText : 中間有置中的文字
  */
 -(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText;
@@ -361,9 +360,18 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                              withLine:(BOOL)isNeedLine 
                          withTextFont:(UIFont *)tempFont;
 
+/**
+ * @brief - 2.12 文字、顏色、底線、字體大小、是否需要 Auto Resize Mask（文字型按鈕＋底線）
+ */
+-(UIButton *)createTextButtonWithText:(NSString *)tempText 
+                        withTextColor:(UIColor *)tempColor 
+                             withLine:(BOOL)isNeedLine 
+                         withTextFont:(UIFont *)tempFont 
+             withIsNeedAutoResizeMask:(BOOL)isNeedAutoResizeMask;
+
 #pragma mark 左右有 Text 的按鈕擴充
 /**
- * @brief   - 2.12 額外設定「左右有 Text 按鈕」的 >「箭頭」圖片是否顯示？
+ * @brief   - 2.13 額外設定「左右有 Text 按鈕」的 >「箭頭」圖片是否顯示？
  * @details - 強制將 tempButton 的箭頭取消（會自動檢查是否有 Arrow）
  * @warning - 此為類別方法！！且只有 ViewTools 所產生的有箭頭按鈕才可以取消箭頭顯示！
  */
@@ -374,17 +382,17 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 #pragma mark ：建立 UILabel 文字元件
 /////////////////////////////////////
 /**
- * @brief - 3.1.1 文字、位置、無 AutoLayout、寬度為文字寬度
+ * @brief - 3.1.1 文字、位置、無 Auto Resize、寬度為文字寬度
  */
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment;
 
 /**
- * @brief - 3.1.1-2 文字、位置、AutoLayout、寬度為文字寬度
+ * @brief - 3.1.1-2 文字、位置、Auto Resize、寬度為文字寬度
  */
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
-           withIsNeedAutoLayout:(BOOL)isNeedAutoLayout;
+           withIsNeedAutoResize:(BOOL)isNeedAutoResize;
 
 /**
  * @brief - 3.1.2 特殊文字、位置
@@ -400,19 +408,19 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                        withTextAlignment:(NSTextAlignment)tempTextAlignment;
 
 /**
- * @brief - 3.2.1 文字、位置、文字顏色、無 AutoLayout、寬度為文字寬度
+ * @brief - 3.2.1 文字、位置、文字顏色、無 Auto Resize、寬度為文字寬度
  */
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment  
                   withTextColor:(UIColor *)tempTextColor;
 
 /**
- * @brief - 3.2.1-2 文字、位置、文字顏色、AutoLayout、寬度為文字寬度
+ * @brief - 3.2.1-2 文字、位置、文字顏色、Auto Resize、寬度為文字寬度
  */
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment  
                   withTextColor:(UIColor *)tempTextColor 
-           withIsNeedAutoLayout:(BOOL)isNeedAutoLayout;
+           withIsNeedAutoResize:(BOOL)isNeedAutoResize;
 
 /**
  * @brief - 3.2.2 特殊文字、位置、文字顏色、寬度為文字寬度

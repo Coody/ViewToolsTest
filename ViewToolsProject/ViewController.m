@@ -84,181 +84,244 @@
         _viewArray = [[NSMutableArray alloc] init];
         
         
-//        // 2.1.1
-//        {
-//            ContainerView *containerView1 = [[ContainerView alloc] init];
-//            [containerView1 setLeftMargin:6.0f];
-//            UIButton *button1 = [_viewTool createButtonWithLeftText:@"測試 2.1.1" withRightText:@"測試1" withNeedArrow:YES];
-//            [containerView1 addUnits:@[button1]];
-//            UIButton *button2 = [_viewTool createButtonWithLeftText:@"測試 2.1.1" withRightText:@"測試2" withNeedArrow:NO];
-//            ContainerView *containerView2 = [[ContainerView alloc] init];
-//            [containerView2 setLeftMargin:6.0f];
-//            [containerView2 addUnits:@[button2]];
-//            [button1 setBackgroundColor:[UIColor darkGrayColor]];
-//            [button2 setBackgroundColor:[UIColor darkGrayColor]];
-//            [_viewArray addObjectsFromArray:@[containerView1 , containerView2]];
-//        }
-//        
-//        // 2.1.2
-//        {
-//            ContainerView *containerView1 = [[ContainerView alloc] init];
-//            [containerView1 setLeftMargin:6.0f];
-//            UIButton *button1 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"測試 2.1.2"] 
-//                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"測試 2.1.2"] 
-//                                                                withNeedArrow:YES];
-//            [containerView1 addUnits:@[button1]];
-//            
-//            ContainerView *containerView2 = [[ContainerView alloc] init];
-//            [containerView2 setLeftMargin:6.0f];
-//            UIButton *button2 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"測試 2.1.2"] 
-//                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"測試 2.1.2"] 
-//                                                                withNeedArrow:NO];
-//            [containerView2 addUnits:@[button2]];
-//            [button1 setBackgroundColor:[UIColor darkGrayColor]];
-//            [button2 setBackgroundColor:[UIColor darkGrayColor]];
-//            [_viewArray addObjectsFromArray:@[containerView1 , containerView2]];
-//        }
-//        
-//        // 2.1.3 , 2.2.1
-//        {
-//            [_viewTool setViewHeight:80.0f];
-//            UIButton *button1 = [_viewTool createButtonWithLeftText:@"2.2.1" 
-//                                                      withRightText:@"2.2.1" 
-//                                                      withNeedArrow:YES 
-//                                                    withCustomWidth:160];
-//            UIButton *button2 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.1.3\n行高"] 
-//                                                               withLineHeight:1.2 
-//                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.1.3\n行高"] 
-//                                                               withLineHeight:2.0 
-//                                                                withNeedArrow:NO];
-//            [button1 setBackgroundColor:[UIColor darkGrayColor]];
-//            [button2 setBackgroundColor:[UIColor darkGrayColor]];
-//            
-//            ContainerView *containerView1 = [[ContainerView alloc] init];
-//            [containerView1 setLeftMargin:6.0f];
-//            [containerView1 setMiddleMargin:6.0f];
-//            [containerView1 addUnits:@[button1,button2]];
-//            
-//            UIButton *button3 = [_viewTool createButtonWithLeftText:@"2.2.1" 
-//                                                      withRightText:@"2.2.1" 
-//                                                      withNeedArrow:NO 
-//                                                    withCustomWidth:160];
-//            UIButton *button4 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.1.3\n行高"] 
-//                                                               withLineHeight:2.0 
-//                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.1.3\n行高"] 
-//                                                               withLineHeight:1.5 
-//                                                                withNeedArrow:YES];
-//            [button3 setBackgroundColor:[UIColor darkGrayColor]];
-//            [button4 setBackgroundColor:[UIColor darkGrayColor]];
-//            ContainerView *containerView2 = [[ContainerView alloc] init];
-//            [containerView2 setLeftMargin:6.0f];
-//            [containerView2 setMiddleMargin:6.0f];
-//            [containerView2 addUnits:@[button3,button4]];
-//            
-//            [_viewArray addObjectsFromArray:@[containerView1 , containerView2]];
-//            [_viewTool setViewHeight:45.0f];
-//        }
-//        
-//        // 2.2.2 , 2.2.4
-//        {
-//            ContainerView *containerView1 = [[ContainerView alloc] init];
-//            [_viewTool setViewHeight:80.0f];
-//            UIButton *button1 = [_viewTool createButtonWithLeftAttributeText:[[NSMutableAttributedString alloc] initWithString:@"2.2.2"] 
-//                                                      withRightAttributeText:[[NSMutableAttributedString alloc] initWithString:@"2.2.2"] 
-//                                                               withNeedArrow:YES 
-//                                                             withCustomWidth:140];
-//            UIButton *button2 = [_viewTool createButtonWithLeftText:@"2.2.4" 
-//                                                      withRightText:@"2.2.4" 
-//                                                      withNeedArrow:YES 
-//                                                    withLabelStatic:EnumLabelStaticType_LeftStatic];
-//            [button1 setBackgroundColor:[UIColor darkGrayColor]];
-//            [button2 setBackgroundColor:[UIColor darkGrayColor]];
-//            [containerView1 addUnits:@[button1,button2]];
-//            
-//            ContainerView *containerView2 = [[ContainerView alloc] init];
-//            UIButton *button3 = [_viewTool createButtonWithLeftAttributeText:[[NSMutableAttributedString alloc] initWithString:@"2.2.2"] 
-//                                                      withRightAttributeText:[[NSMutableAttributedString alloc] initWithString:@"2.2.2"] 
-//                                                               withNeedArrow:NO 
-//                                                             withCustomWidth:140];
-//            UIButton *button4 = [_viewTool createButtonWithLeftText:@"2.2.4" 
-//                                                      withRightText:@"2.2.4" 
-//                                                      withNeedArrow:NO 
-//                                                    withLabelStatic:EnumLabelStaticType_RightStatic];
-//            [button3 setBackgroundColor:[UIColor darkGrayColor]];
-//            [button4 setBackgroundColor:[UIColor darkGrayColor]];
-//            [containerView2 addUnits:@[button3,button4]];
-//            
-//            [_viewArray addObjectsFromArray:@[containerView1 , containerView2]];
-//            
-//        }
-//        
-//        // 2.2.3 , 2.3.1
-//        {
-//            ContainerView *containerView1 = [[ContainerView alloc] init];
-//            [containerView1 setMiddleMargin:6.0f];
-//            [containerView1 setRightMargin:6.0f];
-//            [_viewTool setViewHeight:120.0f];
-//            UIButton *button1 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"123\n456"] 
-//                                                               withLineHeight:1.5 
-//                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"456\n123"] 
-//                                                               withLineHeight:2.0 
-//                                                                withNeedArrow:YES 
-//                                                              withCustomWidth:140];
-//            [button1 setBackgroundColor:[UIColor darkGrayColor]];
-//            UIButton *button2 = [_viewTool createButtonWithText:@"789"];
-//            [button2 setBackgroundColor:[UIColor darkGrayColor]];
-//            [containerView1 addUnits:@[button1,button2]];
-//            
-//            [_viewArray addObject:containerView1];
-//            
-//            [_viewTool setViewHeight:45.0f];
-//        }
-//        
-//        // label 用法
-//        [self createLabel];
-//        
-//        // textField 用法
-//        [self createTextField];
-//        
-//        // Container View 用法
-//        [self createContainerView];
-//        
-//        // 特殊的按鈕
-//        [self createSpecialButton];
-//        
-//        // button
-//        [self createButton];
         
-//        ContainerView *containerView = [[ContainerView alloc] init];
-//        [containerView setLeftMargin:6.0f];
-//        [containerView setRightMargin:6.0f];
-//        UIButton *button = [_viewTool createButtonWithText:@"TEST"];
-//        [button setBackgroundColor:[UIColor darkGrayColor]];
-//        [containerView addUnits:@[button]];
-//        
-//        [_viewArray addObject:containerView];
-//        
-//        [_mainView addUnits:_viewArray];
-//        
-//        _scrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//        _scrollView.contentSize = _mainView.frame.size;
-//        _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-//        [_scrollView setScrollEnabled:YES];
-//        [_scrollView addSubview:_mainView];
-//        [self.view addSubview:_scrollView];
-        
-        
-        
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
-        [button setBackgroundColor:[UIColor darkGrayColor]];
-        [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [button setTitle:@"TEST" forState:(UIControlStateNormal)];
-        [button setTitle:@"GO!" forState:(UIControlStateHighlighted)];
-        [self.view addSubview:button];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-12-[button]-12-|" 
+#ifdef D_TestConstrain
+        UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+        [button1 setBackgroundColor:[UIColor darkGrayColor]];
+        [button1 setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [button1 setTitle:@"TEST" forState:(UIControlStateNormal)];
+        [button1 setTitle:@"GO!" forState:(UIControlStateHighlighted)];
+        UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
+        [button2 setBackgroundColor:[UIColor darkGrayColor]];
+        [button2 setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [button2 setTitle:@"TEST" forState:(UIControlStateNormal)];
+        [button2 setTitle:@"GO!" forState:(UIControlStateHighlighted)];
+        [self.view addSubview:button1];
+        [self.view addSubview:button2];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|-%f-[button1]-[button2]-%f-|" , 6.0f , 6.0f] 
                                                                           options:0 
                                                                           metrics:nil 
-                                                                            views:@{@"button":button}]];
+                                                                            views:@{@"button1":button1,
+                                                                                    @"button2":button2}]];
+#else
+        
+        
+        
+        // 2.1.1
+        {
+            ContainerView *containerView1 = [[ContainerView alloc] init];
+            [containerView1 setLeftMargin:6.0f];
+            UIButton *button1 = [_viewTool createButtonWithLeftText:@"測試 2.1.1" withRightText:@"測試1" withNeedArrow:YES];
+            [containerView1 addUnits:@[button1]];
+            UIButton *button2 = [_viewTool createButtonWithLeftText:@"測試 2.1.1" withRightText:@"測試2" withNeedArrow:NO];
+            ContainerView *containerView2 = [[ContainerView alloc] init];
+            [containerView2 setLeftMargin:6.0f];
+            [containerView2 addUnits:@[button2]];
+            [button1 setBackgroundColor:[UIColor darkGrayColor]];
+            [button2 setBackgroundColor:[UIColor darkGrayColor]];
+            [_viewArray addObjectsFromArray:@[containerView1 , containerView2]];
+        }
+        
+        // 2.1.2
+        {
+            ContainerView *containerView1 = [[ContainerView alloc] init];
+            [containerView1 setLeftMargin:6.0f];
+            UIButton *button1 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"測試 2.1.2"] 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"測試 2.1.2"] 
+                                                                withNeedArrow:YES];
+            [containerView1 addUnits:@[button1]];
+            
+            ContainerView *containerView2 = [[ContainerView alloc] init];
+            [containerView2 setLeftMargin:6.0f];
+            UIButton *button2 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"測試 2.1.2"] 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"測試 2.1.2"] 
+                                                                withNeedArrow:NO];
+            [containerView2 addUnits:@[button2]];
+            [button1 setBackgroundColor:[UIColor darkGrayColor]];
+            [button2 setBackgroundColor:[UIColor darkGrayColor]];
+            [_viewArray addObjectsFromArray:@[containerView1 , containerView2]];
+        }
+        
+        // 2.1.3 , 2.2.1
+        {
+            [_viewTool setViewHeight:80.0f];
+            UIButton *button1 = [_viewTool createButtonWithLeftText:@"2.2.1" 
+                                                      withRightText:@"2.2.1" 
+                                                      withNeedArrow:YES 
+                                                    withCustomWidth:160];
+            UIButton *button2 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.1.3\n行高"] 
+                                                               withLineHeight:1.2 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.1.3\n行高"] 
+                                                               withLineHeight:2.0 
+                                                                withNeedArrow:NO];
+            [button1 setBackgroundColor:[UIColor darkGrayColor]];
+            [button2 setBackgroundColor:[UIColor darkGrayColor]];
+            
+            ContainerView *containerView1 = [[ContainerView alloc] init];
+            [containerView1 setLeftMargin:6.0f];
+            [containerView1 setMiddleMargin:6.0f];
+            [containerView1 addUnits:@[button1,button2]];
+            
+            UIButton *button3 = [_viewTool createButtonWithLeftText:@"2.2.1" 
+                                                      withRightText:@"2.2.1" 
+                                                      withNeedArrow:NO 
+                                                    withCustomWidth:160];
+            UIButton *button4 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.1.3\n行高"] 
+                                                               withLineHeight:2.0 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.1.3\n行高"] 
+                                                               withLineHeight:1.5 
+                                                                withNeedArrow:YES];
+            [button3 setBackgroundColor:[UIColor darkGrayColor]];
+            [button4 setBackgroundColor:[UIColor darkGrayColor]];
+            ContainerView *containerView2 = [[ContainerView alloc] init];
+            [containerView2 setLeftMargin:6.0f];
+            [containerView2 setMiddleMargin:6.0f];
+            [containerView2 addUnits:@[button3,button4]];
+            
+            [_viewArray addObjectsFromArray:@[containerView1 , containerView2]];
+            [_viewTool setViewHeight:45.0f];
+        }
+        
+        // 2.2.2 , 2.2.4
+        {
+            ContainerView *containerView1 = [[ContainerView alloc] init];
+            [containerView1 setLeftMargin:6.0f];
+            [containerView1 setMiddleMargin:6.0f];
+            [_viewTool setViewHeight:80.0f];
+            UIButton *button1 = [_viewTool createButtonWithLeftAttributeText:[[NSMutableAttributedString alloc] initWithString:@"2.2.2"] 
+                                                      withRightAttributeText:[[NSMutableAttributedString alloc] initWithString:@"2.2.2"] 
+                                                               withNeedArrow:YES 
+                                                             withCustomWidth:140];
+            UIButton *button2 = [_viewTool createButtonWithLeftText:@"2.2.4" 
+                                                      withRightText:@"2.2.4" 
+                                                      withNeedArrow:YES 
+                                                    withLabelStatic:EnumLabelStaticType_LeftStatic];
+            [button1 setBackgroundColor:[UIColor darkGrayColor]];
+            [button2 setBackgroundColor:[UIColor darkGrayColor]];
+            [containerView1 addUnits:@[button1,button2]];
+            
+            ContainerView *containerView2 = [[ContainerView alloc] init];
+            [containerView2 setLeftMargin:6.0f];
+            [containerView2 setMiddleMargin:6.0f];
+            UIButton *button3 = [_viewTool createButtonWithLeftAttributeText:[[NSMutableAttributedString alloc] initWithString:@"2.2.2"] 
+                                                      withRightAttributeText:[[NSMutableAttributedString alloc] initWithString:@"2.2.2"] 
+                                                               withNeedArrow:NO 
+                                                             withCustomWidth:140];
+            UIButton *button4 = [_viewTool createButtonWithLeftText:@"2.2.4" 
+                                                      withRightText:@"2.2.4" 
+                                                      withNeedArrow:NO 
+                                                    withLabelStatic:EnumLabelStaticType_RightStatic];
+            [button3 setBackgroundColor:[UIColor darkGrayColor]];
+            [button4 setBackgroundColor:[UIColor darkGrayColor]];
+            [containerView2 addUnits:@[button3,button4]];
+            
+            [_viewArray addObjectsFromArray:@[containerView1 , containerView2]];
+            
+        }
+        
+        // 2.2.3 , 2.3.1 , 2.5
+        {
+            [_viewTool setViewHeight:120.0f];
+            
+            ContainerView *containerView1 = [[ContainerView alloc] init];
+            [containerView1 setMiddleMargin:6.0f];
+            [containerView1 setRightMargin:6.0f];
+            UIButton *button1 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.2.3"] 
+                                                               withLineHeight:1.5 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.2.3"] 
+                                                               withLineHeight:2.0 
+                                                                withNeedArrow:YES 
+                                                              withCustomWidth:140];
+            [button1 setBackgroundColor:[UIColor darkGrayColor]];
+            UIButton *button2 = [_viewTool createButtonWithText:@"2.3.1"];
+            [button2 setBackgroundColor:[UIColor darkGrayColor]];
+            [containerView1 addUnits:@[button1,button2]];
+            
+            ContainerView *containerView2 = [[ContainerView alloc] init];
+            [containerView2 setMiddleMargin:6.0f];
+            [containerView2 setRightMargin:6.0f];
+            UIButton *button3 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.3.1"] 
+                                                               withLineHeight:1.0 
+                                                      withRightAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.3.1"] 
+                                                               withLineHeight:1.0 
+                                                                withNeedArrow:NO 
+                                                              withCustomWidth:140];
+            [button3 setBackgroundColor:[UIColor darkGrayColor]];
+            UIButton *button4 = [_viewTool createRedButtonWithText:@"2.5"];
+            // TODO: 按鈕先設定為紅色背景，請加上真正的紅色按鈕圖
+            [button4 setBackgroundColor:[UIColor redColor]];
+            [containerView2 addUnits:@[button3,button4]];
+            
+            [_viewArray addObject:containerView2];
+            
+            [_viewTool setViewHeight:45.0f];
+        }
+        
+        // 2.2.5 , 2.3.2 , 2.12
+        {
+            ContainerView *containerView1 = [[ContainerView alloc] init];
+            [containerView1 setLeftMargin:6.0f];
+            [containerView1 setMiddleMargin:6.0f];
+            
+            UIButton *button1 = [_viewTool createButtonWithLeftText:@"2.2.5" 
+                                                      withRightText:@"2.2.5" 
+                                                      withNeedArrow:YES 
+                                                    withCustomWidth:140 
+                                                    withLabelStatic:(EnumLabelStaticType_LeftStatic)];
+            UIButton *button2 = [_viewTool createButtonWithTextAndMargin:@"2.3.2"];
+            [button1 setBackgroundColor:[UIColor darkGrayColor]];
+            [button2 setBackgroundColor:[UIColor darkGrayColor]];
+            [containerView1 addUnits:@[button1 , button2]];
+            [_viewArray addObject:containerView1];
+            
+            ContainerView *containerView2 = [[ContainerView alloc] init];
+            [containerView2 setLeftMargin:6.0f];
+            [containerView2 setMiddleMargin:6.0f];
+            
+            UIButton *button3 = [_viewTool createButtonWithLeftText:@"2.2.5" 
+                                                      withRightText:@"2.2.5" 
+                                                      withNeedArrow:NO 
+                                                    withCustomWidth:140 
+                                                    withLabelStatic:(EnumLabelStaticType_None)];
+            UIButton *button4 = [_viewTool createTextButtonWithText:@"2.12" 
+                                                      withTextColor:[UIColor redColor] 
+                                                           withLine:YES 
+                                                       withTextFont:[UIFont boldSystemFontOfSize:18.0f] 
+                                           withIsNeedAutoResizeMask:YES];
+            [button3 setBackgroundColor:[UIColor darkGrayColor]];
+            [containerView2 addUnits:@[button3 , button4]];
+            [_viewArray addObject:containerView2];
+        }
+        
+        {
+            
+        }
+        
+        // label 用法
+        [self createLabel];
+        
+        // textField 用法
+        [self createTextField];
+        
+        // Container View 用法
+        [self createContainerView];
+        
+        // 特殊的按鈕
+        [self createSpecialButton];
+        
+        // button
+        [self createButton];
+        
+        [_mainView addUnits:_viewArray];
+        
+        _scrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _scrollView.contentSize = _mainView.frame.size;
+        _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [_scrollView setScrollEnabled:YES];
+        [_scrollView addSubview:_mainView];
+        [self.view addSubview:_scrollView];
+        
+#endif
     
     }
     return self;
@@ -268,7 +331,7 @@
 -(void)createLabel{
     UILabel *testLabel1 = [_viewTool createLabelWithText:@"元件背景圖案請自行去 ViewTools 的 #define 設定檔案名稱（或路徑＋檔案名稱），或是改寫內部產生路徑當類別方法。\nPS: 目前黑色區塊為辨識 UIView 元件區塊，所自行設定的。" 
                                        withTextAlignment:(NSTextAlignmentLeft) 
-                                    withIsNeedAutoLayout:YES];
+                                    withIsNeedAutoResize:YES];
     [testLabel1 setBackgroundColor:[UIColor blackColor]];
     [_viewArray addObject:testLabel1];
 }
