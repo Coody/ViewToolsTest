@@ -28,13 +28,12 @@
 // 如果不需要設定請直接使用 nil 即可
 // 設定 Image 的名稱（不帶 .png ）
 #define D_ViewTools_Arrow_Image (@"arrow")
-#define D_ViewTools_Button_Red_Normal_Image (nil)
+#define D_ViewTools_Button_Red_Normal_Image (@"red_btn")
 #define D_ViewTools_Button_Red_HightLight_Image (nil)
-#define D_ViewTools_Button_Normal_Image (nil)
+#define D_ViewTools_Button_Normal_Image (@"gray_btn")
 #define D_ViewTools_Button_HightLight_Image (nil)
 #define D_ViewTools_Button_Disable_Image (nil)
-#define D_ViewTools_TextField_Image (nil)
-#define D_ViewTools_TextField_Image (nil)
+#define D_ViewTools_TextField_Image (@"box_textField")
 #define D_ViewTools_TextField_CancelButton_Image (nil)
 
 
@@ -203,6 +202,12 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 1.13 設定輸入框中，游標顏色 */
 -(void)setTextFieldTintColor:(UIColor *)tempColor;
+
+/** 1.14 設定左右有文字、右邊有箭頭按鈕的左間距 */
+-(void)setCustomButtonLeftMargin:(CGFloat)customButtonLeftMargin;
+
+/** 1.15 設定左右有文字、右邊有箭頭按鈕的左間距 */
+-(void)setCustomButtonRightMargin:(CGFloat)customButtonRightMargin;
 
 #pragma mark ：建立按鈕
 /////////////////////////////////////

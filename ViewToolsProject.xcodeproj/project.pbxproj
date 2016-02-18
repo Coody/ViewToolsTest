@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB44E9A01C5A0D0100F3AAB9 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB44E99C1C5A0D0100F3AAB9 /* arrow@2x.png */; };
+		FB44E9A11C5A0D0100F3AAB9 /* box_textField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB44E99D1C5A0D0100F3AAB9 /* box_textField@2x.png */; };
+		FB44E9A21C5A0D0100F3AAB9 /* gray_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB44E99E1C5A0D0100F3AAB9 /* gray_btn@2x.png */; };
+		FB44E9A31C5A0D0100F3AAB9 /* red_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB44E99F1C5A0D0100F3AAB9 /* red_btn@2x.png */; };
 		FBB08CB11B956B1800E742F0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CB01B956B1800E742F0 /* main.m */; };
 		FBB08CB41B956B1800E742F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CB31B956B1800E742F0 /* AppDelegate.m */; };
 		FBB08CB71B956B1800E742F0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CB61B956B1800E742F0 /* ViewController.m */; };
@@ -14,7 +18,6 @@
 		FBB08CBF1B956B1800E742F0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB08CBD1B956B1800E742F0 /* LaunchScreen.xib */; };
 		FBB08CCB1B956B1800E742F0 /* ViewToolsProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CCA1B956B1800E742F0 /* ViewToolsProjectTests.m */; };
 		FBB08CD71B956B4F00E742F0 /* ViewTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB08CD61B956B4F00E742F0 /* ViewTools.m */; };
-		FBB08CD91B95A06900E742F0 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB08CD81B95A06900E742F0 /* arrow@2x.png */; };
 		FBD248DB1BA412CF0002190D /* UITextFieldTools.m in Sources */ = {isa = PBXBuildFile; fileRef = FBD248DA1BA412CF0002190D /* UITextFieldTools.m */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +32,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FB44E99C1C5A0D0100F3AAB9 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
+		FB44E99D1C5A0D0100F3AAB9 /* box_textField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box_textField@2x.png"; sourceTree = "<group>"; };
+		FB44E99E1C5A0D0100F3AAB9 /* gray_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray_btn@2x.png"; sourceTree = "<group>"; };
+		FB44E99F1C5A0D0100F3AAB9 /* red_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_btn@2x.png"; sourceTree = "<group>"; };
 		FBB08CAB1B956B1800E742F0 /* ViewToolsProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewToolsProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB08CAF1B956B1800E742F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBB08CB01B956B1800E742F0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -43,7 +50,6 @@
 		FBB08CCA1B956B1800E742F0 /* ViewToolsProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewToolsProjectTests.m; sourceTree = "<group>"; };
 		FBB08CD51B956B4F00E742F0 /* ViewTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewTools.h; sourceTree = "<group>"; };
 		FBB08CD61B956B4F00E742F0 /* ViewTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewTools.m; sourceTree = "<group>"; };
-		FBB08CD81B95A06900E742F0 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
 		FBD248D91BA412CF0002190D /* UITextFieldTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextFieldTools.h; sourceTree = "<group>"; };
 		FBD248DA1BA412CF0002190D /* UITextFieldTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITextFieldTools.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,6 +72,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB44E99B1C5A0D0100F3AAB9 /* Pics */ = {
+			isa = PBXGroup;
+			children = (
+				FB44E99C1C5A0D0100F3AAB9 /* arrow@2x.png */,
+				FB44E99D1C5A0D0100F3AAB9 /* box_textField@2x.png */,
+				FB44E99E1C5A0D0100F3AAB9 /* gray_btn@2x.png */,
+				FB44E99F1C5A0D0100F3AAB9 /* red_btn@2x.png */,
+			);
+			path = Pics;
+			sourceTree = "<group>";
+		};
 		FBB08CA21B956B1800E742F0 = {
 			isa = PBXGroup;
 			children = (
@@ -87,7 +104,7 @@
 		FBB08CAD1B956B1800E742F0 /* ViewToolsProject */ = {
 			isa = PBXGroup;
 			children = (
-				FBB08CD81B95A06900E742F0 /* arrow@2x.png */,
+				FB44E99B1C5A0D0100F3AAB9 /* Pics */,
 				FBB08CD41B956B4F00E742F0 /* ViewToolsClass */,
 				FBB08CB21B956B1800E742F0 /* AppDelegate.h */,
 				FBB08CB31B956B1800E742F0 /* AppDelegate.m */,
@@ -218,8 +235,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBB08CBF1B956B1800E742F0 /* LaunchScreen.xib in Resources */,
-				FBB08CD91B95A06900E742F0 /* arrow@2x.png in Resources */,
+				FB44E9A31C5A0D0100F3AAB9 /* red_btn@2x.png in Resources */,
 				FBB08CBC1B956B1800E742F0 /* Images.xcassets in Resources */,
+				FB44E9A11C5A0D0100F3AAB9 /* box_textField@2x.png in Resources */,
+				FB44E9A21C5A0D0100F3AAB9 /* gray_btn@2x.png in Resources */,
+				FB44E9A01C5A0D0100F3AAB9 /* arrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +382,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					D_DEBUG,
 				);
 				INFOPLIST_FILE = ViewToolsProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

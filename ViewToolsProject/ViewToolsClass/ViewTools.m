@@ -444,6 +444,8 @@ NSInteger const kArrowImage_Tag = 6481;
 @property (nonatomic , strong) UIColor *textFieldTextColor;
 @property (nonatomic , strong) UIColor *textFieldInnerColor;
 @property (nonatomic , strong) UIColor *textButtonColor;
+@property (nonatomic , assign) CGFloat customButtonLeftMargin;
+@property (nonatomic , assign) CGFloat customButtonRightMargin;
 // 按鈕
 @property (nonatomic , strong) UIImage *buttonImage_Normal;
 @property (nonatomic , strong) UIImage *buttonImage_HightLight;
@@ -493,6 +495,9 @@ NSInteger const kArrowImage_Tag = 6481;
         // TextField Text Color
         _textFieldTextColor = _allTextDefaultColor;
         _textFieldInnerColor = _allTextDefaultColor;
+        
+        // 左右有文字、右邊有箭頭的左右間距
+        self.customButtonLeftMargin = self.customButtonRightMargin = 0.0f;
         
         // 輸入框中，游標的顏色
         [[UITextField appearance] setTintColor:[UIColor whiteColor]];
@@ -611,6 +616,24 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     [[UITextField appearance] setTintColor:tempColor];
 }
 
+-(void)setCustomButtonLeftMargin:(CGFloat)customButtonLeftMargin{
+    if ( customButtonLeftMargin >= 0 ) {
+        _customButtonLeftMargin = customButtonLeftMargin;
+    }
+    else{
+        _customButtonLeftMargin = 0;
+    }
+}
+
+-(void)setCustomButtonRightMargin:(CGFloat)customButtonRightMargin{
+    if ( customButtonRightMargin >= 0 ) {
+        _customButtonRightMargin = customButtonRightMargin;
+    }
+    else{
+        _customButtonRightMargin = 0;
+    }
+}
+
 #pragma mark - 建立按鈕（左邊、右邊都有文字、還有右邊箭頭）
 
 // 2.1.1 建立特殊按鈕（左邊、右邊都有文字、還有右邊箭頭）
@@ -621,7 +644,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createButtonWithLeftText:tempLeftText
                             withRightText:tempRightText 
                             withNeedArrow:tempIsNeedArrow 
-                          withCustomFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, _viewHeight )  
+                          withCustomFrame:CGRectMake(_customButtonLeftMargin,
+                                                     0,
+                                                     [UIScreen mainScreen].bounds.size.width - _customButtonLeftMargin - _customButtonRightMargin ,
+                                                     _viewHeight )  
                           withLabelStatic:EnumLabelStaticType_None 
                      withIsNeedAutoResize:YES];
 }
@@ -812,7 +838,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createButtonWithLeftText:tempLeftText
                             withRightText:tempRightText 
                             withNeedArrow:tempIsNeedArrow 
-                          withCustomFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, _viewHeight )  
+                          withCustomFrame:CGRectMake(_customButtonLeftMargin,
+                                                     0,
+                                                     [UIScreen mainScreen].bounds.size.width - _customButtonLeftMargin - _customButtonRightMargin,
+                                                     _viewHeight )  
                           withLabelStatic:tempEnumLabelStaticType 
                      withIsNeedAutoResize:YES];
 }
@@ -1347,6 +1376,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
         tempHeight = tempSize.height;
     }
+
     return [self createLabelWithText:tempText 
                    withTextAlignment:tempTextAlignment
                      withCustomFrame:CGRectMake(0,0,tempSize.width,tempHeight) 
@@ -1713,6 +1743,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     // 將元件陣列暫時存入 recentObjects
     _recentObjects = nil;
     _recentObjects = @[label];
+    
+#ifdef D_DEBUG
+    [label setBackgroundColor:[UIColor lightGrayColor]];
+#endif
     
     return label;
 }
