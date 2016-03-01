@@ -220,7 +220,7 @@ NSInteger const kArrowImage_Tag = 6481;
                                             unit.frame.size.width,
                                             unit.frame.size.height);
                     if ( unit == [tempViewArray lastObject] ) {
-                        totalY = totalY + unit.frame.size.height + _bottomMargin;
+                        totalY = totalY + unit.frame.size.height + _middleMargin + _bottomMargin;
                     }
                     else{
                         totalY = totalY + unit.frame.size.height + _middleMargin;
