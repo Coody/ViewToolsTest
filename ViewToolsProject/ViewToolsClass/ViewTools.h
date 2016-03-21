@@ -78,6 +78,12 @@ typedef enum{
  */
 -(void)setBackgroundImage:(UIImage *)tempBGImage;
 
+/**
+ * @brief - 設定背景圖片，並且給定裁切距離
+ */
+-(void)setBackgroundImage:(UIImage *)tempBGImage 
+            withCapInsets:(UIEdgeInsets)capInsets;
+
 /** 
  * @brief   - 設定元件內的左邊間距
  * @details - （可以不設定，則為預設值）

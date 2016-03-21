@@ -86,6 +86,18 @@ NSInteger const kArrowImage_Tag = 6481;
     }
 }
 
+/**
+ * @brief - 設定背景圖片
+ */
+-(void)setBackgroundImage:(UIImage *)tempBGImage 
+            withCapInsets:(UIEdgeInsets)capInsets{
+    if ( tempBGImage != nil ) {
+        [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        [_bg setImage:[tempBGImage resizableImageWithCapInsets:capInsets 
+                                                  resizingMode:UIImageResizingModeStretch]];
+    }
+}
+
 /** 
  * @brief   - 設定元件內的左邊間距
  * @details - （可以不設定，則為預設值）
