@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SeparateImageOfNumbersTool : NSObject
+@class UIView;
 
+@interface SeparateImageOfNumbersTool : NSObject
+@property (nonatomic , strong , readonly) NSMutableArray *imageNumberArray;
+@property (nonatomic , strong , readonly) NSMutableDictionary *separateDic;
 -(void)createWithString:(NSString*)sString image:(NSString*)sImage start:(NSString*)sStart;
-@property (nonatomic , strong) NSMutableArray *imageNumberArray;
+-(UIView *)getViewByString:(NSString *)tempString;
 @end
