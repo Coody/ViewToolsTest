@@ -36,6 +36,7 @@
 		FB44E99D1C5A0D0100F3AAB9 /* box_textField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box_textField@2x.png"; sourceTree = "<group>"; };
 		FB44E99E1C5A0D0100F3AAB9 /* gray_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray_btn@2x.png"; sourceTree = "<group>"; };
 		FB44E99F1C5A0D0100F3AAB9 /* red_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_btn@2x.png"; sourceTree = "<group>"; };
+		FB630DF61CBE220A00469E9A /* ViewToolsConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewToolsConstant.h; sourceTree = "<group>"; };
 		FBB08CAB1B956B1800E742F0 /* ViewToolsProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewToolsProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB08CAF1B956B1800E742F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FBB08CB01B956B1800E742F0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -146,6 +147,7 @@
 		FBB08CD41B956B4F00E742F0 /* ViewToolsClass */ = {
 			isa = PBXGroup;
 			children = (
+				FB630DF61CBE220A00469E9A /* ViewToolsConstant.h */,
 				FBB08CD51B956B4F00E742F0 /* ViewTools.h */,
 				FBB08CD61B956B4F00E742F0 /* ViewTools.m */,
 				FBD248D91BA412CF0002190D /* UITextFieldTools.h */,
