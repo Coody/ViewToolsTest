@@ -40,7 +40,10 @@ typedef enum{
 @property (assign , nonatomic) BOOL isVertical;
 /** 元件是否要從最右邊開始對齊，最左邊元件會自動伸縮左邊界？（上下排的時候，會忽略） */
 @property (assign , nonatomic) BOOL isRevertArrangement;
-/** ContainerView 是否需要在寬度不足時，自行增加寬度？（上下排的時候，會忽略） */
+/** 
+ ContainerView 是否需要在寬度不足時，自行增加寬度？
+ （ YES:會自行增加寬度（預設為 NO））（上下排、以及從後面排列到前面的時候，會忽略） 
+ */
 @property (assign , nonatomic) BOOL isAutoFitWidth;
 
 /** 

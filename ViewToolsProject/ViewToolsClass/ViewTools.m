@@ -150,7 +150,7 @@ NSInteger const kArrowImage_Tag = 6481;
 
 -(void)addUnits:(NSArray *)tempViewArray{
     
-    /* 反轉陣列的方法（目前沒用到，但留著做記錄，未來可能會用到） */
+    /* 反轉陣列的方法 */
     if ( _isRevertArrangement ) {
         NSEnumerator *enumerator = [tempViewArray reverseObjectEnumerator];
         NSMutableArray *reverseArray = [[NSMutableArray alloc] init];
@@ -252,14 +252,20 @@ NSInteger const kArrowImage_Tag = 6481;
                 }
                 [self addSubview:unit];
             }
-            
         }
         else{
+            
             if ( [tempViewArray count] == 1 ) {
                 UIView *unit = [tempViewArray firstObject];
+                CGFloat realWidth = self.frame.size.width;
+                if ( _isAutoFitWidth ) {
+                    if ( realWidth < unit.frame.size.width ) {
+                        realWidth = unit.frame.size.width;
+                    }
+                }
                 unit.frame = CGRectMake(_leftMargin ,
                                         unit.frame.origin.y + _topMargin,
-                                        self.frame.size.width - _rightMargin - _leftMargin,
+                                        realWidth - _rightMargin - _leftMargin,
                                         unit.frame.size.height);
                 if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
                     realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
@@ -270,7 +276,12 @@ NSInteger const kArrowImage_Tag = 6481;
                 for ( UIView *unit in tempViewArray ) {
                     if ( unit == [tempViewArray firstObject] ) {
                         if ( _isRevertArrangement ) {
-                            unit.frame = CGRectMake(self.frame.size.width - unit.frame.origin.x - _rightMargin - unit.frame.size.width,
+                            CGFloat unitX = self.frame.size.width - unit.frame.origin.x - _rightMargin - unit.frame.size.width;
+                            if ( unitX < 0 && (_isAutoFitWidth == NO) ) {
+                                NSLog(@" \n!! Warning !!!! Warning !!\n ContainerView's \"WIDTH\" too small!! Please Check it!!!\n\n");
+                                return;
+                            }
+                            unit.frame = CGRectMake(unitX,
                                                     unit.frame.origin.y + _topMargin,
                                                     unit.frame.size.width,
                                                     unit.frame.size.height);
@@ -285,21 +296,31 @@ NSInteger const kArrowImage_Tag = 6481;
                         }
                     }
                     else if( unit == [tempViewArray lastObject] ){
-                        if ( _isRevertArrangement ) {
+                        if ( _isRevertArrangement && (_isAutoFitWidth == NO) ) {
                             unit.frame = CGRectMake(_leftMargin ,
                                                     unit.frame.origin.y + _topMargin,
                                                     totalX - _leftMargin - _middleMargin ,
                                                     unit.frame.size.height);
                         }
                         else{
+                            CGFloat checkWidth = self.frame.size.width - totalX - _middleMargin - _rightMargin;
+                            if ( checkWidth <= 0 ) {
+                                if ( _isAutoFitWidth ) {
+                                    checkWidth = unit.frame.size.width; 
+                                }
+                                else{
+                                    checkWidth = 0;
+                                }
+                            }
                             unit.frame = CGRectMake(unit.frame.origin.x + totalX + _middleMargin ,
                                                     unit.frame.origin.y + _topMargin,
-                                                    self.frame.size.width - totalX - _middleMargin - _rightMargin ,
+                                                    checkWidth ,
                                                     unit.frame.size.height);
+                            totalX = unit.frame.origin.x + unit.frame.size.width + _rightMargin;
                         }
                     }
                     else{
-                        if ( _isRevertArrangement ) {
+                        if ( _isRevertArrangement && (_isAutoFitWidth == NO) ) {
                             unit.frame = CGRectMake(totalX - _middleMargin - unit.frame.size.width ,
                                                     unit.frame.origin.y + _topMargin,
                                                     unit.frame.size.width,
@@ -314,10 +335,19 @@ NSInteger const kArrowImage_Tag = 6481;
                             totalX = totalX + _middleMargin + unit.frame.size.width;
                         }
                     }
+                    
+                    // 改變高度
                     if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
                         realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
                     }
                     [self addSubview:unit];
+                    
+                    // 改變寬度
+                    if ( _isAutoFitWidth && _isRevertArrangement == NO ) {
+                        if ( totalX > self.frame.size.width ) {
+                            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, totalX, self.frame.size.height);
+                        }
+                    }
                 }
             }
         }
@@ -352,7 +382,6 @@ NSInteger const kArrowImage_Tag = 6481;
 }
 
 -(void)recheckInnerView{
-    
     if ( _isVertical ) {
         
     }
@@ -397,59 +426,84 @@ NSInteger const kArrowImage_Tag = 6481;
             for ( UIView *unit in tempViewArray ) {
                 if ( unit == [tempViewArray firstObject] ) {
                     if ( _isRevertArrangement ) {
-                        unit.frame = CGRectMake(self.frame.size.width - _rightMargin - unit.frame.size.width,
-                                                unit.frame.origin.y,
+                        CGFloat unitX = self.frame.size.width - unit.frame.origin.x - _rightMargin - unit.frame.size.width;
+                        if ( unitX < 0 && (_isAutoFitWidth == NO) ) {
+                            NSLog(@" \n!! Warning !!!! Warning !!\n ContainerView's \"WIDTH\" too small!! Please Check it!!!\n\n");
+                            return;
+                        }
+                        unit.frame = CGRectMake(unitX,
+                                                unit.frame.origin.y + _topMargin,
                                                 unit.frame.size.width,
                                                 unit.frame.size.height);
                         totalX = unit.frame.origin.x;
                     }
                     else{
-                        unit.frame = CGRectMake(_leftMargin ,
-                                                unit.frame.origin.y,
+                        unit.frame = CGRectMake(unit.frame.origin.x + _leftMargin ,
+                                                unit.frame.origin.y + _topMargin,
                                                 unit.frame.size.width,
                                                 unit.frame.size.height);
-                        totalX = totalX + _leftMargin + unit.frame.size.width;
+                        totalX = unit.frame.origin.x + unit.frame.size.width;
                     }
                 }
                 else if( unit == [tempViewArray lastObject] ){
-                    if ( _isRevertArrangement ) {
+                    if ( _isRevertArrangement && (_isAutoFitWidth == NO) ) {
                         unit.frame = CGRectMake(_leftMargin ,
-                                                unit.frame.origin.y,
+                                                unit.frame.origin.y + _topMargin,
                                                 totalX - _leftMargin - _middleMargin ,
                                                 unit.frame.size.height);
                     }
                     else{
-                        unit.frame = CGRectMake(totalX + _middleMargin ,
-                                                unit.frame.origin.y,
-                                                self.frame.size.width - totalX - _middleMargin - _rightMargin ,
+                        CGFloat checkWidth = self.frame.size.width - totalX - _middleMargin - _rightMargin;
+                        if ( checkWidth <= 0 ) {
+                            if ( _isAutoFitWidth ) {
+                                checkWidth = unit.frame.size.width; 
+                            }
+                            else{
+                                checkWidth = 0;
+                            }
+                        }
+                        unit.frame = CGRectMake(unit.frame.origin.x + totalX + _middleMargin ,
+                                                unit.frame.origin.y + _topMargin,
+                                                checkWidth ,
                                                 unit.frame.size.height);
+                        totalX = unit.frame.origin.x + unit.frame.size.width + _rightMargin;
                     }
                 }
                 else{
-                    if ( _isRevertArrangement ) {
+                    if ( _isRevertArrangement && (_isAutoFitWidth == NO) ) {
                         unit.frame = CGRectMake(totalX - _middleMargin - unit.frame.size.width ,
-                                                unit.frame.origin.y,
+                                                unit.frame.origin.y + _topMargin,
                                                 unit.frame.size.width,
                                                 unit.frame.size.height);
                         totalX = totalX - _middleMargin - unit.frame.size.width;
                     }
                     else{
-                        unit.frame = CGRectMake(totalX + _middleMargin ,
-                                                unit.frame.origin.y,
+                        unit.frame = CGRectMake(unit.frame.origin.x + totalX + _middleMargin ,
+                                                unit.frame.origin.y + _topMargin,
                                                 unit.frame.size.width,
                                                 unit.frame.size.height);
                         totalX = totalX + _middleMargin + unit.frame.size.width;
                     }
                 }
+                
+                // 改變高度
                 if ( unit.frame.size.height + _topMargin + _bottomMargin > realHeight ) {
                     realHeight = unit.frame.size.height + _topMargin + _bottomMargin;
                 }
+                // 改變寬度
+                if ( _isAutoFitWidth && _isRevertArrangement == NO ) {
+                    if ( totalX > self.frame.size.width ) {
+                        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, totalX, self.frame.size.height);
+                    }
+                }
+                
             }
         }
         [self setContainerViewHight:realHeight];
-        [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        self.isAutoFitWidth = _isAutoFitWidth;
     }
 }
+
 
 @end
 
