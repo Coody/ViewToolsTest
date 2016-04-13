@@ -27,6 +27,7 @@
     if ( self ) {
         
         [self.view setBackgroundColor:[UIColor whiteColor]];
+#define D_Test
 #ifdef D_Test
         // Unit Test
         
