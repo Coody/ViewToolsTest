@@ -6,8 +6,12 @@
 //
 
 #import "ViewTools.h"
+
+// 
 #import <CoreText/CoreText.h>
 
+// for Constant
+#import "ViewToolsConstant.h"
 
 NSInteger const kArrowImage_Tag = 6481;
 
@@ -24,6 +28,7 @@ NSInteger const kArrowImage_Tag = 6481;
     if ( self ) {
         _isVertical = NO;
         _isRevertArrangement = NO;
+        _isAutoFitWidth = NO;
         _leftMargin = 0.0f;
         _rightMargin = 0.0f;
         _middleMargin = 0.0f;
@@ -57,6 +62,7 @@ NSInteger const kArrowImage_Tag = 6481;
                             self.frame.origin.y,
                             self.frame.size.width,
                             _containerViewHight);
+    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 /** 
@@ -75,6 +81,21 @@ NSInteger const kArrowImage_Tag = 6481;
     [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
+-(void)setIsAutoFitWidth:(BOOL)isAutoFitWidth{
+    _isAutoFitWidth = isAutoFitWidth;
+    
+    if ( _isAutoFitWidth == YES && _isVertical == NO && [self.subviews count] > 0) {
+        // 重新計算寬度來適配
+        CGFloat newWidth = 0;
+        UIView *latestView = [self.subviews lastObject];
+        newWidth = newWidth + latestView.frame.origin.x + latestView.frame.size.width + _rightMargin;
+        if ( self.frame.size.width < newWidth ) {
+            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, newWidth, self.frame.size.height);
+            [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        }
+    }
+}
+
 /**
  * @brief - 設定背景圖片
  */
@@ -82,18 +103,6 @@ NSInteger const kArrowImage_Tag = 6481;
     if ( tempBGImage != nil ) {
         [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [_bg setImage:[tempBGImage resizableImageWithCapInsets:UIEdgeInsetsMake(5,5,5,5) 
-                                                  resizingMode:UIImageResizingModeStretch]];
-    }
-}
-
-/**
- * @brief - 設定背景圖片
- */
--(void)setBackgroundImage:(UIImage *)tempBGImage 
-            withCapInsets:(UIEdgeInsets)capInsets{
-    if ( tempBGImage != nil ) {
-        [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        [_bg setImage:[tempBGImage resizableImageWithCapInsets:capInsets 
                                                   resizingMode:UIImageResizingModeStretch]];
     }
 }
@@ -318,7 +327,7 @@ NSInteger const kArrowImage_Tag = 6481;
     }
     
     [self setContainerViewHight:realHeight];
-    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    self.isAutoFitWidth = _isAutoFitWidth;
     
 }
 

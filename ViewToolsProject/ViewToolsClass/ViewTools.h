@@ -9,34 +9,6 @@
 
 #import <UIKit/UIKit.h>
 
-///////////////////////////////////////////////////////////////////
-// 設定元件標準高度（可自行設定）
-#define D_ViewTools_ViewHeight (40.0f)
-// 設定元件與左邊畫面的距離
-#define D_ViewTools_Label_Left_Margin (12)
-#define D_ViewTools_Label_Middle_Margin (12)
-#define D_ViewTools_Label_Right_Margin (12)
-// 設定文字大小
-#define D_ViewTools_Text_Font [UIFont boldSystemFontOfSize:16.0f]
-// 設定文字顏色
-#define D_ViewTools_Text_Color [UIColor whiteColor]
-// 設定 TextField 內文字的顏色
-#define D_ViewTools_TextField_Inner_Color [UIColor grayColor]
-// 設定產生 Button 時，左右的預留間距
-#define D_ViewTools_Button_LeftRight_Margin (6)
-///////////////////////////////////////////////////////////////////
-// 如果不需要設定請直接使用 nil 即可
-// 設定 Image 的名稱（不帶 .png ）
-#define D_ViewTools_Arrow_Image (@"arrow")
-#define D_ViewTools_Button_Red_Normal_Image (@"red_btn")
-#define D_ViewTools_Button_Red_HightLight_Image (nil)
-#define D_ViewTools_Button_Normal_Image (@"gray_btn")
-#define D_ViewTools_Button_HightLight_Image (nil)
-#define D_ViewTools_Button_Disable_Image (nil)
-#define D_ViewTools_TextField_Image (@"box_textField")
-#define D_ViewTools_TextField_CancelButton_Image (nil)
-
-
 // 箭頭 image 的 tag
 extern NSInteger const kArrowImage_Tag;
 
@@ -52,14 +24,24 @@ typedef enum{
 #pragma mark - 容器 View
 @interface ContainerView : UIView
 
+/** 容器最左邊間距（上下排的時候，會忽略） */
 @property (readonly , nonatomic) CGFloat leftMargin;
+/** 容器最右邊間距（上下排的時候，會忽略） */
 @property (readonly , nonatomic) CGFloat rightMargin;
+/** 容器中，元件與元件之間的中邊間距（上下排的時候，會忽略） */
 @property (readonly , nonatomic) CGFloat middleMargin;
+/** 容器最上面、與元件的間距 */
 @property (readonly , nonatomic) CGFloat topMargin;
+/** 容器最下面、與元件的間距 */
 @property (readonly , nonatomic) CGFloat bottomMargin;
+/** 容器背景圖片 */
 @property (strong , nonatomic) UIImageView *bg;
+/** 容器是否為上到下排列？（ YES:上下排列內部元件 NO:左右排列內部元件 ） */
 @property (assign , nonatomic) BOOL isVertical;
+/** 元件是否要從最右邊開始對齊，最左邊元件會自動伸縮左邊界？（上下排的時候，會忽略） */
 @property (assign , nonatomic) BOOL isRevertArrangement;
+/** ContainerView 是否需要在寬度不足時，自行增加寬度？（上下排的時候，會忽略） */
+@property (assign , nonatomic) BOOL isAutoFitWidth;
 
 /** 
  * @brief   - 設定容器的高度
@@ -77,12 +59,6 @@ typedef enum{
  * @brief - 設定背景圖片
  */
 -(void)setBackgroundImage:(UIImage *)tempBGImage;
-
-/**
- * @brief - 設定背景圖片，並且給定裁切距離
- */
--(void)setBackgroundImage:(UIImage *)tempBGImage 
-            withCapInsets:(UIEdgeInsets)capInsets;
 
 /** 
  * @brief   - 設定元件內的左邊間距
