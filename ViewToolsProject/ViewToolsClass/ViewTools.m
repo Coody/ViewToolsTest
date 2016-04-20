@@ -363,7 +363,9 @@ NSInteger const kArrowImage_Tag = 6481;
 
 -(void)removeAllUnits{
     for ( UIView *unit in self.subviews ) {
-        [unit removeFromSuperview];
+        if ( unit != _bg ) {
+            [unit removeFromSuperview];
+        }
     }
 }
 
