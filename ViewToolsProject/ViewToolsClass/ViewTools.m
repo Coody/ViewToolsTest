@@ -385,7 +385,54 @@ NSInteger const kArrowImage_Tag = 6481;
 
 -(void)recheckInnerView{
     if ( _isVertical ) {
-        
+        // 計算內部上下元件 y 的位置 
+        // 垂直擺放元件的方法，會利用
+        CGFloat realHeight = _containerViewHight;
+        CGFloat totalY = 0.0f;
+        NSArray *totalViewArray = self.subviews;
+        NSMutableArray *tempViewArray = [[NSMutableArray alloc] init];
+        for ( UIView *unit in totalViewArray ) {
+            if ( unit != _bg ) {
+                [tempViewArray addObject:unit];
+            }
+        }
+        for ( UIView *unit in tempViewArray ) {
+            if ( unit == [tempViewArray firstObject] ) {
+                unit.frame = CGRectMake(unit.frame.origin.x,
+                                        _topMargin,
+                                        unit.frame.size.width,
+                                        unit.frame.size.height);
+                totalY = unit.frame.origin.y + unit.frame.size.height;
+            }
+            else{
+                if ( unit == [tempViewArray lastObject] ) {
+                    if ( _isAutoFitHeight ) {
+                        unit.frame = CGRectMake(unit.frame.origin.x,
+                                                _middleMargin + totalY,
+                                                unit.frame.size.width,
+                                                self.frame.size.height - (unit.frame.origin.y + _middleMargin + totalY) - _bottomMargin );
+                    }
+                    else{
+                        unit.frame = CGRectMake(unit.frame.origin.x,
+                                                _middleMargin + totalY,
+                                                unit.frame.size.width,
+                                                unit.frame.size.height);
+                    }
+                    
+                    totalY = totalY + unit.frame.size.height + _middleMargin + _bottomMargin;
+                }
+                else{
+                    unit.frame = CGRectMake(unit.frame.origin.x,
+                                            _middleMargin + totalY,
+                                            unit.frame.size.width,
+                                            unit.frame.size.height);
+                    totalY = totalY + unit.frame.size.height + _middleMargin;
+                }
+            }
+            if ( totalY > realHeight ) {
+                realHeight = totalY;
+            }
+        }
     }
     else{
         /* 反轉陣列的方法（目前沒用到，但留著做記錄，未來可能會用到） */
