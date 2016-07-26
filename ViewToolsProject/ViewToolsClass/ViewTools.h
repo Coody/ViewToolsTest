@@ -1,17 +1,14 @@
 //
 //  ViewTools.h
-//
+//  Prime
 //
 //  Created by Coody on 2015/8/21.
+//  Copyright (c) 2015年 Coody. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-
 #import <UIKit/UIKit.h>
-
-// 箭頭 image 的 tag
-extern NSInteger const kArrowImage_Tag;
-
+#import "ViewToolsConstant.h"
 
 typedef enum{
     EnumImageType_None = -1,
@@ -19,6 +16,9 @@ typedef enum{
     EnumImageType_Jpg,
     EnumImageType_Gif
 }EnumImageType;
+
+// 箭頭 image 的 tag
+extern NSInteger const kArrowImage_Tag;
 
 
 #pragma mark - 容器 View
@@ -45,6 +45,21 @@ typedef enum{
  （ YES:會自行增加寬度（預設為 NO））（上下排、以及從後面排列到前面的時候，會忽略） 
  */
 @property (assign , nonatomic) BOOL isAutoFitWidth;
+/** 
+ ContainerView 在上下排列時，最後一個元件會自動調整高度。
+ （ YES:會自行增加高度（預設為 NO） （左右排會忽略））
+ */
+@property (assign , nonatomic) BOOL isAutoFitHeight;
+
+/**
+ ContainerView 預設會依照元件一開始的 Y 值來做初始排列，但如果是第二次加入元件，
+ 請要把 Frame 的 Y 值設定回原本你想要的距離，如果沒有設定，會依照目前的 Y 值做調整。
+
+ 所以如果要忽略 Y 值，請設定後，在使用 addUnit: 
+ 
+ @warning - 如果使用 recheckInnerView 的方法，會直接忽略 Y 值來重新排列。
+ */
+@property (assign , nonatomic) BOOL isIgnoreY;
 
 /** 
  * @brief   - 設定容器的高度
@@ -202,6 +217,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText 
                         withRightText:(NSString *)tempRightText 
                         withNeedArrow:(BOOL)tempIsNeedArrow;
+
 /** 
  * @brief - 2.1.2 左邊特殊文字、右邊特殊文字、箭頭
  */
@@ -246,7 +262,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /**
  * @brief - 2.2.4 左邊文字、右邊文字、箭頭、固定某一邊的文字長度（另一邊會延伸）
-*/
+ */
 -(UIButton *)createButtonWithLeftText:(NSString *)tempLeftText
                         withRightText:(NSString *)tempRightText 
                         withNeedArrow:(BOOL)tempIsNeedArrow 

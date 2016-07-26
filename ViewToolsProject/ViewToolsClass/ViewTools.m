@@ -1,17 +1,15 @@
 //
 //  ViewTools.m
-//
+//  Prime
 //
 //  Created by Coody on 2015/8/21.
+//  Copyright (c) 2015年 Coody. All rights reserved.
 //
 
 #import "ViewTools.h"
 
-// 
+// for Tools
 #import <CoreText/CoreText.h>
-
-// for Constant
-#import "ViewToolsConstant.h"
 
 NSInteger const kArrowImage_Tag = 6481;
 
@@ -29,6 +27,8 @@ NSInteger const kArrowImage_Tag = 6481;
         _isVertical = NO;
         _isRevertArrangement = NO;
         _isAutoFitWidth = NO;
+        _isAutoFitHeight = NO;
+        _isIgnoreY = NO;
         _leftMargin = 0.0f;
         _rightMargin = 0.0f;
         _middleMargin = 0.0f;
@@ -90,9 +90,20 @@ NSInteger const kArrowImage_Tag = 6481;
         UIView *latestView = [self.subviews lastObject];
         newWidth = newWidth + latestView.frame.origin.x + latestView.frame.size.width + _rightMargin;
         if ( self.frame.size.width < newWidth ) {
-            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, newWidth, self.frame.size.height);
-            [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+            [self setContainerViewWidth:newWidth];
         }
+    }
+}
+
+-(void)setIsIgnoreY:(BOOL)isIgnoreY{
+    _isIgnoreY = isIgnoreY;
+}
+
+-(void)setIsAutoFitHeight:(BOOL)isAutoFitHeight{
+    _isAutoFitHeight = isAutoFitHeight;
+    
+    if ( _isAutoFitHeight == YES && _isVertical == YES && [self.subviews count] > 0 ) {
+        [self recheckInnerView];
     }
 }
 
@@ -174,51 +185,6 @@ NSInteger const kArrowImage_Tag = 6481;
     }
     else{
         
-        
-#ifdef D_TestConstrain
-        
-        NSMutableString *constrainString = [[NSMutableString alloc] init];
-        if ( _isVertical ) {
-            [constrainString appendString:@"V:"];
-        }
-        else{
-            [constrainString appendString:@"H:"];
-        }
-        
-        int countI = 1;
-        NSMutableDictionary *viewDic = [NSMutableDictionary dictionary];
-        if ( [tempViewArray count] == 1 ) {
-            UIView *unit = [tempViewArray firstObject];
-            [unit setTranslatesAutoresizingMaskIntoConstraints:NO];
-            [self addSubview:unit];
-            NSString *viewName = @"view1";
-            if ( _isVertical ) {
-                [constrainString appendString:[NSString stringWithFormat:@"|-%.0f-[view1(>=0)]" , _topMargin]];
-                [viewDic setObject:[tempViewArray firstObject] forKey:viewName];
-            }
-            else{
-                [constrainString appendString:[NSString stringWithFormat:@"|-%f-[view1(>=0)]-%f-|" , _leftMargin , _rightMargin ]];
-                [viewDic setObject:[tempViewArray firstObject] forKey:viewName];
-            }
-            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:constrainString 
-                                                                         options:0 
-                                                                         metrics:nil 
-                                                                           views:viewDic]];
-            
-        }
-        else{
-//            for ( UIView *uint in tempViewArray ) {
-//                
-//                
-//                
-//            }
-        }
-        
-        
-        
-#else
-        
-        
         // isVertical == YES , 是否是上下加入元件？ 
         // isVertical == NO , 是否是左右加入元件？
         if ( _isVertical ) {
@@ -228,22 +194,46 @@ NSInteger const kArrowImage_Tag = 6481;
             
             for ( UIView *unit in tempViewArray ) {
                 if ( unit == [tempViewArray firstObject] ) {
-                    
+                    CGFloat yValue = unit.frame.origin.y;
+                    if ( _isIgnoreY ) {
+                        yValue = 0.0f;
+                    }
                     unit.frame = CGRectMake(unit.frame.origin.x,
-                                            unit.frame.origin.y + _topMargin,
+                                            yValue + _topMargin,
                                             unit.frame.size.width,
                                             unit.frame.size.height);
                     totalY = unit.frame.origin.y + unit.frame.size.height;
                 }
                 else{
-                    unit.frame = CGRectMake(unit.frame.origin.x,
-                                            unit.frame.origin.y + _middleMargin + totalY,
-                                            unit.frame.size.width,
-                                            unit.frame.size.height);
                     if ( unit == [tempViewArray lastObject] ) {
+                        CGFloat yValue = unit.frame.origin.y;
+                        if ( _isIgnoreY ) {
+                            yValue = 0.0f;
+                        }
+                        if ( _isAutoFitHeight ) {
+                            unit.frame = CGRectMake(unit.frame.origin.x,
+                                                    yValue + _middleMargin + totalY,
+                                                    unit.frame.size.width,
+                                                    self.frame.size.height - (yValue + _middleMargin + totalY) - _bottomMargin );
+                        }
+                        else{
+                            unit.frame = CGRectMake(unit.frame.origin.x,
+                                                    yValue + _middleMargin + totalY,
+                                                    unit.frame.size.width,
+                                                    unit.frame.size.height);
+                        }
+                        
                         totalY = totalY + unit.frame.size.height + _middleMargin + _bottomMargin;
                     }
                     else{
+                        CGFloat yValue = unit.frame.origin.y;
+                        if ( _isIgnoreY ) {
+                            yValue = 0.0f;
+                        }
+                        unit.frame = CGRectMake(unit.frame.origin.x,
+                                                yValue + _middleMargin + totalY,
+                                                unit.frame.size.width,
+                                                unit.frame.size.height);
                         totalY = totalY + unit.frame.size.height + _middleMargin;
                     }
                 }
@@ -351,14 +341,9 @@ NSInteger const kArrowImage_Tag = 6481;
                 }
             }
         }
-        
-#endif
-        
     }
-    
     [self setContainerViewHight:realHeight];
     self.isAutoFitWidth = _isAutoFitWidth;
-    
 }
 
 -(void)removeAllUnits{
@@ -377,11 +362,11 @@ NSInteger const kArrowImage_Tag = 6481;
             for ( UIView *unit in unitArray ) {
                 [unit removeFromSuperview];
             }
-            
             [self addUnits:unitArray];
         }
     }
 }
+
 
 -(void)recheckInnerView{
     if ( _isVertical ) {
@@ -545,14 +530,12 @@ NSInteger const kArrowImage_Tag = 6481;
                         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, totalX, self.frame.size.height);
                     }
                 }
-                
             }
         }
         [self setContainerViewHight:realHeight];
         self.isAutoFitWidth = _isAutoFitWidth;
     }
 }
-
 
 @end
 
@@ -586,17 +569,6 @@ NSInteger const kArrowImage_Tag = 6481;
 
 @implementation ViewTools
 
-//+(instancetype)sharedInstance{
-//    static ViewTools *viewToolsSharedInstance = nil;
-//    static dispatch_once_t pred;
-//    dispatch_once( &pred , ^{
-//        if ( viewToolsSharedInstance == nil ) {
-//            viewToolsSharedInstance = [[self alloc] init];
-//        } 
-//    });
-//    return viewToolsSharedInstance;
-//}
-
 -(id)init{
     self = [super init];
     if (self) {
@@ -621,7 +593,7 @@ NSInteger const kArrowImage_Tag = 6481;
         _textFieldInnerColor = _allTextDefaultColor;
         
         // 左右有文字、右邊有箭頭的左右間距
-        self.customButtonLeftMargin = self.customButtonRightMargin = 0.0f;
+        self.customButtonLeftMargin = self.customButtonRightMargin = 6.0f;
         
         // 輸入框中，游標的顏色
         [[UITextField appearance] setTintColor:[UIColor whiteColor]];
@@ -815,7 +787,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createButtonWithLeftText:tempLeftText
                             withRightText:tempRightText 
                             withNeedArrow:tempIsNeedArrow 
-                          withCustomFrame:CGRectMake(0, 0, tempCustomWidth, _viewHeight )  
+                          withCustomFrame:CGRectMake(0 , 0, tempCustomWidth, _viewHeight )  
                           withLabelStatic:EnumLabelStaticType_None 
                      withIsNeedAutoResize:NO];
 }
@@ -962,10 +934,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createButtonWithLeftText:tempLeftText
                             withRightText:tempRightText 
                             withNeedArrow:tempIsNeedArrow 
-                          withCustomFrame:CGRectMake(_customButtonLeftMargin,
-                                                     0,
-                                                     [UIScreen mainScreen].bounds.size.width - _customButtonLeftMargin - _customButtonRightMargin,
-                                                     _viewHeight )  
+                          withCustomFrame:CGRectMake(_customButtonLeftMargin, 0, [UIScreen mainScreen].bounds.size.width - _customButtonLeftMargin - _customButtonRightMargin, _viewHeight )  
                           withLabelStatic:tempEnumLabelStaticType 
                      withIsNeedAutoResize:YES];
 }
@@ -1047,7 +1016,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [firstLabel setTag:1];
         [firstLabel setNumberOfLines:0];
         [button addSubview:firstLabel];
-       
+        
 #ifdef D_DEBUG
         [firstLabel setBackgroundColor:[UIColor greenColor]];
 #endif
@@ -1313,10 +1282,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                     resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
                                     resizingMode:UIImageResizingModeStretch] 
                           forState:(UIControlStateHighlighted)];
-//        [button setBackgroundImage:[_buttonImage_Disable
-//                                    resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
-//                                    resizingMode:UIImageResizingModeStretch] 
-//                          forState:(UIControlStateDisabled)];
+        //        [button setBackgroundImage:[_buttonImage_Disable
+        //                                    resizableImageWithCapInsets:UIEdgeInsetsMake( 10, 10, 10, 10) 
+        //                                    resizingMode:UIImageResizingModeStretch] 
+        //                          forState:(UIControlStateDisabled)];
     }
     
     if ( isNeedAutoResize ) {
@@ -1500,7 +1469,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
         tempHeight = tempSize.height;
     }
-
+    
     return [self createLabelWithText:tempText 
                    withTextAlignment:tempTextAlignment
                      withCustomFrame:CGRectMake(0,0,tempSize.width,tempHeight) 
@@ -1986,6 +1955,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     CFRelease(framesetter);
     return fitSize;
 }
+
 
 #if 1
 +(UIImage *)getImageFromeBundleByPath:(NSString *)tempPath{
