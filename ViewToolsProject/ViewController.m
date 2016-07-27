@@ -142,8 +142,8 @@
         // 2.1.3 , 2.2.1
         {
             [_viewTool setViewHeight:80.0f];
-            UIButton *button1 = [_viewTool createButtonWithLeftText:@"2.2.1" 
-                                                      withRightText:@"2.2.1" 
+            UIButton *button1 = [_viewTool createButtonWithLeftText:@"2.2.1x" 
+                                                      withRightText:@"2.2.1x" 
                                                       withNeedArrow:YES 
                                                     withCustomWidth:160];
             UIButton *button2 = [_viewTool createButtonWithLeftAttributedText:[[NSMutableAttributedString alloc] initWithString:@"2.1.3\n行高"] 
@@ -156,6 +156,7 @@
             [containerView1 setLeftMargin:6.0f];
             [containerView1 setMiddleMargin:6.0f];
             [containerView1 addUnits:@[button1,button2]];
+            containerView1.isSeparateAllUnit = YES;
             
             UIButton *button3 = [_viewTool createButtonWithLeftText:@"2.2.1" 
                                                       withRightText:@"2.2.1" 
@@ -431,6 +432,7 @@
 -(void)createContainerView{
     //
     ContainerView *testContainerView1 = [[ContainerView alloc] init];
+    testContainerView1.isSeparateAllUnit = YES;
     
     // 設定 ContainerView 內左間距
     [testContainerView1 setLeftMargin:15.0f];

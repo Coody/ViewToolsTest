@@ -61,6 +61,13 @@ extern NSInteger const kArrowImage_Tag;
  */
 @property (assign , nonatomic) BOOL isIgnoreY;
 
+/**
+ ContainerView 回自動將內部元件平均分布寬度
+ 
+ @warning - isVertical 會無效 
+ */
+@property (assign , nonatomic) BOOL isSeparateAllUnit;
+
 /** 
  * @brief   - 設定容器的高度
  * @details - 

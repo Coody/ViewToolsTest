@@ -29,6 +29,7 @@ NSInteger const kArrowImage_Tag = 6481;
         _isAutoFitWidth = NO;
         _isAutoFitHeight = NO;
         _isIgnoreY = NO;
+        _isSeparateAllUnit = NO;
         _leftMargin = 0.0f;
         _rightMargin = 0.0f;
         _middleMargin = 0.0f;
@@ -99,6 +100,13 @@ NSInteger const kArrowImage_Tag = 6481;
     _isIgnoreY = isIgnoreY;
 }
 
+-(void)setIsSeparateAllUnit:(BOOL)isSeparateAllUnit{
+    _isSeparateAllUnit = isSeparateAllUnit;
+    if ( _isSeparateAllUnit == YES && (_isVertical == NO) ) {
+        [self recheckInnerView];
+    }
+}
+
 -(void)setIsAutoFitHeight:(BOOL)isAutoFitHeight{
     _isAutoFitHeight = isAutoFitHeight;
     
@@ -160,6 +168,16 @@ NSInteger const kArrowImage_Tag = 6481;
 }
 
 -(void)addUnits:(NSArray *)tempViewArray{
+    
+    if ( _isSeparateAllUnit && (_isVertical == NO) && [tempViewArray count] >= 1) {
+        CGFloat separateWidth = (CGFloat)((CGRectGetWidth(self.frame) - _leftMargin - _rightMargin - _middleMargin*([tempViewArray count] - 1))/[tempViewArray count]);
+        for ( UIView *unit in tempViewArray ) {
+            unit.frame = CGRectMake(unit.frame.origin.x,
+                                    unit.frame.origin.y,
+                                    separateWidth,
+                                    CGRectGetHeight(unit.frame));
+        }
+    }
     
     /* 反轉陣列的方法 */
     if ( _isRevertArrangement ) {
@@ -369,6 +387,7 @@ NSInteger const kArrowImage_Tag = 6481;
 
 
 -(void)recheckInnerView{
+    
     if ( _isVertical ) {
         // 計算內部上下元件 y 的位置 
         // 垂直擺放元件的方法，會利用
@@ -381,7 +400,9 @@ NSInteger const kArrowImage_Tag = 6481;
                 [tempViewArray addObject:unit];
             }
         }
+        
         for ( UIView *unit in tempViewArray ) {
+            
             if ( unit == [tempViewArray firstObject] ) {
                 unit.frame = CGRectMake(unit.frame.origin.x,
                                         _topMargin,
@@ -420,14 +441,25 @@ NSInteger const kArrowImage_Tag = 6481;
         }
     }
     else{
+        
         /* 反轉陣列的方法（目前沒用到，但留著做記錄，未來可能會用到） */
         NSArray *totalViewArray = self.subviews;
         NSMutableArray *tempViewArray = [[NSMutableArray alloc] init];
         for ( UIView *unit in totalViewArray ) {
             if ( unit != _bg ) {
                 [tempViewArray addObject:unit];
+                unit.frame = CGRectMake(0 ,
+                                        0,
+                                        unit.frame.size.width,
+                                        unit.frame.size.height);
             }
         }
+        
+        CGFloat separateWidth = 0;
+        if ( _isSeparateAllUnit ) {
+            separateWidth = (CGFloat)((CGRectGetWidth(self.frame) - _leftMargin - _rightMargin - _middleMargin*([tempViewArray count] - 1))/[tempViewArray count]);
+        }
+        
         if ( _isRevertArrangement ) {
             NSEnumerator *enumerator = [tempViewArray reverseObjectEnumerator];
             NSMutableArray *reverseArray = [[NSMutableArray alloc] init];
@@ -458,6 +490,14 @@ NSInteger const kArrowImage_Tag = 6481;
         }
         else{
             for ( UIView *unit in tempViewArray ) {
+                
+                if ( _isSeparateAllUnit ) {
+                    unit.frame = CGRectMake(unit.frame.origin.x,
+                                            unit.frame.origin.y,
+                                            separateWidth,
+                                            CGRectGetHeight(unit.frame));
+                }
+                
                 if ( unit == [tempViewArray firstObject] ) {
                     if ( _isRevertArrangement ) {
                         CGFloat unitX = self.frame.size.width - unit.frame.origin.x - _rightMargin - unit.frame.size.width;
