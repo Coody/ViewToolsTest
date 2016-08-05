@@ -1,7 +1,13 @@
 # ViewToolsTest 
 ![建立者](https://img.shields.io/badge/建立者-Coody-orange.svg)
 
-用來快速建立 view 元件的工具（可以不用管排版）
+1. ViewTools
+用來快速建立 UIButton , UILabel , UITextField 套組元件的工具。
+2. ContainerView
+用來排版的工具 , 可以設定左右排列、或是上下排列。
+
+# 改版說明
+2.0 版本將 ContainerView 獨立出來
 
 # 類別說明
 ViewToolsClass 資料夾裡面包含三個類別：
