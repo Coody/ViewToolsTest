@@ -7,7 +7,7 @@
 用來排版的工具 , 可以設定左右排列、或是上下排列。
 
 # 改版說明
-2.0 版本將 ContainerView 獨立出來
+`2016/8/5` 2.0 版本將 ContainerView 獨立出來
 
 # 類別說明
 ViewToolsClass 資料夾裡面包含三個類別：
