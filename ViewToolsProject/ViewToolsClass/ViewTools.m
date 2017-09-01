@@ -1278,6 +1278,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     label.numberOfLines = 0;
     [label setAttributedText:tempText];
     CGSize tempSize = [label sizeThatFits:CGSizeMake(tempFrame.size.width, tempFrame.size.height)];
+    if( tempSize.height < tempFrame.size.height ){
+        tempSize.height = tempFrame.size.height;
+    }
     [label setFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y, tempFrame.size.width , tempSize.height)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
