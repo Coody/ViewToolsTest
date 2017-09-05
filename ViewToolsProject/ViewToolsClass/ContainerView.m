@@ -45,6 +45,17 @@
 }
 
 /** 
+ * @brief   - 設定容器的位置
+ * @details - 
+ */
+-(void)setContainerViewPosition:(CGPoint)tempPoint{
+    [self setFrame:CGRectMake(tempPoint.x,
+                              tempPoint.y,
+                              self.frame.size.width,
+                              self.frame.size.height)];
+}
+
+/** 
  * @brief   - 設定容器的高度
  * @details - 
  */
