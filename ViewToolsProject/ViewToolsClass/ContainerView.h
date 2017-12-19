@@ -56,6 +56,12 @@
 @property (assign , nonatomic) BOOL isSeparateAllUnit;
 
 /** 
+ * @brief   - 設定容器的位置
+ * @details - 
+ */
+-(void)setContainerViewPosition:(CGPoint)tempPoint;
+
+/** 
  * @brief   - 設定容器的高度
  * @details - 
  */
