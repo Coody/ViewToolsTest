@@ -216,6 +216,9 @@
                                             unit.frame.size.width,
                                             unit.frame.size.height);
                     totalY = unit.frame.origin.y + unit.frame.size.height;
+                    if( unit == [tempViewArray lastObject] ){
+                        totalY = totalY + _bottomMargin;
+                    }
                 }
                 else{
                     if ( unit == [tempViewArray lastObject] ) {
