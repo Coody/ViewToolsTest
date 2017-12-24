@@ -106,4 +106,28 @@
     }
 }
 
+#pragma mark - 類別方法
+/** 
+ * @brief - 是否有四個以上字元？
+ */
++(BOOL)checkFourDifferentKindOfWords:(NSString *)tempCheckString{
+    BOOL isLegal = NO;
+    if ( [tempCheckString length] > 0 ) {
+        int differentWordCount = 0;
+        NSString *newCheckString = [tempCheckString lowercaseString];
+        while ( [newCheckString length] > 0 ) {
+            NSString *word = [newCheckString substringToIndex:1];
+            newCheckString = [newCheckString stringByReplacingOccurrencesOfString:word withString:@""];
+            differentWordCount = differentWordCount + 1;
+            // 只要檢查到有四個字元不相等（ differentWordCount >= 4 ），就直接跳出不用再尋找。
+            if ( differentWordCount >= 4 ) {
+                isLegal = YES;
+                break;
+            }
+        }
+    }
+    return isLegal;
+}
+
+
 @end

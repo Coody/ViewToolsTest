@@ -60,4 +60,10 @@
  */
 -(void)checkAllSettingsInTools:(id)sender;
 
+#pragma mark - 類別方法
+/** 
+ * @brief - 是否有四個以上的不同字元？
+ */
++(BOOL)checkFourDifferentKindOfWords:(NSString *)tempCheckString;
+
 @end
