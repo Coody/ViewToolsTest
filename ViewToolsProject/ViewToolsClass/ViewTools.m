@@ -1336,6 +1336,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createTextFieldWithText:tempText 
                            withInnerText:tempInnerText 
                        withTextAlignment:tempTextAlignment 
+                  withLeftAndRightMargin:10.0f 
                          withCustomWidth:[UIScreen mainScreen].bounds.size.width 
                     withIsNeedAutoResize:YES];
 }
@@ -1351,16 +1352,35 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return [self createTextFieldWithText:tempText 
                            withInnerText:tempInnerText 
                        withTextAlignment:tempTextAlignment 
+                  withLeftAndRightMargin:10.0f 
                          withCustomWidth:tempCustomWidth 
                     withIsNeedAutoResize:NO];
 }
 
 /**
- * @brief - 4.3 設定 UITextField 文字輸入元件（給設定的寬度）
+ * @brief - 4.3 文字、Inner文字、位置、左右邊預留一點寬度、總寬度（回傳包含 UITextField 的 UIView ）
+ * @detail 如果需要取得 UITextField ，請用 [[_viewTools getRecentObjects] firstObject]; 來取得即可。
  */
 -(UIView *)createTextFieldWithText:(NSString *)tempText 
                      withInnerText:(NSString *)tempInnerText 
                  withTextAlignment:(NSTextAlignment)tempTextAlignment 
+            withLeftAndRightMargin:(float)tempLeftAndRightMargin 
+              withTotalCustomWidth:(float)tempCustomWidth{
+    return [self createTextFieldWithText:tempText 
+                           withInnerText:tempInnerText 
+                       withTextAlignment:tempTextAlignment 
+                  withLeftAndRightMargin:tempLeftAndRightMargin 
+                         withCustomWidth:tempCustomWidth 
+                    withIsNeedAutoResize:YES];
+}
+
+/**
+ * @brief - 4.4 設定 UITextField 文字輸入元件（給設定的寬度）
+ */
+-(UIView *)createTextFieldWithText:(NSString *)tempText 
+                     withInnerText:(NSString *)tempInnerText 
+                 withTextAlignment:(NSTextAlignment)tempTextAlignment 
+            withLeftAndRightMargin:(float)tempLeftAndRightMargin 
                    withCustomWidth:(float)tempCustomWidth 
               withIsNeedAutoResize:(BOOL)isNeedAutoResize
 {
@@ -1383,10 +1403,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                          resizingMode:UIImageResizingModeStretch]];
     [allView addSubview:inputView];
     
-    // TextField
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10,
+    // TextField（預設 10 ）
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(tempLeftAndRightMargin,
                                                                            0,
-                                                                           tempCustomWidth - 20,
+                                                                           tempCustomWidth - tempLeftAndRightMargin*2,
                                                                            _viewHeight)];
     textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [textField setTextAlignment:tempTextAlignment];
@@ -1409,7 +1429,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     
     // 將元件陣列暫時存入 recentObjects
     _recentObjects = nil;
-    _recentObjects = @[textField];
+    _recentObjects = @[textField , inputView];
     
     return allView;
 }

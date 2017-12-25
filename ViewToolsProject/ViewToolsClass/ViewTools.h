@@ -471,6 +471,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 /////////////////////////////////////
 /**
  * @brief - 4.1 文字、Inner文字、位置（附加 UITextField 的 UIView ）
+ * @detail 如果需要取得 UITextField ，請用 [[_viewTools getRecentObjects] firstObject]; 來取得即可。
  */
 -(UIView *)createTextFieldWithText:(NSString *)tempText 
                      withInnerText:(NSString *)tempInnerText 
@@ -478,11 +479,22 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /**
  * @brief - 4.2 文字、Inner文字、位置、自定寬度（附加 UITextField 的 UIView ）
+ * @detail 如果需要取得 UITextField ，請用 [[_viewTools getRecentObjects] firstObject]; 來取得即可。
  */
 -(UIView *)createTextFieldWithText:(NSString *)tempText 
                      withInnerText:(NSString *)tempInnerText 
                  withTextAlignment:(NSTextAlignment)tempTextAlignment 
                    withCustomWidth:(float)tempCustomWidth;
+
+/**
+ * @brief - 4.3 文字、Inner文字、位置、左右邊預留一點寬度、總寬度（回傳包含 UITextField 的 UIView ）
+ * @detail 如果需要取得 UITextField ，請用 [[_viewTools getRecentObjects] firstObject]; 來取得即可。
+ */
+-(UIView *)createTextFieldWithText:(NSString *)tempText 
+                     withInnerText:(NSString *)tempInnerText 
+                 withTextAlignment:(NSTextAlignment)tempTextAlignment 
+            withLeftAndRightMargin:(float)tempLeftAndRightMargin 
+              withTotalCustomWidth:(float)tempCustomWidth;
 
 /////////////////////////////////////
 /**
