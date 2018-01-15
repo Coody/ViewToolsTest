@@ -23,6 +23,7 @@
 #define D_ViewTools_Text_Color [UIColor whiteColor]
 // 設定 TextField 內文字的顏色
 #define D_ViewTools_TextField_Inner_Color [UIColor grayColor]
+#define D_ViewTools_TextField_Tint_Color [UIColor whiteColor]
 ///////////////////////////////////////////////////////////////////
 // 如果不需要設定請直接使用 nil 即可
 // 設定 Image 的名稱（不帶 .png ）

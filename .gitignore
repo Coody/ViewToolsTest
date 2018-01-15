@@ -2,3 +2,9 @@ ViewToolsProject.xcodeproj/project.xcworkspace/xcshareddata/ViewToolsProject.xcc
 ViewToolsProject.xcodeproj/project.xcworkspace/xcuserdata/coodychou.xcuserdatad/UserInterfaceState.xcuserstate
 ViewToolsProject.xcodeproj/xcuserdata/coodychou.xcuserdatad/xcschemes/ViewToolsProject.xcscheme
 Breakpoints_v2.xcbkptlist
+
+DerivedData/
+*.xcworkspacedata
+*.xcuserstate
+*.xcyserdatad/
+xcschemes/

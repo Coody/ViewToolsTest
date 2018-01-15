@@ -71,7 +71,7 @@ NSInteger const kArrowImage_Tag = 6481;
         self.customButtonLeftMargin = self.customButtonRightMargin = 6.0f;
         
         // 輸入框中，游標的顏色
-        [[UITextField appearance] setTintColor:[UIColor whiteColor]];
+        [ViewTools setTextFieldTintColor:D_ViewTools_TextField_Tint_Color];
         
         // 按鈕
         _buttonImage_Normal = [ViewTools getImageFromeBundleByPath:D_ViewTools_Button_Normal_Image];
@@ -203,6 +203,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     else{
         _customButtonRightMargin = 0;
     }
+}
+
++(void)setTextFieldTintColor:(UIColor *)color{
+    [[UITextField appearance] setTintColor:color];
 }
 
 #pragma mark - 建立按鈕（左邊、右邊都有文字、還有右邊箭頭）

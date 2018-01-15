@@ -104,6 +104,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 /** 1.15 設定左右有文字、右邊有箭頭按鈕的左間距 */
 -(void)setCustomButtonRightMargin:(CGFloat)customButtonRightMargin;
 
+/** 1.16 設定 TextField 內的游標顏色 */
++(void)setTextFieldTintColor:(UIColor *)color;
+
 #pragma mark ：建立按鈕
 /////////////////////////////////////
 /** 
