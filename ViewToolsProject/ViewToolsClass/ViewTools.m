@@ -71,7 +71,7 @@ NSInteger const kArrowImage_Tag = 6481;
         self.customButtonLeftMargin = self.customButtonRightMargin = 6.0f;
         
         // 輸入框中，游標的顏色
-        [ViewTools setTextFieldTintColor:D_ViewTools_TextField_Tint_Color];
+        [ViewTools setTextFieldTintColor:[UIColor blueColor]];
         
         // 按鈕
         _buttonImage_Normal = [ViewTools getImageFromeBundleByPath:D_ViewTools_Button_Normal_Image];
