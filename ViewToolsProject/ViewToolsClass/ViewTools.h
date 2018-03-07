@@ -273,6 +273,53 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                          withTextFont:(UIFont *)tempFont 
              withIsNeedAutoResizeMask:(BOOL)isNeedAutoResizeMask;
 
+/**
+ * @brief - 2.13.1 建立左邊有 icon 、中間文字、右邊有箭頭 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText;
+
+/**
+ * @brief - 2.13.2 建立左邊有 icon 、中間文字、右邊有箭頭、是否為系統預設樣式 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText
+                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+
+/**
+ * @brief - 2.13.3 建立左邊有 icon 、右邊有箭頭、客製化寬度、是否為系統預設樣式 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText
+                           withCustomWidth:(CGFloat)tempCustomWidth
+                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+
+/**
+ * @brief - 2.13.4 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否為系統預設樣式 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText
+                           withCustomFrame:(CGRect)tempCustomFrame
+                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+
+/**
+ * @brief - 2.13.5 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否需要右邊箭頭、是否為系統預設樣式 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText
+                           withCustomFrame:(CGRect)tempCustomFrame
+                             withNeedArrow:(BOOL)tempIsNeedArrow
+                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+
+/**
+ * @brief - 2.13.5 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否需要右邊箭頭、是否為系統預設樣式 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText
+                           withCustomFrame:(CGRect)tempCustomFrame
+                             withNeedArrow:(BOOL)tempIsNeedArrow
+                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+
 #pragma mark 左右有 Text 的按鈕擴充
 /**
  * @brief   - 2.13 額外設定「左右有 Text 按鈕」的 >「箭頭」圖片是否顯示？

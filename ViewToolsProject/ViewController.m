@@ -49,6 +49,8 @@
 //         andButtonHightLightImage:nil 
 //            andButtonDisableImage:nil];
         
+        
+        
         // 1.3
         [_viewTool setButtonTextColor:[UIColor whiteColor]];
         // 1.4
@@ -472,6 +474,12 @@
     specialButton.layer.cornerRadius = 10.0f;
     [specialButton addTarget:self action:@selector(pressedSpecialBtn:) forControlEvents:(UIControlEventTouchUpInside)];
     [_viewArray addObject:specialButton];
+    
+    
+    UIButton *testBtn = [_viewTool createButtonWithLeftIconImage:[[UIImage alloc] init] withRightText:@"test" withIsSystemDefaultStyle:YES];
+    
+    [_viewArray addObject:testBtn];
+    
 }
 
 -(void)createButton{

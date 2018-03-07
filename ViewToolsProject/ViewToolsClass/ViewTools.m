@@ -28,6 +28,7 @@ NSInteger const kArrowImage_Tag = 6481;
 @property (nonatomic , strong) UIColor *textButtonColor;
 @property (nonatomic , assign) CGFloat customButtonLeftMargin;
 @property (nonatomic , assign) CGFloat customButtonRightMargin;
+@property (nonatomic , assign) CGFloat customButtonMiddleMargin;
 // 按鈕
 @property (nonatomic , strong) UIImage *buttonImage_Normal;
 @property (nonatomic , strong) UIImage *buttonImage_HightLight;
@@ -68,7 +69,7 @@ NSInteger const kArrowImage_Tag = 6481;
         _textFieldInnerColor = _allTextDefaultColor;
         
         // 左右有文字、右邊有箭頭的左右間距
-        self.customButtonLeftMargin = self.customButtonRightMargin = 6.0f;
+        self.customButtonLeftMargin = self.customButtonMiddleMargin = self.customButtonRightMargin = 6.0f;
         
         // 輸入框中，游標的顏色
         [ViewTools setTextFieldTintColor:[UIColor blueColor]];
@@ -323,28 +324,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     }
     
     // 建立箭頭
-    UIImageView *arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
-    CGFloat arrowWidth = 0.0f;
-    [arrowImageView setFrame:CGRectMake(tempCustomWidth - arrowImageView.frame.size.width - D_ViewTools_Label_Left_Margin,
-                                        (_viewHeight - arrowImageView.frame.size.height)*0.5 ,
-                                        arrowImageView.frame.size.width,
-                                        arrowImageView.frame.size.height)];
-    [button addSubview:arrowImageView];
-    arrowImageView.tag = kArrowImage_Tag;
-    arrowImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-    
-    if ( tempIsNeedArrow ) 
-    {
-        [arrowImageView setAlpha:1.0f];
-        arrowWidth = arrowImageView.frame.size.width + D_ViewTools_Label_Right_Margin;
-    }
-    else
-    {
-        [arrowImageView setAlpha:0.0f];
-        arrowWidth = 0.0f;
-    }
-    
-    
+    UIImageView *arrowImageView = [self createArrowWithFrame:button.frame
+                                               withTargetBtn:button
+                                             withIsNeedArrow:tempIsNeedArrow];
+    CGFloat arrowWidth = arrowImageView.frame.size.width;
     
     // 將內部元進整理成陣列回傳（多個元件時）
     NSMutableArray *tempReturnObjects = [[NSMutableArray alloc] init];
@@ -449,32 +432,12 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     else{
         button.autoresizingMask = UIViewAutoresizingNone;
     }
-    
-    // 建立箭頭
-    UIImageView *arrowImageView;
-    
+
     // 設定「箭頭 + 左邊固定間距」
-    CGFloat arrowWidth = 0.0f;
-    arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
-    [arrowImageView setFrame:CGRectMake(tempCustomFrame.size.width - arrowImageView.frame.size.width - D_ViewTools_Label_Right_Margin,
-                                        (_viewHeight - arrowImageView.frame.size.height)*0.5,
-                                        arrowImageView.frame.size.width,
-                                        arrowImageView.frame.size.height)];
-    [button addSubview:arrowImageView];
-    arrowImageView.tag = kArrowImage_Tag;
-    arrowImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-    
-    if ( tempIsNeedArrow ) 
-    {
-        [arrowImageView setAlpha:1.0f];
-        // 左邊間距 + 箭頭的寬度
-        arrowWidth = arrowImageView.frame.size.width + D_ViewTools_Label_Middle_Margin;
-    }
-    else
-    {
-        [arrowImageView setAlpha:0.0f];
-        arrowWidth = 0.0f;
-    }
+    UIImageView *arrowImageView = [self createArrowWithFrame:tempCustomFrame
+                                               withTargetBtn:button
+                                             withIsNeedArrow:tempIsNeedArrow];
+    CGFloat arrowWidth = arrowImageView.frame.size.width;
     
     // 將內部元進整理成陣列回傳（多個元件時）
     NSMutableArray *tempReturnObjects = [[NSMutableArray alloc] init];
@@ -872,6 +835,122 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return textButton;
 }
 
+/**
+ * @brief - 2.13.1 建立左邊有 icon 、中間文字、右邊有箭頭 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText{
+    
+    return [self createButtonWithLeftIconImage:tempLeftIcnoImage
+                                 withRightText:tempRightText
+                               withCustomFrame:CGRectMake(0, 0,
+                                                          [UIScreen mainScreen].bounds.size.width,
+                                                          [self getViewHeight])
+                                 withNeedArrow:YES
+                      withIsSystemDefaultStyle:YES];
+}
+
+/**
+ * @brief - 2.13.2 建立左邊有 icon 、中間文字、右邊有箭頭、是否為系統預設樣式 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText
+                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
+    return [self createButtonWithLeftIconImage:tempLeftIcnoImage
+                                 withRightText:tempRightText
+                               withCustomFrame:CGRectMake(0, 0,
+                                                          [UIScreen mainScreen].bounds.size.width,
+                                                          [self getViewHeight])
+                                 withNeedArrow:YES
+                      withIsSystemDefaultStyle:isSystemDefaultStyle];
+}
+
+/**
+ * @brief - 2.13.3 建立左邊有 icon 、右邊有箭頭、客製化寬度、是否為系統預設樣式 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText
+                           withCustomWidth:(CGFloat)tempCustomWidth
+                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
+    return [self createButtonWithLeftIconImage:tempLeftIcnoImage
+                                 withRightText:tempRightText
+                               withCustomFrame:CGRectMake(0, 0,
+                                                          tempCustomWidth,
+                                                          [self getViewHeight])
+                                 withNeedArrow:YES
+                      withIsSystemDefaultStyle:isSystemDefaultStyle];
+}
+
+/**
+ * @brief - 2.13.4 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否為系統預設樣式 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText
+                           withCustomFrame:(CGRect)tempCustomFrame
+                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
+    return [self createButtonWithLeftIconImage:tempLeftIcnoImage
+                                 withRightText:tempRightText
+                               withCustomFrame:tempCustomFrame
+                                 withNeedArrow:YES
+                      withIsSystemDefaultStyle:isSystemDefaultStyle];
+}
+
+/**
+ * @brief - 2.13.5 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否需要右邊箭頭、是否為系統預設樣式 的按鈕
+ */
+-(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
+                             withRightText:(NSString *)tempRightText
+                           withCustomFrame:(CGRect)tempCustomFrame
+                             withNeedArrow:(BOOL)tempIsNeedArrow
+                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
+    UIButton *button = [[UIButton alloc] initWithFrame:tempCustomFrame];
+    UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,40,40)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(_customButtonLeftMargin, 0, 40, tempCustomFrame.size.height)];
+    iconImageView.center = CGPointMake(20, CGRectGetMidX(view.frame));
+    [view addSubview:iconImageView];
+    
+    // 建立箭頭
+    UIImageView *arrowImageView = [self createArrowWithFrame:tempCustomFrame
+                                               withTargetBtn:button
+                                             withIsNeedArrow:tempIsNeedArrow];
+    CGFloat arrowWidth = arrowImageView.frame.size.width;
+    
+    // 將內部元進整理成陣列回傳（多個元件時）
+    NSMutableArray *tempReturnObjects = [[NSMutableArray alloc] init];
+    
+    ViewTools *privateViewTools = [[ViewTools alloc] init];
+    [privateViewTools setViewHeight:tempCustomFrame.size.height];
+    UILabel *label = [privateViewTools createLabelWithText:tempRightText
+                                         withTextAlignment:(NSTextAlignmentLeft)
+                                           withCustomWidth:button.frame.size.width - iconImageView.frame.origin.x - iconImageView.frame.size.width - arrowWidth - _customButtonRightMargin - _customButtonMiddleMargin*2];
+    [label setFrame:CGRectMake( _customButtonLeftMargin + _customButtonMiddleMargin + 40,
+                               label.frame.origin.y,
+                               label.frame.size.width,
+                               label.frame.size.height)];
+    
+    if( isSystemDefaultStyle == YES ){
+        UIView *up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tempCustomFrame.size.width, 1)];
+        [up setBackgroundColor:[UIColor lightGrayColor]];
+        [button addSubview:up];
+        UIView *down = [[UIView alloc] initWithFrame:CGRectMake(0, tempCustomFrame.size.height - 1, tempCustomFrame.size.width, 1)];
+        [down setBackgroundColor:[UIColor lightGrayColor]];
+        [button addSubview:down];
+        [button setBackgroundColor:[UIColor whiteColor]];
+        [label setTextColor:[UIColor blackColor]];
+        [label setFont:[UIFont systemFontOfSize:16.0f]];
+    }
+    else{
+        [button setBackgroundColor:[UIColor whiteColor]];
+        [label setTextColor:_labelTextColor];
+        [label setFont:_textFont];
+    }
+    
+    [button addSubview:view];
+    [button addSubview:label];
+    [tempReturnObjects addObjectsFromArray:@[label]];
+    return button;
+}
+
 #pragma mark 左右有 Text 的按鈕擴充
 // 2.13 額外設定左右有 Text 按鈕的 Arrow 是否顯示？
 +(void)isNeedArrow:(BOOL)isNeedArrow withButton:(UIButton *)tempButton
@@ -887,6 +966,37 @@ andButtonDisableImage:(UIImage *)tempDisableImage
             break;
         }
     }
+}
+
+-(UIImageView *)createArrowWithFrame:(CGRect)tempCustomFrame
+                       withTargetBtn:(UIButton *)tempTargetBtn
+                     withIsNeedArrow:(BOOL)isNeedArrow{
+    // 建立箭頭
+    UIImageView *arrowImageView;
+    
+    // 設定「箭頭 + 左邊固定間距」
+    CGFloat arrowWidth = 0.0f;
+    arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
+    [arrowImageView setFrame:CGRectMake(tempCustomFrame.size.width - arrowImageView.frame.size.width - D_ViewTools_Label_Right_Margin,
+                                        (_viewHeight - arrowImageView.frame.size.height)*0.5,
+                                        arrowImageView.frame.size.width,
+                                        arrowImageView.frame.size.height)];
+    [tempTargetBtn addSubview:arrowImageView];
+    arrowImageView.tag = kArrowImage_Tag;
+    arrowImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    
+    if ( isNeedArrow )
+    {
+        [arrowImageView setAlpha:1.0f];
+        // 左邊間距 + 箭頭的寬度
+        arrowWidth = arrowImageView.frame.size.width + D_ViewTools_Label_Middle_Margin;
+    }
+    else
+    {
+        [arrowImageView setAlpha:0.0f];
+        arrowWidth = 0.0f;
+    }
+    return arrowImageView;
 }
 
 #pragma mark - 建立 Label
