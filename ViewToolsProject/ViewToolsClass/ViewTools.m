@@ -903,7 +903,12 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                            withCustomFrame:(CGRect)tempCustomFrame
                              withNeedArrow:(BOOL)tempIsNeedArrow
                   withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
-    UIButton *button = [[UIButton alloc] initWithFrame:tempCustomFrame];
+    ViewTools *privateViewTools = [[ViewTools alloc] init];
+    [privateViewTools setViewHeight:tempCustomFrame.size.height];
+    [privateViewTools setButtonImage:[ViewTools imageFromColor:[UIColor whiteColor]]
+            andButtonHightLightImage:[ViewTools imageFromColor:[UIColor lightGrayColor]]
+               andButtonDisableImage:[ViewTools imageFromColor:[UIColor lightGrayColor]]];
+    UIButton *button = [privateViewTools createButtonWithText:@""];
     UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,40,40)];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(_customButtonLeftMargin, 0, 40, tempCustomFrame.size.height)];
     iconImageView.center = CGPointMake(20, CGRectGetMidX(view.frame));
@@ -918,8 +923,6 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     // 將內部元進整理成陣列回傳（多個元件時）
     NSMutableArray *tempReturnObjects = [[NSMutableArray alloc] init];
     
-    ViewTools *privateViewTools = [[ViewTools alloc] init];
-    [privateViewTools setViewHeight:tempCustomFrame.size.height];
     UILabel *label = [privateViewTools createLabelWithText:tempRightText
                                          withTextAlignment:(NSTextAlignmentLeft)
                                            withCustomWidth:button.frame.size.width - iconImageView.frame.origin.x - iconImageView.frame.size.width - arrowWidth - _customButtonRightMargin - _customButtonMiddleMargin*2];
@@ -927,17 +930,18 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                label.frame.origin.y,
                                label.frame.size.width,
                                label.frame.size.height)];
+    [label setBackgroundColor:[UIColor clearColor]];
     
     if( isSystemDefaultStyle == YES ){
-        UIView *up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tempCustomFrame.size.width, 1)];
+        UIView *up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tempCustomFrame.size.width, 0.5)];
         [up setBackgroundColor:[UIColor lightGrayColor]];
         [button addSubview:up];
-        UIView *down = [[UIView alloc] initWithFrame:CGRectMake(0, tempCustomFrame.size.height - 1, tempCustomFrame.size.width, 1)];
+        UIView *down = [[UIView alloc] initWithFrame:CGRectMake(0, tempCustomFrame.size.height - 0.5, tempCustomFrame.size.width, 0.5)];
         [down setBackgroundColor:[UIColor lightGrayColor]];
         [button addSubview:down];
         [button setBackgroundColor:[UIColor whiteColor]];
         [label setTextColor:[UIColor blackColor]];
-        [label setFont:[UIFont systemFontOfSize:16.0f]];
+        [label setFont:[UIFont systemFontOfSize:20.0f]];
     }
     else{
         [button setBackgroundColor:[UIColor whiteColor]];
@@ -947,7 +951,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     
     [button addSubview:view];
     [button addSubview:label];
-    [tempReturnObjects addObjectsFromArray:@[label]];
+    [tempReturnObjects addObjectsFromArray:@[label , arrowImageView ]];
     return button;
 }
 
@@ -997,6 +1001,17 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         arrowWidth = 0.0f;
     }
     return arrowImageView;
+}
+
++ (UIImage *)imageFromColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 #pragma mark - 建立 Label
