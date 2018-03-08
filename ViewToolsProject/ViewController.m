@@ -476,9 +476,19 @@
     [_viewArray addObject:specialButton];
     
     
-    UIButton *testBtn = [_viewTool createButtonWithLeftIconImage:[[UIImage alloc] init] withRightText:@"test" withIsSystemDefaultStyle:YES];
+    UIButton *testBtn = [_viewTool createButtonWithIconImage:[[UIImage alloc] init] withLeftText:@"test" withRightText:@"test2"];
+    UIButton *testBtn2 = [_viewTool createButtonWithIconImage:[[UIImage alloc] init] withLeftText:@"test1" withRightText:@"test2" withIsSystemDefaultStyle:NO];
+    UIButton *testBtn3 = [_viewTool createButtonWithIconImage:[[UIImage alloc] init]
+                                                 withLeftText:@"YAYAYA"
+                                                withRightText:@"NONONO"
+                                              withCustomFrame:CGRectMake(10, 0, 340, 48)
+                                                withNeedArrow:YES
+                                     withIsSystemDefaultStyle:NO
+                                           withStaticSideType:(EnumLabelStaticType_None)];
     
     [_viewArray addObject:testBtn];
+    [_viewArray addObject:testBtn2];
+    [_viewArray addObject:testBtn3];
     
 }
 

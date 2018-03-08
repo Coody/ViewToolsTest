@@ -206,6 +206,15 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     }
 }
 
+-(void)setCustomButtonMiddleMargin:(CGFloat)customButtonMiddleMargin{
+    if ( customButtonMiddleMargin >= 0 ) {
+        _customButtonMiddleMargin = customButtonMiddleMargin;
+    }
+    else{
+        _customButtonMiddleMargin = 0;
+    }
+}
+
 +(void)setTextFieldTintColor:(UIColor *)color{
     [[UITextField appearance] setTintColor:color];
 }
@@ -835,74 +844,94 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     return textButton;
 }
 
-/**
- * @brief - 2.13.1 建立左邊有 icon 、中間文字、右邊有箭頭 的按鈕
- */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText{
+// 建立左邊有 icon 、左邊文字、右邊文字、箭頭 的按鈕
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText{
+    return [self createButtonWithIconImage:tempIcnoImage
+                              withLeftText:tempLeftText
+                             withRightText:tempRightText
+                           withCustomFrame:CGRectMake(0, 0,
+                                                      [UIScreen mainScreen].bounds.size.width,
+                                                      [self getViewHeight])
+                             withNeedArrow:NO
+                  withIsSystemDefaultStyle:YES
+                        withStaticSideType:EnumLabelStaticType_LeftStatic];
+}
+
+// 建立左邊有 icon 、左邊文字、右邊文字、箭頭、是否為系統預設樣式 的按鈕
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
+    return [self createButtonWithIconImage:tempIcnoImage
+                              withLeftText:tempLeftText
+                             withRightText:tempRightText
+                           withCustomFrame:CGRectMake(0, 0,
+                                                      [UIScreen mainScreen].bounds.size.width,
+                                                      [self getViewHeight])
+                             withNeedArrow:NO
+                  withIsSystemDefaultStyle:isSystemDefaultStyle
+                        withStaticSideType:(EnumLabelStaticType_LeftStatic)];
+}
+
+// 2.13.3 建立左邊有 icon 、左邊文字、右邊文字、客製化 width 、是否為系統預設樣式 的按鈕
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText
+                       withCustomWidth:(CGFloat)tempCustomWidth
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
+    return [self createButtonWithIconImage:tempIcnoImage
+                              withLeftText:tempLeftText
+                             withRightText:tempRightText
+                           withCustomFrame:CGRectMake(0, 0,
+                                                      tempCustomWidth,
+                                                      [self getViewHeight])
+                             withNeedArrow:NO
+                  withIsSystemDefaultStyle:isSystemDefaultStyle
+                        withStaticSideType:(EnumLabelStaticType_LeftStatic)];
+}
+
+// 2.13.4 建立左邊有 icon 、左邊文字、右邊文字、箭頭、客製化 Frame、是否為系統預設樣式 的按鈕
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText
+                       withCustomFrame:(CGRect)tempCustomFrame
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
+    return [self createButtonWithIconImage:tempIcnoImage
+                              withLeftText:tempLeftText
+                             withRightText:tempRightText
+                           withCustomFrame:tempCustomFrame
+                             withNeedArrow:NO
+                  withIsSystemDefaultStyle:isSystemDefaultStyle
+                        withStaticSideType:(EnumLabelStaticType_LeftStatic)];
+}
+
+// 2.13.5 建立左邊有 icon 、左邊文字、右邊文字、箭頭 的按鈕、客製化 Frame、是否需要右邊箭頭、是否為系統預設樣式 的按鈕
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText
+                       withCustomFrame:(CGRect)tempCustomFrame
+                         withNeedArrow:(BOOL)tempIsNeedArrow
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
+    return [self createButtonWithIconImage:tempIcnoImage
+                              withLeftText:tempLeftText
+                             withRightText:tempRightText
+                           withCustomFrame:tempCustomFrame
+                             withNeedArrow:tempIsNeedArrow
+                  withIsSystemDefaultStyle:isSystemDefaultStyle
+                        withStaticSideType:(EnumLabelStaticType_LeftStatic)];
+}
+
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText
+                       withCustomFrame:(CGRect)tempCustomFrame
+                         withNeedArrow:(BOOL)tempIsNeedArrow
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle
+                    withStaticSideType:(EnumLabelStaticType)labelStaticType{
     
-    return [self createButtonWithLeftIconImage:tempLeftIcnoImage
-                                 withRightText:tempRightText
-                               withCustomFrame:CGRectMake(0, 0,
-                                                          [UIScreen mainScreen].bounds.size.width,
-                                                          [self getViewHeight])
-                                 withNeedArrow:YES
-                      withIsSystemDefaultStyle:YES];
-}
-
-/**
- * @brief - 2.13.2 建立左邊有 icon 、中間文字、右邊有箭頭、是否為系統預設樣式 的按鈕
- */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText
-                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
-    return [self createButtonWithLeftIconImage:tempLeftIcnoImage
-                                 withRightText:tempRightText
-                               withCustomFrame:CGRectMake(0, 0,
-                                                          [UIScreen mainScreen].bounds.size.width,
-                                                          [self getViewHeight])
-                                 withNeedArrow:YES
-                      withIsSystemDefaultStyle:isSystemDefaultStyle];
-}
-
-/**
- * @brief - 2.13.3 建立左邊有 icon 、右邊有箭頭、客製化寬度、是否為系統預設樣式 的按鈕
- */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText
-                           withCustomWidth:(CGFloat)tempCustomWidth
-                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
-    return [self createButtonWithLeftIconImage:tempLeftIcnoImage
-                                 withRightText:tempRightText
-                               withCustomFrame:CGRectMake(0, 0,
-                                                          tempCustomWidth,
-                                                          [self getViewHeight])
-                                 withNeedArrow:YES
-                      withIsSystemDefaultStyle:isSystemDefaultStyle];
-}
-
-/**
- * @brief - 2.13.4 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否為系統預設樣式 的按鈕
- */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText
-                           withCustomFrame:(CGRect)tempCustomFrame
-                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
-    return [self createButtonWithLeftIconImage:tempLeftIcnoImage
-                                 withRightText:tempRightText
-                               withCustomFrame:tempCustomFrame
-                                 withNeedArrow:YES
-                      withIsSystemDefaultStyle:isSystemDefaultStyle];
-}
-
-/**
- * @brief - 2.13.5 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否需要右邊箭頭、是否為系統預設樣式 的按鈕
- */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText
-                           withCustomFrame:(CGRect)tempCustomFrame
-                             withNeedArrow:(BOOL)tempIsNeedArrow
-                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
+    // ViewTools
     ViewTools *privateViewTools = [[ViewTools alloc] init];
     [privateViewTools setViewHeight:tempCustomFrame.size.height];
     if( isSystemDefaultStyle == YES ){
@@ -910,11 +939,28 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                 andButtonHightLightImage:[ViewTools imageFromColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.00]]
                    andButtonDisableImage:[ViewTools imageFromColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.00]]];
     }
-    UIButton *button = [privateViewTools createButtonWithText:@""];
-    UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,40,40)];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(_customButtonLeftMargin, 0, 40, tempCustomFrame.size.height)];
-    iconImageView.center = CGPointMake(20, CGRectGetMidX(view.frame));
-    [view addSubview:iconImageView];
+    
+    // Button
+    UIButton *button = [privateViewTools createButtonWithText:@"" withCustomFrame:tempCustomFrame withIsRedButton:NO];
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
+    // icon Image
+    UIImageView *iconImageView = [[UIImageView alloc] initWithImage:tempIcnoImage];
+    UIView *iconView = [[UIView alloc] initWithFrame:CGRectMake(_customButtonLeftMargin, 0, 52, tempCustomFrame.size.height)];
+    [iconView setBackgroundColor:[UIColor clearColor]];
+    CGFloat imageX = 0.0f;
+    CGFloat imageY = 0.0f;
+    if(iconImageView.frame.size.height > iconView.frame.size.height || iconImageView.frame.size.width > iconView.frame.size.width)
+    {
+        iconImageView.frame = CGRectMake(0, 0, iconView.frame.size.width, iconView.frame.size.height);
+    }else
+    {
+        imageX = (iconView.frame.size.width - iconImageView.frame.size.width) * 0.5;
+        imageY = (iconView.frame.size.height - iconImageView.frame.size.height) * 0.5;
+    }
+    iconImageView.frame = CGRectMake(imageX, imageY, iconImageView.frame.size.width, iconImageView.frame.size.height);
+    [iconView addSubview:iconImageView];
+    [button addSubview:iconView];
     
     // 建立箭頭
     UIImageView *arrowImageView = [self createArrowWithFrame:tempCustomFrame
@@ -922,17 +968,87 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                              withIsNeedArrow:tempIsNeedArrow];
     CGFloat arrowWidth = arrowImageView.frame.size.width;
     
+    if(tempIsNeedArrow)
+    {
+        [arrowImageView setAlpha:1.0f];
+    }
+    else
+    {
+        [arrowImageView setAlpha:0.0f];
+    }
+    
+    // Label
     // 將內部元進整理成陣列回傳（多個元件時）
     NSMutableArray *tempReturnObjects = [[NSMutableArray alloc] init];
-    
-    UILabel *label = [privateViewTools createLabelWithText:tempRightText
-                                         withTextAlignment:(NSTextAlignmentLeft)
-                                           withCustomWidth:button.frame.size.width - iconImageView.frame.origin.x - iconImageView.frame.size.width - arrowWidth - _customButtonRightMargin - _customButtonMiddleMargin*2];
-    [label setFrame:CGRectMake( _customButtonLeftMargin + _customButtonMiddleMargin + 40,
-                               label.frame.origin.y,
-                               label.frame.size.width,
-                               label.frame.size.height)];
-    [label setBackgroundColor:[UIColor clearColor]];
+    UILabel *leftLabel;
+    UILabel *rightLabel;
+    if( tempLeftText == nil ){
+        tempLeftText = @"";
+    }
+    if( tempRightText == nil ){
+        tempRightText = @"";
+    }
+    switch ( labelStaticType ) {
+        case EnumLabelStaticType_None:
+        {
+            // 不管
+            leftLabel = [privateViewTools createLabelWithText:tempLeftText withTextAlignment:(NSTextAlignmentLeft)];
+            [leftLabel setFrame:CGRectMake(_customButtonLeftMargin + _customButtonMiddleMargin + iconView.frame.size.width,
+                                           0,
+                                           leftLabel.frame.size.width,
+                                           leftLabel.frame.size.height)];
+            rightLabel = [privateViewTools createLabelWithText:tempRightText withTextAlignment:(NSTextAlignmentRight)];
+            [rightLabel setFrame:CGRectMake(button.frame.size.width - _customButtonRightMargin  - rightLabel.frame.size.width - arrowWidth - D_ViewTools_Label_Right_Margin,
+                                            0,
+                                            rightLabel.frame.size.width,
+                                            rightLabel.frame.size.height)];
+            leftLabel.autoresizingMask = UIViewAutoresizingNone;
+            rightLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        }
+            break;
+        case EnumLabelStaticType_RightStatic:
+        {
+            // 右邊 label 固定長度
+            rightLabel = [privateViewTools createLabelWithText:tempRightText withTextAlignment:(NSTextAlignmentRight)];
+            CGFloat leftLabelWidth = button.frame.size.width -_customButtonLeftMargin - iconView.frame.size.width - _customButtonMiddleMargin*2 - rightLabel.frame.size.width - arrowWidth - _customButtonRightMargin - D_ViewTools_Label_Right_Margin;
+            leftLabel = [privateViewTools createLabelWithText:tempLeftText withTextAlignment:(NSTextAlignmentLeft) withCustomWidth:leftLabelWidth];
+            [leftLabel setFrame:CGRectMake(_customButtonLeftMargin + _customButtonMiddleMargin + arrowImageView.frame.size.width,
+                                           0,
+                                           leftLabel.frame.size.width,
+                                           leftLabel.frame.size.height)];
+            [rightLabel setFrame:CGRectMake(leftLabel.frame.origin.x + leftLabel.frame.size.width + _customButtonMiddleMargin,
+                                            0,
+                                            rightLabel.frame.size.width,
+                                            rightLabel.frame.size.height)];
+            leftLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+            rightLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        }
+            break;
+        case EnumLabelStaticType_LeftStatic:
+        default:
+        {
+            // 預設
+            // 左邊 label 固定長度
+            leftLabel = [privateViewTools createLabelWithText:tempLeftText withTextAlignment:(NSTextAlignmentLeft)];
+            [leftLabel setFrame:CGRectMake(_customButtonLeftMargin + _customButtonMiddleMargin + iconView.frame.size.width,
+                                           0,
+                                           leftLabel.frame.size.width,
+                                           leftLabel.frame.size.height)];
+            CGFloat rightLabelWidth = button.frame.size.width - _customButtonLeftMargin - iconView.frame.size.width - _customButtonMiddleMargin*2 - leftLabel.frame.size.width - _customButtonRightMargin - arrowWidth - D_ViewTools_Label_Right_Margin;
+            rightLabel = [privateViewTools createLabelWithText:tempRightText withTextAlignment:(NSTextAlignmentRight) withCustomWidth:rightLabelWidth];
+            [rightLabel setFrame:CGRectMake(leftLabel.frame.origin.x + leftLabel.frame.size.width + _customButtonMiddleMargin,
+                                            0,
+                                            rightLabel.frame.size.width,
+                                            rightLabel.frame.size.height)];
+            leftLabel.autoresizingMask = UIViewAutoresizingNone;
+            rightLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
+        }
+            break;
+    }
+    [leftLabel setBackgroundColor:[UIColor clearColor]];
+    [rightLabel setBackgroundColor:[UIColor clearColor]];
+    [button addSubview:leftLabel];
+    [button addSubview:rightLabel];
     
     if( isSystemDefaultStyle == YES ){
         UIView *up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tempCustomFrame.size.width, 0.5)];
@@ -942,18 +1058,19 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [down setBackgroundColor:[UIColor colorWithRed:0.82 green:0.81 blue:0.83 alpha:1.00]];
         [button addSubview:down];
         [button setBackgroundColor:[UIColor whiteColor]];
-        [label setTextColor:[UIColor blackColor]];
-        [label setFont:[UIFont systemFontOfSize:16.0f]];
+        [leftLabel setTextColor:[UIColor blackColor]];
+        [leftLabel setFont:[UIFont systemFontOfSize:16.0f]];
+        [rightLabel setTextColor:[UIColor blackColor]];
+        [rightLabel setFont:[UIFont systemFontOfSize:16.0f]];
     }
     else{
-        [button setBackgroundColor:[UIColor whiteColor]];
-        [label setTextColor:_labelTextColor];
-        [label setFont:_textFont];
+        [leftLabel setTextColor:_labelTextColor];
+        [leftLabel setFont:_textFont];
+        [rightLabel setTextColor:_labelTextColor];
+        [rightLabel setFont:_textFont];
     }
     
-    [button addSubview:view];
-    [button addSubview:label];
-    [tempReturnObjects addObjectsFromArray:@[label , arrowImageView ]];
+    [tempReturnObjects addObjectsFromArray:@[leftLabel , rightLabel , arrowImageView]];
     return button;
 }
 

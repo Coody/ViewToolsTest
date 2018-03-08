@@ -104,7 +104,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 /** 1.15 設定左右有文字、右邊有箭頭按鈕的左間距 */
 -(void)setCustomButtonRightMargin:(CGFloat)customButtonRightMargin;
 
-/** 1.16 設定 TextField 內的游標顏色 */
+/** 1.16 設定最左邊有 icon ，左右有文字、右邊有箭頭按鈕的中間間距 */
+-(void)setCustomButtonMiddleMargin:(CGFloat)customButtonMiddleMargin;
+
+/** 1.17 設定 TextField 內的游標顏色 */
 +(void)setTextFieldTintColor:(UIColor *)color;
 
 #pragma mark ：建立按鈕
@@ -274,51 +277,58 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
              withIsNeedAutoResizeMask:(BOOL)isNeedAutoResizeMask;
 
 /**
- * @brief - 2.13.1 建立左邊有 icon 、中間文字、右邊有箭頭 的按鈕
+ * @brief - 2.13.1 建立左邊有 icon 、左邊文字、右邊文字、箭頭 的按鈕
  */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText;
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText;
 
 /**
- * @brief - 2.13.2 建立左邊有 icon 、中間文字、右邊有箭頭、是否為系統預設樣式 的按鈕
+ * @brief - 2.13.2 建立左邊有 icon 、左邊文字、右邊文字、箭頭、是否為系統預設樣式 的按鈕
  */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText
-                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText 
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
 
 /**
- * @brief - 2.13.3 建立左邊有 icon 、右邊有箭頭、客製化寬度、是否為系統預設樣式 的按鈕
+ * @brief - 2.13.3 建立左邊有 icon 、左邊文字、右邊文字、客製化 width 、是否為系統預設樣式 的按鈕
  */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText
-                           withCustomWidth:(CGFloat)tempCustomWidth
-                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText
+                       withCustomWidth:(CGFloat)tempCustomWidth
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
 
 /**
- * @brief - 2.13.4 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否為系統預設樣式 的按鈕
+ * @brief - 2.13.4 建立左邊有 icon 、左邊文字、右邊文字、箭頭、客製化 Frame、是否為系統預設樣式 的按鈕
  */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText
-                           withCustomFrame:(CGRect)tempCustomFrame
-                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText
+                       withCustomFrame:(CGRect)tempCustomFrame
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
 
 /**
- * @brief - 2.13.5 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否需要右邊箭頭、是否為系統預設樣式 的按鈕
+ * @brief - 2.13.5 建立左邊有 icon 、左邊文字、右邊文字、箭頭 的按鈕、客製化 Frame、是否需要右邊箭頭、是否為系統預設樣式 的按鈕
  */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText
-                           withCustomFrame:(CGRect)tempCustomFrame
-                             withNeedArrow:(BOOL)tempIsNeedArrow
-                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText
+                       withCustomFrame:(CGRect)tempCustomFrame
+                         withNeedArrow:(BOOL)tempIsNeedArrow
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
 
 /**
- * @brief - 2.13.5 建立左邊有 icon 、中間文字、右邊有箭頭、客製化 Frame、是否需要右邊箭頭、是否為系統預設樣式 的按鈕
+ * @brief - 2.13.6 建立左邊有 icon 、左邊文字、右邊文字、箭頭 的按鈕、客製化 Frame、是否需要右邊箭頭、是否為系統預設樣式、哪一邊文字要固定的按鈕
  */
--(UIButton *)createButtonWithLeftIconImage:(UIImage *)tempLeftIcnoImage
-                             withRightText:(NSString *)tempRightText
-                           withCustomFrame:(CGRect)tempCustomFrame
-                             withNeedArrow:(BOOL)tempIsNeedArrow
-                  withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle;
+-(UIButton *)createButtonWithIconImage:(UIImage *)tempIcnoImage
+                          withLeftText:(NSString *)tempLeftText
+                         withRightText:(NSString *)tempRightText
+                       withCustomFrame:(CGRect)tempCustomFrame
+                         withNeedArrow:(BOOL)tempIsNeedArrow
+              withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle
+                    withStaticSideType:(EnumLabelStaticType)labelStaticType;
 
 #pragma mark 左右有 Text 的按鈕擴充
 /**
