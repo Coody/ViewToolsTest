@@ -905,9 +905,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                   withIsSystemDefaultStyle:(BOOL)isSystemDefaultStyle{
     ViewTools *privateViewTools = [[ViewTools alloc] init];
     [privateViewTools setViewHeight:tempCustomFrame.size.height];
-    [privateViewTools setButtonImage:[ViewTools imageFromColor:[UIColor whiteColor]]
-            andButtonHightLightImage:[ViewTools imageFromColor:[UIColor lightGrayColor]]
-               andButtonDisableImage:[ViewTools imageFromColor:[UIColor lightGrayColor]]];
+    if( isSystemDefaultStyle == YES ){
+        [privateViewTools setButtonImage:[ViewTools imageFromColor:[UIColor whiteColor]]
+                andButtonHightLightImage:[ViewTools imageFromColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.00]]
+                   andButtonDisableImage:[ViewTools imageFromColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.00]]];
+    }
     UIButton *button = [privateViewTools createButtonWithText:@""];
     UIImageView *iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,40,40)];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(_customButtonLeftMargin, 0, 40, tempCustomFrame.size.height)];
@@ -934,10 +936,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     
     if( isSystemDefaultStyle == YES ){
         UIView *up = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tempCustomFrame.size.width, 0.5)];
-        [up setBackgroundColor:[UIColor lightGrayColor]];
+        [up setBackgroundColor:[UIColor colorWithRed:0.82 green:0.81 blue:0.83 alpha:1.00]];
         [button addSubview:up];
         UIView *down = [[UIView alloc] initWithFrame:CGRectMake(0, tempCustomFrame.size.height - 0.5, tempCustomFrame.size.width, 0.5)];
-        [down setBackgroundColor:[UIColor lightGrayColor]];
+        [down setBackgroundColor:[UIColor colorWithRed:0.82 green:0.81 blue:0.83 alpha:1.00]];
         [button addSubview:down];
         [button setBackgroundColor:[UIColor whiteColor]];
         [label setTextColor:[UIColor blackColor]];
