@@ -943,7 +943,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [button addSubview:down];
         [button setBackgroundColor:[UIColor whiteColor]];
         [label setTextColor:[UIColor blackColor]];
-        [label setFont:[UIFont systemFontOfSize:20.0f]];
+        [label setFont:[UIFont systemFontOfSize:16.0f]];
     }
     else{
         [button setBackgroundColor:[UIColor whiteColor]];
