@@ -135,8 +135,8 @@
 -(BOOL)textField:(UITextField *)textField
 shouldChangeCharactersInRange:(NSRange)range
 replacementString:(NSString *)string{
-    if( textField.text != nil && ![textField.text isEqualToString:@""] ){
-        // 有字串才判斷
+    if( _predicateString != nil &&
+        ![_predicateString isEqualToString:@""] ){
         NSString *checkString = [textField.text stringByReplacingCharactersInRange:range withString:string];
         NSPredicate *tempPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@" , _predicateString];
         _isPredicateLegal = [tempPredicate evaluateWithObject:checkString];
