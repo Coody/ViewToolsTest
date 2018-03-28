@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol UITextFieldDelegate;
+
 @protocol UITextFieldTools_Protocol <NSObject>
 
 -(void)endCheckWithSender:(id)sender;
@@ -17,7 +19,7 @@
 /**
  * @brief - 擴充 UITextField 的辨識字元、截斷字元功能
  */
-@interface UITextFieldTools : NSObject
+@interface UITextFieldTools : NSObject <UITextFieldDelegate>
 
 /** 非必要的 Delegate */
 @property (nonatomic , weak) id < UITextFieldTools_Protocol > delegate;

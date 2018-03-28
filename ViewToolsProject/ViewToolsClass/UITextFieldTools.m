@@ -78,11 +78,13 @@
  */
 -(void)checkWordWithSender:(id)sender{
     if ( [sender isMemberOfClass:[UITextField class]] ) {
+        UITextField *textField = (UITextField *)sender;
         if ( _predicateString == nil || 
-            [_predicateString isEqualToString:@""] ) {
+            [_predicateString isEqualToString:@""]||
+            textField.delegate != nil ) {
             return;
         }
-        UITextField *textField = (UITextField *)sender;
+        
         NSPredicate *phonePredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@" , _predicateString];
         _isPredicateLegal = [phonePredicate evaluateWithObject:textField.text];
         
@@ -129,5 +131,20 @@
     return isLegal;
 }
 
+#pragma mark - UITextField's Delegate
+-(BOOL)textField:(UITextField *)textField
+shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string{
+    if( textField.text != nil && ![textField.text isEqualToString:@""] ){
+        // 有字串才判斷
+        NSString *checkString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        NSPredicate *tempPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@" , _predicateString];
+        _isPredicateLegal = [tempPredicate evaluateWithObject:checkString];
+        return _isPredicateLegal;
+    }
+    else{
+        return YES;
+    }
+}
 
 @end
