@@ -556,6 +556,8 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
             withLeftAndRightMargin:(float)tempLeftAndRightMargin 
               withTotalCustomWidth:(float)tempCustomWidth;
 
+#pragma mark -
+#pragma mark ：通用工具
 /////////////////////////////////////
 /**
  * @brief - 給一串字，回傳字的 Size
@@ -588,5 +590,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
  * @brief - 反轉陣列
  */
 + (NSArray *)revertArray:(NSArray *)tempOriginalArray;
+
+/**
+ * @brief - 建立一張單純色塊的 UIImage
+ */
++ (UIImage *)imageFromColor:(UIColor *)color;
 
 @end
