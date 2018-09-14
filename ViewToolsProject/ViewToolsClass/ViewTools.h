@@ -195,14 +195,22 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 /** 
  * @brief   - 2.3.2 文字（按鈕，左右留 5 pixel 的空間）
  * @details - 左右有留 6 pixel 的空間
- * @param   - tempText : 中間有置中的文字
+ * @param   tempText : 中間有置中的文字
  */
 -(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText;
 
 /** 
+ * @brief   - 2.3.3 文字（按鈕，左右留 tempMargin pixel 的空間）
+ * @details - 左右有留 tempMargin pixel 的空間
+ * @param   tempText : 中間有置中的文字
+ * @param   tempMargin : 左右間距 tempMargin
+ */
+-(UIButton *)createButtonWithText:(NSString *)tempText withMargin:(CGFloat)tempMargin;
+
+/** 
  * @brief - 2.4 文字、自定寬度（按鈕）
- * @param - tempText        : 中間有置中的文字
- * @param - tempCustomWidth : 自行設定寬度
+ * @param tempText        : 中間有置中的文字
+ * @param tempCustomWidth : 自行設定寬度
  */
 -(UIButton *)createButtonWithText:(NSString *)tempText
                   withCustomWidth:(float)tempCustomWidth;
@@ -214,17 +222,17 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 
  * @brief - 2.6 文字、自定寬度（紅色按鈕）
- * @param - tempText        : 中間有置中的文字
- * @param - tempCustomWidth : 自行設定寬度
+ * @param tempText        : 中間有置中的文字
+ * @param tempCustomWidth : 自行設定寬度
  */
 -(UIButton *)createRedButtonWithText:(NSString *)tempText 
                      withCustomWidth:(float)tempCustomWidth;
 
 /** 
  * @brief - 2.7 文字、自定寬度、是否為紅色按鈕
- * @param - tempText        : 中間有置中的文字
- * @param - tempCustomWidth : 自行設定寬度
- * @param - tempIsRedButton : 是否為紅色按鈕
+ * @param tempText        : 中間有置中的文字
+ * @param tempCustomWidth : 自行設定寬度
+ * @param tempIsRedButton : 是否為紅色按鈕
  */
 -(UIButton *)createButtonWithText:(NSString *)tempText 
                   withCustomWidth:(float)tempCustomWidth 
@@ -232,9 +240,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 
  * @brief - 2.8 文字、自定 Frame 、是否為紅色按鈕
- * @param - tempText        : 中間有置中的文字
- * @param - tempCustomWidth : 自行設定 Frame
- * @param - tempIsRedButton : 是否為紅色按鈕  
+ * @param tempText        : 中間有置中的文字
+ * @param tempCustomFrame : 自行設定 Frame
+ * @param tempIsRedButton : 是否為紅色按鈕  
  */
 -(UIButton *)createButtonWithText:(NSString *)tempText 
                   withCustomFrame:(CGRect)tempCustomFrame 
@@ -242,25 +250,25 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /**
  * @brief - 2.9 文字（文字型按鈕＋底線）
- * @param - tempText : （紅色＋底線）文字
+ * @param tempText : （紅色＋底線）文字
  */
 -(UIButton *)createTextButtonWithText:(NSString *)tempText;
 
 /**
  * @brief - 2.10 文字、顏色、底線（文字型按鈕＋底線）
- * @param - tempText   : 文字
- * @param - tempColor  : （文字＋底線的）顏色
- * @param - isNeedLine : 是否需要底線？ 
+ * @param tempText   : 文字
+ * @param tempColor  : （文字＋底線的）顏色
+ * @param isNeedLine : 是否需要底線？ 
  */
 -(UIButton *)createTextButtonWithText:(NSString *)tempText 
                         withTextColor:(UIColor *)tempColor 
                              withLine:(BOOL)isNeedLine;
 /**
  * @brief - 2.11 文字、顏色、底線、字體大小（文字型按鈕＋底線）
- * @param - tempText   : 文字
- * @param - tempColor  : （文字＋底線的）顏色
- * @param - isNeedLine : 是否需要底線？ 
- * @param - tempFont   : 文字字體
+ * @param tempText   : 文字
+ * @param tempColor  : （文字＋底線的）顏色
+ * @param isNeedLine : 是否需要底線？ 
+ * @param tempFont   : 文字字體
  */
 -(UIButton *)createTextButtonWithText:(NSString *)tempText 
                         withTextColor:(UIColor *)tempColor 
@@ -561,9 +569,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 /////////////////////////////////////
 /**
  * @brief - 給一串字，回傳字的 Size
- * @param - tempWidth: 給寬度（如果想問此字串寬度就直接給 CGFLOAT_MAX）
- * @param - tempText: 字串
- * @param - tempFont: 字型、與字體大小
+ * @param tempWidth : 給寬度（如果想問此字串寬度就直接給 CGFLOAT_MAX）
+ * @param tempText : 字串
+ * @param tempFont : 字型、與字體大小
  */
 +(CGSize)getTextSizeWithWidth:(float)tempWidth 
                      withText:(NSString *)tempText 
@@ -571,9 +579,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /**
  * @brief - 給一個 Attribute String，回傳字的 Size
- * @param - tempWidth: 給寬度（如果想問此字串寬度就直接給 CGFLOAT_MAX）
- * @param - tempText: Attribute 字串
- * @param - tempFont: 字型、與字體大小
+ * @param tempWidth : 給寬度（如果想問此字串寬度就直接給 CGFLOAT_MAX）
+ * @param tempText : Attribute 字串
+ * @param tempFont : 字型、與字體大小
  */
 +(CGSize)getTextSizeWithWidth:(float)tempWidth 
             withAttributeText:(NSAttributedString *)tempText 

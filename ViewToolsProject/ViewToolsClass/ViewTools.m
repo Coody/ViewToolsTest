@@ -631,10 +631,17 @@ andButtonDisableImage:(UIImage *)tempDisableImage
  * @brief - 2.3.2 建立一般按鈕（中間有置中的文字、左右有留 6 pixel 的空）
  */
 -(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText{
+    return [self createButtonWithText:tempText withMargin:6.0f];
+}
+
+/** 
+ * @brief   - 2.3.3 文字（按鈕，左右留 tempMargin pixel 的空間）
+ */
+-(UIButton *)createButtonWithText:(NSString *)tempText withMargin:(CGFloat)tempMargin{
     return [self createButtonWithText:tempText 
-                      withCustomFrame:CGRectMake(6, 
+                      withCustomFrame:CGRectMake(tempMargin, 
                                                  0, 
-                                                 [UIScreen mainScreen].bounds.size.width - 12,
+                                                 [UIScreen mainScreen].bounds.size.width - tempMargin*2,
                                                  _viewHeight) 
                       withIsRedButton:NO 
                  withIsNeedAutoResize:YES];
