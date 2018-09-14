@@ -27,16 +27,16 @@
 ///////////////////////////////////////////////////////////////////
 // 如果不需要設定請直接使用 nil 即可
 // 設定 Image 的名稱（不帶 .png ）
-#define D_ViewTools_Arrow_Image (@"arrow")
+#define D_ViewTools_Arrow_Image (@"Datas/Res/Pics/arrow")
 // 設定紅色按鈕的 Image
-#define D_ViewTools_Button_Red_Normal_Image (@"red_btn")
+#define D_ViewTools_Button_Red_Normal_Image (@"Datas/Res/Pics/red_btn")
 #define D_ViewTools_Button_Red_HightLight_Image (nil)
 // 設定一般類型按鈕的 Image 1
-#define D_ViewTools_Button_Normal_Image (@"gray_btn")
+#define D_ViewTools_Button_Normal_Image (@"Datas/Res/Pics/gray_btn")
 #define D_ViewTools_Button_HightLight_Image (nil)
 #define D_ViewTools_Button_Disable_Image (nil)
 // 設定輸入框類型的 Image
-#define D_ViewTools_TextField_Image (@"box_textField")
+#define D_ViewTools_TextField_Image (@"Datas/Res/Pics/box_textField")
 #define D_ViewTools_TextField_CancelButton_Image (nil)
 ///////////////////////////////////////////////////////////////////
 
