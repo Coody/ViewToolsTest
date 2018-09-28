@@ -15,7 +15,7 @@
 @property (readonly , nonatomic) CGFloat leftMargin;
 /** 容器最右邊間距（上下排的時候，會忽略） */
 @property (readonly , nonatomic) CGFloat rightMargin;
-/** 容器中，元件與元件之間的中邊間距（上下排的時候，會忽略） */
+/** 容器中，元件與元件之間的中邊間距 */
 @property (readonly , nonatomic) CGFloat middleMargin;
 /** 容器最上面、與元件的間距 */
 @property (readonly , nonatomic) CGFloat topMargin;
