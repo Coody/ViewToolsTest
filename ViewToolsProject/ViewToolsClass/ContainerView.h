@@ -15,7 +15,7 @@
 @property (readonly , nonatomic) CGFloat leftMargin;
 /** 容器最右邊間距（上下排的時候，會忽略） */
 @property (readonly , nonatomic) CGFloat rightMargin;
-/** 容器中，元件與元件之間的中邊間距 */
+/** 容器中，元件與元件之間的中邊間距（上下排的時候，會忽略） */
 @property (readonly , nonatomic) CGFloat middleMargin;
 /** 容器最上面、與元件的間距 */
 @property (readonly , nonatomic) CGFloat topMargin;
@@ -111,6 +111,19 @@
  * @details - 只要是 UIView 都可以加入，但是建議以 ViewTools 的建立元件為主。
  */
 -(void)addUnits:(NSArray *)tempViewArray;
+
+/**
+ * @brief   - 插入 UIView 元件
+ * @details - 如果插入元件找不到該 index （如 subview 內的元件不足），則會插入最後一項
+ */
+-(void)insertUnit:(UIView *)unit withIndex:(NSUInteger)index;
+-(void)insertUnits:(NSArray *)unitArray withIndex:(NSArray *)indexArray;
+
+/**
+ * @brief   - 移除特定的 uiview
+ */
+-(void)removeUnit:(UIView *)unit;
+-(void)removeUnits:(NSArray *)units;
 
 -(void)removeAllUnits;
 

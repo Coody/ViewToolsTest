@@ -54,6 +54,7 @@ NSInteger const kArrowImage_Tag = 6481;
         // 初始化設定
         _viewHeight = D_ViewTools_ViewHeight;
         _textFont = D_ViewTools_Text_Font;
+        _textFieldInnerFont = D_ViewTools_Text_Font;
         _allTextDefaultColor = D_ViewTools_Text_Color;
         
         // Label Text Color
@@ -178,6 +179,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 
 -(void)setTextFieldInnerColor:(UIColor *)textFieldInnerColor{
     _textFieldInnerColor = textFieldInnerColor;
+}
+
+-(void)setTextFieldInnerFont:(UIFont *)textFieldInnerFont{
+    _textFieldInnerFont = textFieldInnerFont;
 }
 
 -(void)setTextFont:(UIFont *)textFont{
@@ -1675,7 +1680,8 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     if ( tempInnerText ) {
         textField.attributedPlaceholder = [[NSAttributedString alloc] 
                                            initWithString:tempInnerText
-                                           attributes:@{NSForegroundColorAttributeName:_textFieldInnerColor}];
+                                           attributes:@{NSForegroundColorAttributeName:_textFieldInnerColor,
+                                                        NSFontAttributeName:_textFieldInnerFont}];
     }
     else{
         [textField setPlaceholder:@""];

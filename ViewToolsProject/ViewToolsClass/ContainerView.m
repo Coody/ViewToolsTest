@@ -373,6 +373,36 @@
     self.isAutoFitWidth = _isAutoFitWidth;
 }
 
+-(void)insertUnit:(UIView *)unit withIndex:(NSUInteger)index{
+    index = index + 1;
+    if( index > [self.subviews count] ){
+        index = [self.subviews count];
+    }
+    [self insertSubview:unit atIndex:index];
+}
+
+-(void)insertUnits:(NSArray *)unitArray withIndex:(NSArray *)indexArray{
+    if( [unitArray count] == [indexArray count] ){
+        for ( int index = 0; index < [unitArray count] ; index++ ) {
+            [self insertUnit:unitArray[index] withIndex:[indexArray[index] unsignedIntegerValue]];
+        }
+    }
+}
+
+-(void)removeUnit:(UIView *)unit{
+    if( unit ){
+        [self removeUnits:@[unit]];
+    }
+}
+
+- (void)removeUnits:(NSArray *)units{
+    for ( UIView *removeUnit in units ) {
+        if( removeUnit.superview ){
+            [removeUnit removeFromSuperview];
+        }
+    }
+}
+
 -(void)removeAllUnits{
     for ( UIView *unit in self.subviews ) {
         if ( unit != _bg ) {
@@ -448,6 +478,7 @@
                 realHeight = totalY;
             }
         }
+        [self setContainerViewHight:realHeight];
     }
     else{
         

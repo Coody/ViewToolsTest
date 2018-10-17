@@ -36,7 +36,21 @@ typedef enum : NSInteger{
 
 @interface ViewTools : NSObject
 
-@property (nonatomic , strong , readonly) UIFont *textFont;
+@property (nonatomic , readonly) UIFont *textFont;
+@property (nonatomic , readonly) UIFont *textFieldInnerFont;
+// 一般設定
+@property (nonatomic , readonly) CGFloat viewHeight;
+@property (nonatomic , readonly) UIColor *allTextDefaultColor;
+@property (nonatomic , readonly) UIColor *btnTextColor;
+@property (nonatomic , readonly) UIColor *btnLeftTextColor;
+@property (nonatomic , readonly) UIColor *btnRightTextColor;
+@property (nonatomic , readonly) UIColor *labelTextColor;
+@property (nonatomic , readonly) UIColor *textFieldTextColor;
+@property (nonatomic , readonly) UIColor *textFieldInnerColor;
+@property (nonatomic , readonly) UIColor *textButtonColor;
+@property (nonatomic , readonly) CGFloat customButtonLeftMargin;
+@property (nonatomic , readonly) CGFloat customButtonRightMargin;
+@property (nonatomic , readonly) CGFloat customButtonMiddleMargin;
 
 // TODO: 暫時拔掉單例作法，如果畫面想要自行設定可以設定詳細資訊，避免某個畫面設定完後，變更到其他畫面！
 //+(instancetype)sharedInstance;
@@ -109,6 +123,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 1.17 設定 TextField 內的游標顏色 */
 +(void)setTextFieldTintColor:(UIColor *)color;
+
+/** 1.18 設定 TextField 內部 Place Holder 的字體大小 */
+-(void)setTextFieldInnerFont:(UIFont *)textFieldInnerFont;
 
 #pragma mark ：建立按鈕
 /////////////////////////////////////
