@@ -112,6 +112,18 @@
  */
 -(void)addUnits:(NSArray *)tempViewArray;
 
+/**
+ * @brief   - 插入 UIView 元件
+ * @details - 如果插入元件找不到該 index （如 subview 內的元件不足），則會插入最後一項
+ */
+-(void)insertUnit:(UIView *)unit withIndex:(NSUInteger)index;
+
+/**
+ * @brief   - 移除特定的 uiview
+ */
+-(void)removeUnit:(UIView *)unit;
+-(void)removeUnits:(NSArray *)units;
+
 -(void)removeAllUnits;
 
 /**

@@ -373,6 +373,30 @@
     self.isAutoFitWidth = _isAutoFitWidth;
 }
 
+-(void)insertUnit:(UIView *)unit withIndex:(NSUInteger)index{
+    index = index + 1;
+    if( index > [self.subviews count] ){
+        index = [self.subviews count];
+    }
+    [self insertSubview:unit atIndex:index];
+}
+
+-(void)removeUnit:(UIView *)unit{
+    NSMutableArray *unitArray = [[NSMutableArray alloc] init];
+    [unitArray addObject:_bg];
+    for ( UIView *checkUnit in self.subviews ) {
+        if( checkUnit != unit ){
+            [unitArray addObject:checkUnit];
+        }
+    }
+    [self removeAllUnits];
+    [self addUnits:unitArray];
+}
+
+- (void)removeUnits:(NSArray *)units{
+    
+}
+
 -(void)removeAllUnits{
     for ( UIView *unit in self.subviews ) {
         if ( unit != _bg ) {
