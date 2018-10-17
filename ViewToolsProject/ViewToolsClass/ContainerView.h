@@ -117,6 +117,7 @@
  * @details - 如果插入元件找不到該 index （如 subview 內的元件不足），則會插入最後一項
  */
 -(void)insertUnit:(UIView *)unit withIndex:(NSUInteger)index;
+-(void)insertUnits:(NSArray *)unitArray withIndex:(NSArray *)indexArray;
 
 /**
  * @brief   - 移除特定的 uiview

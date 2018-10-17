@@ -36,7 +36,8 @@ typedef enum : NSInteger{
 
 @interface ViewTools : NSObject
 
-@property (nonatomic , strong , readonly) UIFont *textFont;
+@property (nonatomic , readonly) UIFont *textFont;
+@property (nonatomic , readonly) UIFont *textFieldInnerFont;
 // 一般設定
 @property (nonatomic , readonly) CGFloat viewHeight;
 @property (nonatomic , readonly) UIColor *allTextDefaultColor;
@@ -122,6 +123,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 
 /** 1.17 設定 TextField 內的游標顏色 */
 +(void)setTextFieldTintColor:(UIColor *)color;
+
+/** 1.18 設定 TextField 內部 Place Holder 的字體大小 */
+-(void)setTextFieldInnerFont:(UIFont *)textFieldInnerFont;
 
 #pragma mark ：建立按鈕
 /////////////////////////////////////

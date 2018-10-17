@@ -381,20 +381,26 @@
     [self insertSubview:unit atIndex:index];
 }
 
--(void)removeUnit:(UIView *)unit{
-    NSMutableArray *unitArray = [[NSMutableArray alloc] init];
-    [unitArray addObject:_bg];
-    for ( UIView *checkUnit in self.subviews ) {
-        if( checkUnit != unit ){
-            [unitArray addObject:checkUnit];
+-(void)insertUnits:(NSArray *)unitArray withIndex:(NSArray *)indexArray{
+    if( [unitArray count] == [indexArray count] ){
+        for ( int index = 0; index < [unitArray count] ; index++ ) {
+            [self insertUnit:unitArray[index] withIndex:[indexArray[index] unsignedIntegerValue]];
         }
     }
-    [self removeAllUnits];
-    [self addUnits:unitArray];
+}
+
+-(void)removeUnit:(UIView *)unit{
+    if( unit ){
+        [self removeUnits:@[unit]];
+    }
 }
 
 - (void)removeUnits:(NSArray *)units{
-    
+    for ( UIView *removeUnit in units ) {
+        if( removeUnit.superview ){
+            [removeUnit removeFromSuperview];
+        }
+    }
 }
 
 -(void)removeAllUnits{
@@ -472,6 +478,7 @@
                 realHeight = totalY;
             }
         }
+        [self setContainerViewHight:realHeight];
     }
     else{
         
