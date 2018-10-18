@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A1D94B021770B0900ABC212 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1D94AF21770B0900ABC212 /* TestViewController.m */; };
 		FB44E9A01C5A0D0100F3AAB9 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB44E99C1C5A0D0100F3AAB9 /* arrow@2x.png */; };
 		FB44E9A11C5A0D0100F3AAB9 /* box_textField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB44E99D1C5A0D0100F3AAB9 /* box_textField@2x.png */; };
 		FB44E9A21C5A0D0100F3AAB9 /* gray_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB44E99E1C5A0D0100F3AAB9 /* gray_btn@2x.png */; };
@@ -33,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A1D94AE21770B0900ABC212 /* TestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		5A1D94AF21770B0900ABC212 /* TestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		FB44E99C1C5A0D0100F3AAB9 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
 		FB44E99D1C5A0D0100F3AAB9 /* box_textField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "box_textField@2x.png"; sourceTree = "<group>"; };
 		FB44E99E1C5A0D0100F3AAB9 /* gray_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray_btn@2x.png"; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 				FBB08CBB1B956B1800E742F0 /* Images.xcassets */,
 				FBB08CBD1B956B1800E742F0 /* LaunchScreen.xib */,
 				FBB08CAE1B956B1800E742F0 /* Supporting Files */,
+				5A1D94AE21770B0900ABC212 /* TestViewController.h */,
+				5A1D94AF21770B0900ABC212 /* TestViewController.m */,
 			);
 			path = ViewToolsProject;
 			sourceTree = "<group>";
@@ -268,6 +273,7 @@
 			files = (
 				FBB08CB71B956B1800E742F0 /* ViewController.m in Sources */,
 				FBB08CB41B956B1800E742F0 /* AppDelegate.m in Sources */,
+				5A1D94B021770B0900ABC212 /* TestViewController.m in Sources */,
 				FBD248DB1BA412CF0002190D /* UITextFieldTools.m in Sources */,
 				FBB08CD71B956B4F00E742F0 /* ViewTools.m in Sources */,
 				FB83F62E1D5430480015D3DE /* ContainerView.m in Sources */,

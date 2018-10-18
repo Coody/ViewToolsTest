@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
+#import "TestViewController.h"
 
 @interface AppDelegate ()
 
@@ -26,7 +27,7 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:(UIStatusBarStyleDefault)];
     
-    ViewController *test = [[ViewController alloc] init];
+    TestViewController *test = [[TestViewController alloc] init];
     
     self.window.rootViewController = test;
     
