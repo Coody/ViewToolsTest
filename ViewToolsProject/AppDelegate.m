@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
+#import "TestViewController.h"
 
 @interface AppDelegate ()
 
