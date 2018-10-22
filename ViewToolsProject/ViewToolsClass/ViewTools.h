@@ -447,12 +447,27 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
                            withIsTemplet:(BOOL)tempIsTemplet;
 
 /**
+ * @brief - 3.3.4 文字、位置、設定樣板寬度的距離（左右有一點間距）
+ */
+-(UILabel *)createLabelWithText:(NSString *)tempText 
+              withTextAlignment:(NSTextAlignment)tempTextAlignment 
+            withLeftRightMargin:(CGFloat)tempLeftRightMargin;
+
+/**
  * @brief - 3.4.1 文字、位置、文字顏色、設定樣板寬度（左右有一點間距）
  */
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
                   withTextColor:(UIColor *)tempTextColor 
                   withIsTemplet:(BOOL)tempIsTemplet;
+
+/**
+ * @brief - 3.4.1.a 文字、位置、文字顏色、設定樣板寬度的左右間距（左右有一點間距）
+ */
+-(UILabel *)createLabelWithText:(NSString *)tempText 
+              withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                  withTextColor:(UIColor *)tempTextColor 
+            withLeftRightMargin:(CGFloat)tempLeftRightMargin;
 
 /**
  * @brief - 3.4.2 特殊文字、位置、文字顏色、設定樣板寬度（左右有一點間距）
