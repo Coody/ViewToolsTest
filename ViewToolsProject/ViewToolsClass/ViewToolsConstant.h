@@ -12,7 +12,7 @@
 ////////// 預設的畫面顯示設定（如果沒有特別要求的話，會吃的預設值）//////////
 ///////////////////////////////////////////////////////////////////
 // 設定元件標準高度（可自行設定）
-#define D_ViewTools_ViewHeight (46.0f)
+#define D_ViewTools_ViewHeight (44.0f)
 // 設定元件與左邊畫面的距離
 #define D_ViewTools_Label_Left_Margin (12)
 #define D_ViewTools_Label_Middle_Margin (12)
