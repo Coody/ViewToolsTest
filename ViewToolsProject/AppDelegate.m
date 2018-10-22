@@ -27,7 +27,7 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:(UIStatusBarStyleDefault)];
     
-    TestViewController *test = [[TestViewController alloc] init];
+    ViewController *test = [[ViewController alloc] init];
     
     self.window.rootViewController = test;
     
