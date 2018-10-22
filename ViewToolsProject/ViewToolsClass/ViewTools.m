@@ -1302,6 +1302,18 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                 withIsTemplet:tempIsTemplet];
 }
 
+/**
+ * @brief - 3.3.4 文字、位置、設定樣板寬度的距離（左右有一點間距）
+ */
+-(UILabel *)createLabelWithText:(NSString *)tempText 
+              withTextAlignment:(NSTextAlignment)tempTextAlignment 
+            withLeftRightMargin:(CGFloat)tempLeftRightMargin;{
+    return [self createLabelWithText:tempText 
+                   withTextAlignment:tempTextAlignment 
+                       withTextColor:_labelTextColor 
+                 withLeftRightMargin:tempLeftRightMargin];
+}
+
 // 3.4.1
 -(UILabel *)createLabelWithText:(NSString *)tempText 
               withTextAlignment:(NSTextAlignment)tempTextAlignment 
@@ -1309,30 +1321,41 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                   withIsTemplet:(BOOL)tempIsTemplet
 {
     if ( tempIsTemplet == YES ) {
-        CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX 
-                                                 withText:tempText 
-                                                 withFont:_textFont];
-        CGFloat tempHeight = _viewHeight;
-        if ( tempSize.width > [UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2 ) {
-            // 改成限制寬度來計算高度
-            tempSize = [ViewTools getTextSizeWithWidth:([UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2) 
-                                              withText:tempText 
-                                              withFont:_textFont];
-            tempHeight = tempSize.height;
-        }
         return [self createLabelWithText:tempText 
                        withTextAlignment:tempTextAlignment 
-                         withCustomFrame:CGRectMake(D_ViewTools_Label_Left_Margin, 
-                                                    0, 
-                                                    [UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2,
-                                                    tempHeight) 
                            withTextColor:tempTextColor 
-                    withIsNeedAutoResize:NO];
+                     withLeftRightMargin:D_ViewTools_Label_Left_Margin];
     }
     else{
         return [self createLabelWithText:tempText
                        withTextAlignment:tempTextAlignment];
     }
+}
+
+// 3.4.1.a
+-(UILabel *)createLabelWithText:(NSString *)tempText 
+              withTextAlignment:(NSTextAlignment)tempTextAlignment 
+                  withTextColor:(UIColor *)tempTextColor 
+            withLeftRightMargin:(CGFloat)tempLeftRightMargin{
+    CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX 
+                                             withText:tempText 
+                                             withFont:_textFont];
+    CGFloat tempHeight = _viewHeight;
+    if ( tempSize.width > [UIScreen mainScreen].bounds.size.width - tempLeftRightMargin*2 ) {
+        // 改成限制寬度來計算高度
+        tempSize = [ViewTools getTextSizeWithWidth:([UIScreen mainScreen].bounds.size.width - tempLeftRightMargin*2) 
+                                          withText:tempText 
+                                          withFont:_textFont];
+        tempHeight = tempSize.height;
+    }
+    return [self createLabelWithText:tempText 
+                   withTextAlignment:tempTextAlignment 
+                     withCustomFrame:CGRectMake(tempLeftRightMargin, 
+                                                0, 
+                                                [UIScreen mainScreen].bounds.size.width - tempLeftRightMargin*2,
+                                                tempHeight) 
+                       withTextColor:tempTextColor 
+                withIsNeedAutoResize:NO];
 }
 
 // 3.4.2
