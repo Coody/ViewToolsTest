@@ -12,13 +12,13 @@
 ////////// 預設的畫面顯示設定（如果沒有特別要求的話，會吃的預設值）//////////
 ///////////////////////////////////////////////////////////////////
 // 設定元件標準高度（可自行設定）
-#define D_ViewTools_ViewHeight (44.0f)
+#define D_ViewTools_ViewHeight (40.0f)
 // 設定元件與左邊畫面的距離
 #define D_ViewTools_Label_Left_Margin (12)
 #define D_ViewTools_Label_Middle_Margin (12)
 #define D_ViewTools_Label_Right_Margin (12)
 // 設定文字大小
-#define D_ViewTools_Text_Font [UIFont boldSystemFontOfSize:16.0f]
+#define D_ViewTools_Text_Font [UIFont systemFontOfSize:14.0f]
 // 設定文字顏色
 #define D_ViewTools_Text_Color [UIColor whiteColor]
 // 設定 TextField 內文字的顏色

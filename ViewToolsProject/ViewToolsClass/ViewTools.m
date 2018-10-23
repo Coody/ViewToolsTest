@@ -1071,9 +1071,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [button addSubview:down];
         [button setBackgroundColor:[UIColor whiteColor]];
         [leftLabel setTextColor:[UIColor blackColor]];
-        [leftLabel setFont:[UIFont systemFontOfSize:16.0f]];
+        [leftLabel setFont:self.textFont];
         [rightLabel setTextColor:[UIColor blackColor]];
-        [rightLabel setFont:[UIFont systemFontOfSize:16.0f]];
+        [rightLabel setFont:self.textFont];
     }
     else{
         [leftLabel setTextColor:_labelTextColor];
