@@ -13,7 +13,8 @@
 ViewToolsClass 資料夾裡面包含三個類別：
 * ViewTools 類別：專門產生各類的 UIView 元件（如：UILabel , UITextField , UIButton ... 等）
 * ContainerView 類別：專門將 ViewTools 類別所產生的 UIView 元件左右排版好、並且產生適當寬度。
-* UITextFieldTools 類別：擴充 UITextField 的辨識字元、截斷字元功能
+* UITextFieldTools 類別：擴充 UITextField 的辨識字元、截斷字元功能。
+* TabButton 類別：類似切頁的按鈕功能，已實作底部線條動畫。
 
 # 使用方式
 #### ViewTools & ContainerView
