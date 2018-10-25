@@ -72,9 +72,9 @@
     }
     _containerViewHight = tempHight;
     super.frame = CGRectMake(super.frame.origin.x,
-                            super.frame.origin.y,
-                            super.frame.size.width,
-                            _containerViewHight);
+                             super.frame.origin.y,
+                             super.frame.size.width,
+                             _containerViewHight);
     [_bg setFrame:CGRectMake(0, 0, super.frame.size.width, super.frame.size.height)];
 }
 
@@ -88,9 +88,9 @@
         tempWidth = 0;
     }
     super.frame = CGRectMake(super.frame.origin.x,
-                            super.frame.origin.y,
-                            tempWidth ,
-                            super.frame.size.height);
+                             super.frame.origin.y,
+                             tempWidth ,
+                             super.frame.size.height);
     [_bg setFrame:CGRectMake(0, 0, super.frame.size.width, super.frame.size.height)];
 }
 
