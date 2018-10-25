@@ -173,7 +173,7 @@ static CGFloat const kTabButton_DefaultSelectedBarHeight = 4.0f;
 -(void)initialSelectBar{
     if( !_selectedBarBackgroundView ){
         _selectedBarBackgroundView = 
-        [[UIView alloc] initWithFrame:CGRectMake(0 , self.frame.size.height - _selectedBarHeight + 1,
+        [[UIView alloc] initWithFrame:CGRectMake(0 , self.frame.size.height - _selectedBarHeight + 2,
                                                  self.frame.size.width , self.selectedBarHeight - 2)];
         [_selectedBarBackgroundView setBackgroundColor:self.selectedBarBackgroundColor];
     }
