@@ -38,6 +38,12 @@
     return self;
 }
 
+-(void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    [self setContainerViewWidth:frame.size.width];
+    [self setContainerViewHight:frame.size.height];
+}
+
 -(void)dealloc{
     for ( UIView *unit in self.subviews ) {
         [unit removeFromSuperview];
@@ -65,11 +71,11 @@
         tempHight = 0;
     }
     _containerViewHight = tempHight;
-    self.frame = CGRectMake(self.frame.origin.x,
-                            self.frame.origin.y,
-                            self.frame.size.width,
+    super.frame = CGRectMake(super.frame.origin.x,
+                            super.frame.origin.y,
+                            super.frame.size.width,
                             _containerViewHight);
-    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    [_bg setFrame:CGRectMake(0, 0, super.frame.size.width, super.frame.size.height)];
 }
 
 /** 
@@ -81,11 +87,11 @@
     if( tempWidth < 0 ){
         tempWidth = 0;
     }
-    self.frame = CGRectMake(self.frame.origin.x,
-                            self.frame.origin.y,
+    super.frame = CGRectMake(super.frame.origin.x,
+                            super.frame.origin.y,
                             tempWidth ,
-                            self.frame.size.height);
-    [_bg setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+                            super.frame.size.height);
+    [_bg setFrame:CGRectMake(0, 0, super.frame.size.width, super.frame.size.height)];
 }
 
 -(void)setIsAutoFitWidth:(BOOL)isAutoFitWidth{
