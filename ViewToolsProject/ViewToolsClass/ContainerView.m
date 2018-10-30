@@ -366,7 +366,7 @@
                     [self addSubview:unit];
                     
                     // 改變寬度
-                    if ( _isAutoFitWidth && _isRevertArrangement == NO ) {
+                    if ( _isAutoFitWidth == YES && _isRevertArrangement == NO ) {
                         if ( totalX > self.frame.size.width ) {
                             self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, totalX, self.frame.size.height);
                         }
@@ -432,7 +432,6 @@
 
 
 -(void)recheckInnerView{
-    
     if ( _isVertical ) {
         // 計算內部上下元件 y 的位置 
         // 垂直擺放元件的方法，會利用
@@ -503,7 +502,7 @@
         }
         
         CGFloat separateWidth = 0;
-        if ( _isSeparateAllUnit ) {
+        if ( _isSeparateAllUnit && [tempViewArray count] >= 1 ) {
             separateWidth = (CGFloat)((CGRectGetWidth(self.frame) - _leftMargin - _rightMargin - _middleMargin*([tempViewArray count] - 1))/[tempViewArray count]);
         }
         
