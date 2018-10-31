@@ -676,6 +676,18 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                       withIsRedButton:YES 
                  withIsNeedAutoResize:YES];
 }
+
+// 2.5.1 建立一般紅色按鈕，左右距離 tempMargin
+-(UIButton *)createRedButtonWithText:(NSString *)tempText withMargin:(CGFloat)tempMargin{
+    return [self createButtonWithText:tempText 
+                      withCustomFrame:CGRectMake(tempMargin, 
+                                                 0, 
+                                                 [UIScreen mainScreen].bounds.size.width - tempMargin*2,
+                                                 _viewHeight)
+                      withIsRedButton:YES 
+                 withIsNeedAutoResize:YES];
+}
+
 // 2.6 建立一般紅色按鈕（給設定的寬度）
 -(UIButton *)createRedButtonWithText:(NSString *)tempText 
                      withCustomWidth:(float)tempCustomWidth
@@ -1071,9 +1083,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [button addSubview:down];
         [button setBackgroundColor:[UIColor whiteColor]];
         [leftLabel setTextColor:[UIColor blackColor]];
-        [leftLabel setFont:[UIFont systemFontOfSize:16.0f]];
+        [leftLabel setFont:self.textFont];
         [rightLabel setTextColor:[UIColor blackColor]];
-        [rightLabel setFont:[UIFont systemFontOfSize:16.0f]];
+        [rightLabel setFont:self.textFont];
     }
     else{
         [leftLabel setTextColor:_labelTextColor];
