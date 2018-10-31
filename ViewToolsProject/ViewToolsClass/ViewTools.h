@@ -237,6 +237,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
  */
 -(UIButton *)createRedButtonWithText:(NSString *)tempText;
 
+/**
+ * @brief - 2.5.1 建立一般紅色按鈕，左右距離 tempMargin
+ */
+-(UIButton *)createRedButtonWithText:(NSString *)tempText withMargin:(CGFloat)tempMargin;
+
 /** 
  * @brief - 2.6 文字、自定寬度（紅色按鈕）
  * @param tempText        : 中間有置中的文字
