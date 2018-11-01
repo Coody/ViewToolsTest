@@ -20,7 +20,7 @@
 // 設定文字大小
 #define D_ViewTools_Text_Font [UIFont systemFontOfSize:14.0f]
 // 設定文字顏色
-#define D_ViewTools_Text_Color [UIColor whiteColor]
+#define D_ViewTools_Text_Color [UIColor blackColor]
 // 設定 TextField 內文字的顏色
 #define D_ViewTools_TextField_Inner_Color [UIColor grayColor]
 #define D_ViewTools_TextField_Tint_Color [UIColor whiteColor]
