@@ -1812,7 +1812,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 #endif
         if(nil == cachedImage)
         {
+#ifdef D_DEBUG
             NSLog(@"\n\n*****\n Class: %@ , File \"%@\" not exist!!\n*****\n\n", self, fullPath);
+#endif
         }
     }
     
