@@ -26,6 +26,10 @@ NSInteger const kArrowImage_Tag = 6481;
 @property (nonatomic , strong) UIColor *textFieldTextColor;
 @property (nonatomic , strong) UIColor *textFieldInnerColor;
 @property (nonatomic , strong) UIColor *textButtonColor;
+// 一般設定 : Margin
+@property (nonatomic , assign) CGFloat labelLeftMargin;
+@property (nonatomic , assign) CGFloat labelRightMargin;
+@property (nonatomic , assign) CGFloat labelMiddleMargin;
 @property (nonatomic , assign) CGFloat customButtonLeftMargin;
 @property (nonatomic , assign) CGFloat customButtonRightMargin;
 @property (nonatomic , assign) CGFloat customButtonMiddleMargin;
@@ -38,7 +42,10 @@ NSInteger const kArrowImage_Tag = 6481;
 @property (nonatomic , strong) UIImage *arrowImage;
 // TextField
 @property (nonatomic , strong) UIImage *textFieldImage;
+// Private ViewTools
+@property (nonatomic , strong) ViewTools *privateViewTools;
 
+// 給外界取得複合式 UI 元件
 @property (nonatomic , strong) NSArray *recentObjects;
 
 @end
@@ -59,6 +66,9 @@ NSInteger const kArrowImage_Tag = 6481;
         
         // Label Text Color
         _labelTextColor = _allTextDefaultColor;
+        _labelLeftMargin = D_ViewTools_Label_Left_Margin;
+        _labelRightMargin = D_ViewTools_Label_Right_Margin;
+        _labelMiddleMargin = D_ViewTools_Label_Middle_Margin;
         
         // button Text Color
         _btnTextColor = _allTextDefaultColor;
@@ -84,6 +94,8 @@ NSInteger const kArrowImage_Tag = 6481;
         _arrowImage = [ViewTools getImageFromeBundleByPath:D_ViewTools_Arrow_Image];
         
         _textFieldImage = [ViewTools getImageFromeBundleByPath:D_ViewTools_TextField_Image];
+        
+        _privateViewTools = [[ViewTools alloc] init];
     }
     return self;
 }
@@ -193,6 +205,33 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     [[UITextField appearance] setTintColor:tempColor];
 }
 
+-(void)setLabelLeftMargin:(CGFloat)labelLeftMargin{
+    if( labelLeftMargin >= 0 ){
+        _labelLeftMargin = labelLeftMargin;
+    }
+    else{
+        _labelLeftMargin = 0;
+    }
+}
+
+-(void)setLabelRightMargin:(CGFloat)labelRightMargin{
+    if( labelRightMargin >= 0 ){
+        _labelRightMargin = labelRightMargin;
+    }
+    else{
+        _labelRightMargin = 0;
+    }
+}
+
+-(void)setLabelMiddleMargin:(CGFloat)labelMiddleMargin{
+    if( labelMiddleMargin >= 0 ){
+        _labelMiddleMargin = labelMiddleMargin;
+    }
+    else{
+        _labelMiddleMargin = 0;
+    }
+}
+
 -(void)setCustomButtonLeftMargin:(CGFloat)customButtonLeftMargin{
     if ( customButtonLeftMargin >= 0 ) {
         _customButtonLeftMargin = customButtonLeftMargin;
@@ -218,6 +257,11 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     else{
         _customButtonMiddleMargin = 0;
     }
+}
+
+/** 1.19 設定 private ViewTools 給左右兩邊有 Text 的 Button 使用（沒設定則會使用預設的） */
+-(void)setPrivateViewTools:(ViewTools *)privateViewTools{
+    _privateViewTools = privateViewTools;
 }
 
 +(void)setTextFieldTintColor:(UIColor *)color{
@@ -326,10 +370,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                 withCustomWidth:(float)tempCustomWidth 
                            withIsNeedAutoResize:(BOOL)isNeedAutoResize
 {
-    UIButton *button = [self getBasicButtonWithFrame:CGRectMake(0, 
-                                                                0, 
-                                                                tempCustomWidth,
-                                                                _viewHeight)];
+    UIButton *button = [self getBasicButtonWithFrame:CGRectMake(0, 0, tempCustomWidth, _viewHeight)];
     if ( isNeedAutoResize ) {
         button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
@@ -346,27 +387,20 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     // 將內部元進整理成陣列回傳（多個元件時）
     NSMutableArray *tempReturnObjects = [[NSMutableArray alloc] init];
     
-    ViewTools *privateViewTools = [[ViewTools alloc] init];
-    [privateViewTools setTextFont:_textFont];
+    [self.privateViewTools setTextFont:_textFont];
     
     // 建立左邊文字
     if ( tempLeftText != nil )
     {
-        UILabel *firstLabel = [privateViewTools createLabelWithAttributeText:tempLeftText 
-                                                              withLineHeight:tempLeftLineHeight
-                                                           withTextAlignment:(NSTextAlignmentLeft)];
-        firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin ,
-                                      0,
-                                      firstLabel.frame.size.width,
-                                      _viewHeight);
+        UILabel *firstLabel = [self.privateViewTools createLabelWithAttributeText:tempLeftText 
+                                                                   withLineHeight:tempLeftLineHeight 
+                                                                withTextAlignment:(NSTextAlignmentLeft)];
+        firstLabel.frame = CGRectMake(self.privateViewTools.labelLeftMargin , 0 ,
+                                      firstLabel.frame.size.width , _viewHeight);
         [firstLabel setTag:1];
         [firstLabel setNumberOfLines:0];
         firstLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [button addSubview:firstLabel];
-        
-#ifdef D_DEBUG
-        [firstLabel setBackgroundColor:[UIColor greenColor]];
-#endif
         
         // 將元件加入陣列（等等會暫時存入 recentObject）
         [tempReturnObjects addObject:firstLabel];
@@ -375,20 +409,19 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     // 建立右邊文字
     if ( tempRightText != nil )
     {
-        UILabel *secondLabel = [privateViewTools createLabelWithAttributeText:tempRightText 
-                                                               withLineHeight:tempRightLineHeight 
-                                                            withTextAlignment:(NSTextAlignmentRight)];
-        secondLabel.frame = CGRectMake(button.frame.size.width - arrowWidth - secondLabel.frame.size.width - D_ViewTools_Label_Right_Margin ,
+        UILabel *secondLabel = [self.privateViewTools createLabelWithAttributeText:tempRightText 
+                                                                    withLineHeight:tempRightLineHeight 
+                                                                 withTextAlignment:(NSTextAlignmentRight)];
+        secondLabel.frame = CGRectMake(button.frame.size.width - 
+                                       arrowWidth - 
+                                       secondLabel.frame.size.width - 
+                                       self.privateViewTools.labelRightMargin ,
                                        0,
                                        secondLabel.frame.size.width,
                                        _viewHeight);
         [secondLabel setTag:2];
         secondLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [button addSubview:secondLabel];
-        
-#ifdef D_DEBUG
-        [secondLabel setBackgroundColor:[UIColor greenColor]];
-#endif
         
         // 將元件加入陣列（等等會暫時存入 recentObject）
         [tempReturnObjects addObject:secondLabel];
@@ -456,8 +489,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     // 將內部元進整理成陣列回傳（多個元件時）
     NSMutableArray *tempReturnObjects = [[NSMutableArray alloc] init];
     
-    ViewTools *privateViewTools = [[ViewTools alloc] init];
-    [privateViewTools setViewHeight:tempCustomFrame.size.height];
+    [self.privateViewTools setViewHeight:tempCustomFrame.size.height];
     
 #define D_Reconstruction
 #ifdef D_Reconstruction
@@ -467,7 +499,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     UILabel *firstLabel;
     UILabel *secondLebal;
     if ( tempLeftText != nil ) {
-        firstLabel = [privateViewTools createLabelWithText:tempLeftText withTextAlignment:NSTextAlignmentLeft];
+        firstLabel = [self.privateViewTools createLabelWithText:tempLeftText withTextAlignment:NSTextAlignmentLeft];
         firstLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [firstLabel setTag:1];
         [firstLabel setNumberOfLines:0];
@@ -480,7 +512,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [tempReturnObjects addObject:firstLabel];
     }
     if ( tempRightText != nil ) {
-        secondLebal = [privateViewTools createLabelWithText:tempRightText withTextAlignment:NSTextAlignmentRight];
+        secondLebal = [self.privateViewTools createLabelWithText:tempRightText withTextAlignment:NSTextAlignmentRight];
         secondLebal.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [secondLebal setTag:2];
         [secondLebal setNumberOfLines:0];
@@ -498,13 +530,20 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         case EnumLabelStaticType_LeftStatic:
         {
             // 左邊固定、右邊改變 frame 拉到最大
-            [firstLabel setFrame:CGRectMake(D_ViewTools_Label_Left_Margin,
+            [firstLabel setFrame:CGRectMake(self.privateViewTools.labelLeftMargin,
                                             0,
                                             firstLabel.frame.size.width,
                                             firstLabel.frame.size.height)];
-            [secondLebal setFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + D_ViewTools_Label_Middle_Margin,
+            [secondLebal setFrame:CGRectMake(firstLabel.frame.origin.x + 
+                                             firstLabel.frame.size.width + 
+                                             self.privateViewTools.labelMiddleMargin,
                                              0,
-                                             button.frame.size.width - firstLabel.frame.size.width - D_ViewTools_Label_Left_Margin - D_ViewTools_Label_Middle_Margin - D_ViewTools_Label_Right_Margin - arrowWidth ,
+                                             button.frame.size.width - 
+                                             firstLabel.frame.size.width - 
+                                             self.privateViewTools.labelLeftMargin - 
+                                             self.privateViewTools.labelMiddleMargin - 
+                                             self.privateViewTools.labelRightMargin - 
+                                             arrowWidth ,
                                              secondLebal.frame.size.height )];
             secondLebal.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         }
@@ -512,12 +551,20 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         case EnumLabelStaticType_RightStatic:
         {
             // 右邊固定、左邊改變 frame 拉到最大
-            [firstLabel setFrame:CGRectMake(D_ViewTools_Label_Left_Margin,
+            [firstLabel setFrame:CGRectMake(self.privateViewTools.labelLeftMargin,
                                             0,
-                                            button.frame.size.width - secondLebal.frame.origin.x - secondLebal.frame.size.width - D_ViewTools_Label_Left_Margin - D_ViewTools_Label_Middle_Margin - D_ViewTools_Label_Right_Margin - arrowWidth ,
+                                            button.frame.size.width - 
+                                            secondLebal.frame.origin.x - 
+                                            secondLebal.frame.size.width - 
+                                            self.privateViewTools.labelLeftMargin - 
+                                            self.privateViewTools.labelMiddleMargin - 
+                                            self.privateViewTools.labelRightMargin -
+                                            arrowWidth ,
                                             firstLabel.frame.size.height)];
             firstLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-            [secondLebal setFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + D_ViewTools_Label_Middle_Margin,
+            [secondLebal setFrame:CGRectMake(firstLabel.frame.origin.x + 
+                                             firstLabel.frame.size.width +
+                                             self.privateViewTools.labelMiddleMargin,
                                              0,
                                              secondLebal.frame.size.width,
                                              secondLebal.frame.size.height)];
@@ -527,11 +574,14 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         default:
         {
             // 不處理，維持現狀。
-            [firstLabel setFrame:CGRectMake(D_ViewTools_Label_Left_Margin,
+            [firstLabel setFrame:CGRectMake(self.privateViewTools.labelLeftMargin,
                                             0,
                                             firstLabel.frame.size.width,
                                             firstLabel.frame.size.height)];
-            [secondLebal setFrame:CGRectMake(button.frame.size.width - D_ViewTools_Label_Right_Margin - arrowWidth - secondLebal.frame.size.width,
+            [secondLebal setFrame:CGRectMake(button.frame.size.width - 
+                                             self.privateViewTools.labelRightMargin - 
+                                             arrowWidth - 
+                                             secondLebal.frame.size.width,
                                              0,
                                              secondLebal.frame.size.width,
                                              secondLebal.frame.size.height)];
@@ -548,8 +598,8 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     UILabel *firstLabel;
     if ( tempLeftText != nil )
     {
-        firstLabel = [privateViewTools createLabelWithText:tempLeftText 
-                                         withTextAlignment:(NSTextAlignmentLeft)];
+        firstLabel = [self.privateViewTools createLabelWithText:tempLeftText 
+                                              withTextAlignment:(NSTextAlignmentLeft)];
         
         // 右邊為固定的長度（左邊文字寬度會依照右邊來計算到最大寬度）
         if ( tempEnumLabelStaticType == EnumLabelStaticType_RightStatic ) {
@@ -562,13 +612,16 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                                                   withFont:_textFont];
             }
             
-            firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin,
+            firstLabel.frame = CGRectMake(self.privateViewTools.labelLeftMargin,
                                           0,
-                                          button.frame.size.width - D_ViewTools_Label_Left_Margin - arrowWidth - tempSize.width,
+                                          button.frame.size.width - 
+                                          self.privateViewTools.labelLeftMargin - 
+                                          arrowWidth - 
+                                          tempSize.width,
                                           _viewHeight);
         }
         else{
-            firstLabel.frame = CGRectMake(D_ViewTools_Label_Left_Margin,
+            firstLabel.frame = CGRectMake(self.privateViewTools.labelLeftMargin,
                                           0,
                                           firstLabel.frame.size.width,
                                           _viewHeight);
@@ -587,17 +640,27 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     UILabel *secondLabel;
     if ( tempRightText != nil )
     {
-        secondLabel = [privateViewTools createLabelWithText:tempRightText 
-                                          withTextAlignment:(NSTextAlignmentRight)];
+        secondLabel = [self.privateViewTools createLabelWithText:tempRightText 
+                                               withTextAlignment:(NSTextAlignmentRight)];
         secondLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         if ( tempEnumLabelStaticType == EnumLabelStaticType_LeftStatic ) {
-            secondLabel.frame = CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + D_ViewTools_Label_Middle_Margin ,
+            secondLabel.frame = CGRectMake(firstLabel.frame.origin.x + 
+                                           firstLabel.frame.size.width + 
+                                           self.privateViewTools.labelMiddleMargin ,
                                            0,
-                                           button.frame.size.width - D_ViewTools_Label_Left_Margin*2 - arrowWidth - firstLabel.frame.size.width - D_ViewTools_Label_Middle_Margin ,
+                                           button.frame.size.width - 
+                                           self.privateViewTools.labelLeftMargin * 2 - 
+                                           arrowWidth - 
+                                           firstLabel.frame.size.width - 
+                                           self.privateViewTools.labelMiddleMargin ,
                                            _viewHeight);
         }
         else{
-            secondLabel.frame = CGRectMake(button.frame.size.width - D_ViewTools_Label_Left_Margin - arrowWidth - D_ViewTools_Label_Middle_Margin - secondLabel.frame.size.width ,
+            secondLabel.frame = CGRectMake(button.frame.size.width - 
+                                           self.privateViewTools.labelLeftMargin - 
+                                           arrowWidth - 
+                                           self.privateViewTools.labelMiddleMargin - 
+                                           secondLabel.frame.size.width ,
                                            0,
                                            secondLabel.frame.size.width,
                                            _viewHeight);
@@ -956,16 +1019,15 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                     withStaticSideType:(EnumLabelStaticType)labelStaticType{
     
     // ViewTools
-    ViewTools *privateViewTools = [[ViewTools alloc] init];
-    [privateViewTools setViewHeight:tempCustomFrame.size.height];
+    [self.privateViewTools setViewHeight:tempCustomFrame.size.height];
     if( isSystemDefaultStyle == YES ){
-        [privateViewTools setButtonImage:[ViewTools imageFromColor:[UIColor whiteColor]]
-                andButtonHightLightImage:[ViewTools imageFromColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.00]]
-                   andButtonDisableImage:[ViewTools imageFromColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.00]]];
+        [self.privateViewTools setButtonImage:[ViewTools imageFromColor:[UIColor whiteColor]] 
+                     andButtonHightLightImage:[ViewTools imageFromColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.00]] 
+                        andButtonDisableImage:[ViewTools imageFromColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.00]]];
     }
     
     // Button
-    UIButton *button = [privateViewTools createButtonWithText:@"" withCustomFrame:tempCustomFrame withIsRedButton:NO];
+    UIButton *button = [self.privateViewTools createButtonWithText:@"" withCustomFrame:tempCustomFrame withIsRedButton:NO];
     button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     // icon Image
@@ -1016,13 +1078,20 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         case EnumLabelStaticType_None:
         {
             // 不管
-            leftLabel = [privateViewTools createLabelWithText:tempLeftText withTextAlignment:(NSTextAlignmentLeft)];
-            [leftLabel setFrame:CGRectMake(_customButtonLeftMargin + _customButtonMiddleMargin + iconView.frame.size.width,
+            leftLabel = [self.privateViewTools createLabelWithText:tempLeftText withTextAlignment:(NSTextAlignmentLeft)];
+            [leftLabel setFrame:CGRectMake(_customButtonLeftMargin + 
+                                           _customButtonMiddleMargin + 
+                                           iconView.frame.size.width,
                                            0,
                                            leftLabel.frame.size.width,
                                            leftLabel.frame.size.height)];
-            rightLabel = [privateViewTools createLabelWithText:tempRightText withTextAlignment:(NSTextAlignmentRight)];
-            [rightLabel setFrame:CGRectMake(button.frame.size.width - _customButtonRightMargin  - rightLabel.frame.size.width - arrowWidth - D_ViewTools_Label_Right_Margin,
+            rightLabel = [self.privateViewTools createLabelWithText:tempRightText 
+                                                  withTextAlignment:(NSTextAlignmentRight)];
+            [rightLabel setFrame:CGRectMake(button.frame.size.width - 
+                                            _customButtonRightMargin  - 
+                                            rightLabel.frame.size.width - 
+                                            arrowWidth - 
+                                            self.privateViewTools.labelRightMargin,
                                             0,
                                             rightLabel.frame.size.width,
                                             rightLabel.frame.size.height)];
@@ -1033,14 +1102,26 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         case EnumLabelStaticType_RightStatic:
         {
             // 右邊 label 固定長度
-            rightLabel = [privateViewTools createLabelWithText:tempRightText withTextAlignment:(NSTextAlignmentRight)];
-            CGFloat leftLabelWidth = button.frame.size.width -_customButtonLeftMargin - iconView.frame.size.width - _customButtonMiddleMargin*2 - rightLabel.frame.size.width - arrowWidth - _customButtonRightMargin - D_ViewTools_Label_Right_Margin;
-            leftLabel = [privateViewTools createLabelWithText:tempLeftText withTextAlignment:(NSTextAlignmentLeft) withCustomWidth:leftLabelWidth];
-            [leftLabel setFrame:CGRectMake(_customButtonLeftMargin + _customButtonMiddleMargin + arrowImageView.frame.size.width,
+            rightLabel = [self.privateViewTools createLabelWithText:tempRightText 
+                                                  withTextAlignment:(NSTextAlignmentRight)];
+            
+            CGFloat leftLabelWidth = button.frame.size.width - 
+            _customButtonLeftMargin - iconView.frame.size.width - 
+            _customButtonMiddleMargin * 2 - rightLabel.frame.size.width - 
+            arrowWidth - _customButtonRightMargin - self.privateViewTools.labelRightMargin;
+            
+            leftLabel = [self.privateViewTools createLabelWithText:tempLeftText 
+                                                 withTextAlignment:(NSTextAlignmentLeft) 
+                                                   withCustomWidth:leftLabelWidth];
+            [leftLabel setFrame:CGRectMake(_customButtonLeftMargin + 
+                                           _customButtonMiddleMargin + 
+                                           arrowImageView.frame.size.width,
                                            0,
                                            leftLabel.frame.size.width,
                                            leftLabel.frame.size.height)];
-            [rightLabel setFrame:CGRectMake(leftLabel.frame.origin.x + leftLabel.frame.size.width + _customButtonMiddleMargin,
+            [rightLabel setFrame:CGRectMake(leftLabel.frame.origin.x + 
+                                            leftLabel.frame.size.width + 
+                                            _customButtonMiddleMargin,
                                             0,
                                             rightLabel.frame.size.width,
                                             rightLabel.frame.size.height)];
@@ -1053,14 +1134,26 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         {
             // 預設
             // 左邊 label 固定長度
-            leftLabel = [privateViewTools createLabelWithText:tempLeftText withTextAlignment:(NSTextAlignmentLeft)];
-            [leftLabel setFrame:CGRectMake(_customButtonLeftMargin + _customButtonMiddleMargin + iconView.frame.size.width,
+            leftLabel = [self.privateViewTools createLabelWithText:tempLeftText 
+                                                 withTextAlignment:(NSTextAlignmentLeft)];
+            [leftLabel setFrame:CGRectMake(_customButtonLeftMargin + 
+                                           _customButtonMiddleMargin + 
+                                           iconView.frame.size.width,
                                            0,
                                            leftLabel.frame.size.width,
                                            leftLabel.frame.size.height)];
-            CGFloat rightLabelWidth = button.frame.size.width - _customButtonLeftMargin - iconView.frame.size.width - _customButtonMiddleMargin*2 - leftLabel.frame.size.width - _customButtonRightMargin - arrowWidth - D_ViewTools_Label_Right_Margin;
-            rightLabel = [privateViewTools createLabelWithText:tempRightText withTextAlignment:(NSTextAlignmentRight) withCustomWidth:rightLabelWidth];
-            [rightLabel setFrame:CGRectMake(leftLabel.frame.origin.x + leftLabel.frame.size.width + _customButtonMiddleMargin,
+            
+            CGFloat rightLabelWidth = button.frame.size.width - 
+            _customButtonLeftMargin - iconView.frame.size.width - 
+            _customButtonMiddleMargin * 2 - leftLabel.frame.size.width - 
+            _customButtonRightMargin - arrowWidth - self.privateViewTools.labelRightMargin;
+            
+            rightLabel = [self.privateViewTools createLabelWithText:tempRightText 
+                                                  withTextAlignment:(NSTextAlignmentRight) 
+                                                    withCustomWidth:rightLabelWidth];
+            [rightLabel setFrame:CGRectMake(leftLabel.frame.origin.x + 
+                                            leftLabel.frame.size.width + 
+                                            _customButtonMiddleMargin,
                                             0,
                                             rightLabel.frame.size.width,
                                             rightLabel.frame.size.height)];
@@ -1124,7 +1217,9 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     // 設定「箭頭 + 左邊固定間距」
     CGFloat arrowWidth = 0.0f;
     arrowImageView = [[UIImageView alloc] initWithImage:_arrowImage];
-    [arrowImageView setFrame:CGRectMake(tempCustomFrame.size.width - arrowImageView.frame.size.width - D_ViewTools_Label_Right_Margin,
+    [arrowImageView setFrame:CGRectMake(tempCustomFrame.size.width - 
+                                        arrowImageView.frame.size.width - 
+                                        self.privateViewTools.labelRightMargin,
                                         (_viewHeight - arrowImageView.frame.size.height)*0.5,
                                         arrowImageView.frame.size.width,
                                         arrowImageView.frame.size.height)];
@@ -1136,7 +1231,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     {
         [arrowImageView setAlpha:1.0f];
         // 左邊間距 + 箭頭的寬度
-        arrowWidth = arrowImageView.frame.size.width + D_ViewTools_Label_Middle_Margin;
+        arrowWidth = arrowImageView.frame.size.width + self.privateViewTools.labelMiddleMargin;
     }
     else
     {
@@ -1175,7 +1270,8 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
     CGFloat tempHeight = _viewHeight;
     if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
-        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
+        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width 
+                                          withText:tempText withFont:_textFont];
         tempHeight = tempSize.height;
     }
     return [self createLabelWithText:tempText 
@@ -1210,10 +1306,14 @@ andButtonDisableImage:(UIImage *)tempDisableImage
               withTextAlignment:(NSTextAlignment)tempTextAlignment  
                   withTextColor:(UIColor *)tempTextColor
 {
-    CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
+    CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX 
+                                             withText:tempText 
+                                             withFont:_textFont];
     CGFloat tempHeight = _viewHeight;
     if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
-        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
+        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width 
+                                          withText:tempText 
+                                          withFont:_textFont];
         tempHeight = tempSize.height;
     }
     
@@ -1230,10 +1330,14 @@ andButtonDisableImage:(UIImage *)tempDisableImage
                   withTextColor:(UIColor *)tempTextColor 
            withIsNeedAutoResize:(BOOL)isNeedAutoResize
 {
-    CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX withText:tempText withFont:_textFont];
+    CGSize tempSize = [ViewTools getTextSizeWithWidth:CGFLOAT_MAX 
+                                             withText:tempText 
+                                             withFont:_textFont];
     CGFloat tempHeight = _viewHeight;
     if ( tempSize.width > [UIScreen mainScreen].bounds.size.width ) {
-        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width withText:tempText withFont:_textFont];
+        tempSize = [ViewTools getTextSizeWithWidth:[UIScreen mainScreen].bounds.size.width 
+                                          withText:tempText 
+                                          withFont:_textFont];
         tempHeight = tempSize.height;
     }
     return [self createLabelWithText:tempText 
@@ -1336,7 +1440,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         return [self createLabelWithText:tempText 
                        withTextAlignment:tempTextAlignment 
                            withTextColor:tempTextColor 
-                     withLeftRightMargin:D_ViewTools_Label_Left_Margin];
+                     withLeftRightMargin:self.labelLeftMargin];
     }
     else{
         return [self createLabelWithText:tempText
@@ -1379,9 +1483,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     if ( tempIsTemplet == YES ) {
         return [self createLabelWithAttributeText:tempText 
                                 withTextAlignment:tempTextAlignment 
-                                  withCustomFrame:CGRectMake(D_ViewTools_Label_Left_Margin,
+                                  withCustomFrame:CGRectMake(self.labelLeftMargin,
                                                              0,
-                                                             [UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2,
+                                                             [UIScreen mainScreen].bounds.size.width -
+                                                             self.labelLeftMargin - self.labelRightMargin,
                                                              CGFLOAT_MAX) 
                                     withTextColor:tempTextColor];
     }
@@ -1402,9 +1507,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         return [self createLabelWithAttributeText:tempText 
                                 withTextAlignment:tempTextAlignment 
                                    withLineHeight:tempLineHeight 
-                            withStaticCustomFrame:CGRectMake(D_ViewTools_Label_Left_Margin,
+                            withStaticCustomFrame:CGRectMake(self.labelLeftMargin,
                                                              0,
-                                                             [UIScreen mainScreen].bounds.size.width - D_ViewTools_Label_Left_Margin*2,
+                                                             [UIScreen mainScreen].bounds.size.width -
+                                                             self.labelLeftMargin - self.labelRightMargin,
                                                              CGFLOAT_MAX) 
                                     withTextColor:tempTextColor];
     }
