@@ -48,6 +48,10 @@ typedef enum : NSInteger{
 @property (nonatomic , readonly) UIColor *textFieldTextColor;
 @property (nonatomic , readonly) UIColor *textFieldInnerColor;
 @property (nonatomic , readonly) UIColor *textButtonColor;
+// 一般設定 : Margin
+@property (nonatomic , readonly) CGFloat labelLeftMargin;
+@property (nonatomic , readonly) CGFloat labelRightMargin;
+@property (nonatomic , readonly) CGFloat labelMiddleMargin;
 @property (nonatomic , readonly) CGFloat customButtonLeftMargin;
 @property (nonatomic , readonly) CGFloat customButtonRightMargin;
 @property (nonatomic , readonly) CGFloat customButtonMiddleMargin;
@@ -112,20 +116,32 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 /** 1.13 設定輸入框中，游標顏色 */
 -(void)setTextFieldTintColor:(UIColor *)tempColor;
 
-/** 1.14 設定左右有文字、右邊有箭頭按鈕的左間距 */
+/** 1.14 設定 Label 預設左邊間距 */
+-(void)setLabelLeftMargin:(CGFloat)labelLeftMargin;
+
+/** 1.15 設定 Label 預設右邊間距 */
+-(void)setLabelRightMargin:(CGFloat)labelRightMargin;
+
+/** 1.16 設定 Label 預設ㄓ中邊間距*/
+-(void)setLabelMiddleMargin:(CGFloat)labelMiddleMargin;
+
+/** 1.17 設定左右有文字、右邊有箭頭按鈕的左間距 */
 -(void)setCustomButtonLeftMargin:(CGFloat)customButtonLeftMargin;
 
-/** 1.15 設定左右有文字、右邊有箭頭按鈕的左間距 */
+/** 1.18 設定左右有文字、右邊有箭頭按鈕的左間距 */
 -(void)setCustomButtonRightMargin:(CGFloat)customButtonRightMargin;
 
-/** 1.16 設定最左邊有 icon ，左右有文字、右邊有箭頭按鈕的中間間距 */
+/** 1.19 設定最左邊有 icon ，左右有文字、右邊有箭頭按鈕的中間間距 */
 -(void)setCustomButtonMiddleMargin:(CGFloat)customButtonMiddleMargin;
 
-/** 1.17 設定 TextField 內的游標顏色 */
+/** 1.20 設定 TextField 內的游標顏色 */
 +(void)setTextFieldTintColor:(UIColor *)color;
 
-/** 1.18 設定 TextField 內部 Place Holder 的字體大小 */
+/** 1.21 設定 TextField 內部 Place Holder 的字體大小 */
 -(void)setTextFieldInnerFont:(UIFont *)textFieldInnerFont;
+
+/** 1.22 設定 private ViewTools 給左右兩邊有 Text 的 Button 使用（沒設定則會使用預設的） */
+-(void)setPrivateViewTools:(ViewTools *)privateViewTools;
 
 #pragma mark ：建立按鈕
 /////////////////////////////////////
