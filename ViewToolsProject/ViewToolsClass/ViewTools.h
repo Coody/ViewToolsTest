@@ -86,61 +86,55 @@ andButtonDisableImage:(UIImage *)tempDisableImage;
 /** 1.3 設定按鈕的文字顏色 */
 -(void)setButtonTextColor:(UIColor *)tempColor;
 
-/** 1.4 設定按鈕左邊的文字顏色（使用 ViewTolls 實體內的元件設定都會改變（在這之後使用 viewTolls 建立的才會使用新的值來做設定）） */
--(void)setButtonLeftTextColor:(UIColor *)tempColor;
-
-/** 1.5 設定按鈕右邊的文字顏色（使用 ViewTolls 實體內的元件設定都會改變（在這之後使用 viewTolls 建立的才會使用新的值來做設定）） */
--(void)setButtonRightTextColor:(UIColor *)tempColor;
-
-/** 1.6 設定箭頭的 Image */
+/** 1.4 設定箭頭的 Image */
 -(void)setArrowImage:(UIImage *)arrowImage;
 
-/** 1.7 設定 TextField 的框框 */
+/** 1.5 設定 TextField 的框框 */
 -(void)setTextFieldImage:(UIImage *)textFieldImage;
 
-/** 1.8 設定 TextField 的文字顏色 */
+/** 1.6 設定 TextField 的文字顏色 */
 -(void)setTextFieldTextColor:(UIColor *)textFieldTextColor;
 
-/** 1.9 設定 TextField 內文字的顏色 */
+/** 1.7 設定 TextField 內文字的顏色 */
 -(void)setTextFieldInnerColor:(UIColor *)textFieldInnerColor;
 
-/** 1.10 設定 Label 的文字顏色 */
+/** 1.8 設定 Label 的文字顏色 */
 -(void)setLabelTextColor:(UIColor *)tempColor;
 
-/** 1.11 設定 文字Button 的顏色  */
+/** 1.9 設定 文字Button 的顏色  */
 -(void)setTextButtonColor:(UIColor *)tempColor;
 
-/** 1.12 設定文字大小  */
+/** 1.10 設定文字大小  */
 -(void)setTextFont:(UIFont *)textFont;
 
-/** 1.13 設定輸入框中，游標顏色 */
+/** 1.11 設定輸入框中，游標顏色 */
 -(void)setTextFieldTintColor:(UIColor *)tempColor;
 
-/** 1.14 設定 Label 預設左邊間距 */
+/** 1.12 設定 Label 預設左邊間距 */
 -(void)setLabelLeftMargin:(CGFloat)labelLeftMargin;
 
-/** 1.15 設定 Label 預設右邊間距 */
+/** 1.13 設定 Label 預設右邊間距 */
 -(void)setLabelRightMargin:(CGFloat)labelRightMargin;
 
-/** 1.16 設定 Label 預設ㄓ中邊間距*/
+/** 1.14 設定 Label 預設ㄓ中邊間距*/
 -(void)setLabelMiddleMargin:(CGFloat)labelMiddleMargin;
 
-/** 1.17 設定左右有文字、右邊有箭頭按鈕的左間距 */
+/** 1.15 設定左右有文字、右邊有箭頭按鈕的左間距 */
 -(void)setCustomButtonLeftMargin:(CGFloat)customButtonLeftMargin;
 
-/** 1.18 設定左右有文字、右邊有箭頭按鈕的左間距 */
+/** 1.16 設定左右有文字、右邊有箭頭按鈕的左間距 */
 -(void)setCustomButtonRightMargin:(CGFloat)customButtonRightMargin;
 
-/** 1.19 設定最左邊有 icon ，左右有文字、右邊有箭頭按鈕的中間間距 */
+/** 1.17 設定最左邊有 icon ，左右有文字、右邊有箭頭按鈕的中間間距 */
 -(void)setCustomButtonMiddleMargin:(CGFloat)customButtonMiddleMargin;
 
-/** 1.20 設定 TextField 內的游標顏色 */
+/** 1.18 設定 TextField 內的游標顏色 */
 +(void)setTextFieldTintColor:(UIColor *)color;
 
-/** 1.21 設定 TextField 內部 Place Holder 的字體大小 */
+/** 1.19 設定 TextField 內部 Place Holder 的字體大小 */
 -(void)setTextFieldInnerFont:(UIFont *)textFieldInnerFont;
 
-/** 1.22 設定 private ViewTools 給左右兩邊有 Text 的 Button 使用（沒設定則會使用預設的） */
+/** 1.20 設定 private ViewTools 給左右兩邊有 Text 的 Button 使用（沒設定則會使用預設的） */
 -(void)setPrivateViewTools:(ViewTools *)privateViewTools;
 
 #pragma mark ：建立按鈕

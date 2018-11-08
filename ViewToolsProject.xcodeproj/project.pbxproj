@@ -398,7 +398,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					D_DEBUG,
+					D_PRIVATE_DEBUG,
 				);
 				INFOPLIST_FILE = ViewToolsProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

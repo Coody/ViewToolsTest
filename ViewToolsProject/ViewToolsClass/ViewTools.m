@@ -51,6 +51,7 @@ NSInteger const kArrowImage_Tag = 6481;
 @end
 
 @implementation ViewTools
+@synthesize privateViewTools = _privateViewTools;
 
 -(id)init{
     self = [super init];
@@ -80,7 +81,7 @@ NSInteger const kArrowImage_Tag = 6481;
         _textFieldInnerColor = _allTextDefaultColor;
         
         // 左右有文字、右邊有箭頭的左右間距
-        self.customButtonLeftMargin = self.customButtonMiddleMargin = self.customButtonRightMargin = 12.0f;
+        self.customButtonLeftMargin = self.customButtonMiddleMargin = self.customButtonRightMargin = 6.0f;
         
         // 輸入框中，游標的顏色
         [ViewTools setTextFieldTintColor:[UIColor blueColor]];
@@ -94,8 +95,6 @@ NSInteger const kArrowImage_Tag = 6481;
         _arrowImage = [ViewTools getImageFromeBundleByPath:D_ViewTools_Arrow_Image];
         
         _textFieldImage = [ViewTools getImageFromeBundleByPath:D_ViewTools_TextField_Image];
-        
-        _privateViewTools = [[ViewTools alloc] init];
     }
     return self;
 }
@@ -158,14 +157,6 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 
 -(void)setButtonTextColor:(UIColor *)tempColor{
     _btnTextColor = tempColor;
-}
-
--(void)setButtonLeftTextColor:(UIColor *)tempColor{
-    _btnLeftTextColor = tempColor;
-}
-
--(void)setButtonRightTextColor:(UIColor *)tempColor{
-    _btnRightTextColor = tempColor;
 }
 
 -(void)setLabelTextColor:(UIColor *)tempColor{
@@ -262,6 +253,13 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 /** 1.19 設定 private ViewTools 給左右兩邊有 Text 的 Button 使用（沒設定則會使用預設的） */
 -(void)setPrivateViewTools:(ViewTools *)privateViewTools{
     _privateViewTools = privateViewTools;
+}
+// private
+-(ViewTools *)privateViewTools{
+    if( !_privateViewTools ){
+        _privateViewTools = [[ViewTools alloc] init];
+    }
+    return _privateViewTools;
 }
 
 +(void)setTextFieldTintColor:(UIColor *)color{
@@ -505,7 +503,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [firstLabel setNumberOfLines:0];
         [button addSubview:firstLabel];
         
-#ifdef D_DEBUG
+#ifdef D_PRIVATE_DEBUG
         [firstLabel setBackgroundColor:[UIColor greenColor]];
 #endif
         
@@ -518,7 +516,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
         [secondLebal setNumberOfLines:0];
         [button addSubview:secondLebal];
         
-#ifdef D_DEBUG
+#ifdef D_PRIVATE_DEBUG
         [secondLebal setBackgroundColor:[UIColor greenColor]];
 #endif
         
@@ -699,7 +697,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
  * @brief - 2.3.2 建立一般按鈕（中間有置中的文字、左右有留 6 pixel 的空）
  */
 -(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText{
-    return [self createButtonWithText:tempText withMargin:12.0f];
+    return [self createButtonWithText:tempText withMargin:6.0f];
 }
 
 /** 
@@ -1719,7 +1717,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
     _recentObjects = nil;
     _recentObjects = @[label];
     
-#ifdef D_DEBUG
+#ifdef D_PRIVATE_DEBUG
     [label setBackgroundColor:[UIColor lightGrayColor]];
 #endif
     
@@ -1918,7 +1916,7 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 #endif
         if(nil == cachedImage)
         {
-#ifdef D_DEBUG
+#ifdef D_PRIVATE_DEBUG
             NSLog(@"\n\n*****\n Class: %@ , File \"%@\" not exist!!\n*****\n\n", self, fullPath);
 #endif
         }
