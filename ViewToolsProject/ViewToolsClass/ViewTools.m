@@ -81,7 +81,7 @@ NSInteger const kArrowImage_Tag = 6481;
         _textFieldInnerColor = _allTextDefaultColor;
         
         // 左右有文字、右邊有箭頭的左右間距
-        self.customButtonLeftMargin = self.customButtonMiddleMargin = self.customButtonRightMargin = 6.0f;
+        self.customButtonLeftMargin = self.customButtonMiddleMargin = self.customButtonRightMargin = 12.0f;
         
         // 輸入框中，游標的顏色
         [ViewTools setTextFieldTintColor:[UIColor blueColor]];
@@ -694,10 +694,10 @@ andButtonDisableImage:(UIImage *)tempDisableImage
 }
 
 /** 
- * @brief - 2.3.2 建立一般按鈕（中間有置中的文字、左右有留 6 pixel 的空）
+ * @brief - 2.3.2 建立一般按鈕（中間有置中的文字、左右有留 12 pixel 的空）
  */
 -(UIButton *)createButtonWithTextAndMargin:(NSString *)tempText{
-    return [self createButtonWithText:tempText withMargin:6.0f];
+    return [self createButtonWithText:tempText withMargin:12.0f];
 }
 
 /** 
